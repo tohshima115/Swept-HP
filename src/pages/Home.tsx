@@ -82,7 +82,7 @@ const Home = () => {
             お知らせ
           </Typography>
           <Grid container spacing={4}>
-            <Grid item xs={12} md={4}>
+            <Grid size={{xs:12, md:4}}>
               <NewsCard
                 date="2024.03.15"
                 title="Sweptが新サービスを開始しました"
@@ -91,7 +91,7 @@ const Home = () => {
                 onClick={() => navigate('/news/1')}
               />
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid size={{xs:12, md:4}}>
               <NewsCard
                 date="2024.03.10"
                 title="イベント開催のお知らせ"
@@ -100,7 +100,7 @@ const Home = () => {
                 onClick={() => navigate('/news/2')}
               />
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid size={{xs:12, md:4}}>
               <NewsCard
                 date="2024.03.05"
                 title="採用情報を更新しました"

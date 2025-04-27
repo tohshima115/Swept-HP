@@ -1,25 +1,27 @@
 import { Button as MuiButton, ButtonProps } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-const StyledButton = styled(MuiButton)(({ theme }) => ({
-  borderRadius: '8px',
+const StyledButton = styled(MuiButton)(() => ({
+  borderRadius: '64px',
   textTransform: 'none',
-  fontWeight: 'bold',
-  padding: '12px 24px',
-  fontSize: '16px',
+  fontWeight: 700,
+  padding: '10px',
+  fontSize: '18.29px',
+  fontFamily: 'Noto Sans JP, sans-serif',
+  boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15)',
   '&.MuiButton-contained': {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
+    backgroundColor: '#334380',
+    color: '#F5F5F5',
     '&:hover': {
-      backgroundColor: theme.palette.primary.dark,
+      backgroundColor: '#2A3768',
     },
   },
   '&.MuiButton-outlined': {
-    borderColor: theme.palette.primary.main,
-    color: theme.palette.primary.main,
+    borderColor: '#334380',
+    color: '#334380',
     '&:hover': {
-      backgroundColor: theme.palette.primary.light,
-      borderColor: theme.palette.primary.dark,
+      backgroundColor: '#E8E8E8',
+      borderColor: '#2A3768',
     },
   },
 }))

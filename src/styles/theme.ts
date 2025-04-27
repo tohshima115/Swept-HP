@@ -1,64 +1,92 @@
 import { createTheme } from '@mui/material/styles'
 
+const BASE_FONT_SIZE_MOBILE = 16
+const BASE_FONT_SIZE_DESKTOP = 18
+
+const calculateHeadingSize = (n: number) => ({
+  fontSize: `calc(${BASE_FONT_SIZE_MOBILE}px * 8/${n})`,
+  '@media (min-width:600px)': {
+    fontSize: `calc(${BASE_FONT_SIZE_DESKTOP}px * 8/${n})`,
+  },
+})
+
 export const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#1976d2',
-      light: '#42a5f5',
-      dark: '#1565c0',
+      main: '#334380',
+      light: '#E8EAF2',
+      dark: '#21295C',
     },
     secondary: {
-      main: '#dc004e',
-      light: '#ff4081',
-      dark: '#9a0036',
+      main: '#EFE47C',
+      light: '#FCFBE7',
+      dark: '#D97620',
     },
     background: {
-      default: '#f5f5f5',
-      paper: '#ffffff',
+      default: '#FFFFFF',
+      paper: '#F4F4F5',
     },
+    text: {
+      primary: '#1F2337',
+      secondary: '#525460',
+      disabled: '#787A87',
+    },
+    divider: '#D5D5D8',
   },
   typography: {
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-    ].join(','),
+    fontFamily: '"Noto Sans JP", "Caveat", sans-serif',
     h1: {
-      fontSize: '2.5rem',
+      ...calculateHeadingSize(3),
       fontWeight: 700,
+      lineHeight: 1.4,
     },
     h2: {
-      fontSize: '2rem',
-      fontWeight: 600,
+      ...calculateHeadingSize(4),
+      fontWeight: 700,
+      lineHeight: 1.4,
     },
     h3: {
-      fontSize: '1.75rem',
-      fontWeight: 600,
+      ...calculateHeadingSize(5),
+      fontWeight: 700,
+      lineHeight: 1.4,
+    },
+    h4: {
+      ...calculateHeadingSize(6),
+      fontWeight: 700,
+      lineHeight: 1.4,
+    },
+    h5: {
+      ...calculateHeadingSize(7),
+      fontWeight: 700,
+      lineHeight: 1.4,
+    },
+    h6: {
+      ...calculateHeadingSize(7),
+      fontWeight: 700,
+      lineHeight: 1.4,
     },
     body1: {
-      fontSize: '1rem',
+      fontSize: `${BASE_FONT_SIZE_MOBILE}px`,
+      fontWeight: 400,
       lineHeight: 1.5,
-    },
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          textTransform: 'none',
-          borderRadius: 8,
-        },
+      '@media (min-width:600px)': {
+        fontSize: `${BASE_FONT_SIZE_DESKTOP}px`,
       },
     },
-    MuiContainer: {
-      styleOverrides: {
-        root: {
-          padding: '2rem',
-        },
+    body2: {
+      fontSize: `${BASE_FONT_SIZE_MOBILE}px`,
+      fontWeight: 700,
+      lineHeight: 1.5,
+      '@media (min-width:600px)': {
+        fontSize: `${BASE_FONT_SIZE_DESKTOP}px`,
+      },
+    },
+    overline: {
+      fontSize: `${BASE_FONT_SIZE_MOBILE}px`,
+      lineHeight: 2,
+      '@media (min-width:600px)': {
+        fontSize: `${BASE_FONT_SIZE_DESKTOP}px`,
       },
     },
   },

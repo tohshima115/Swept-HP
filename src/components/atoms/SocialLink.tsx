@@ -16,7 +16,7 @@ const SocialLink: React.FC<SocialLinkProps> = ({ href, icon, sx }) => {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      size="small"
+      size="medium"
       sx={{ 
         color: 'text.primary',
         '&:hover': {

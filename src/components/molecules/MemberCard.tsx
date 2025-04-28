@@ -6,15 +6,18 @@ import MemberBio from '../atoms/MemberBio';
 import MemberThoughts from './MemberThoughts';
 import MemberNavigationPrev from '../atoms/MemberNavigationPrev';
 import MemberNavigationNext from '../atoms/MemberNavigationNext';
+import DotNavigation from './DotNavigation';
 
 interface MemberCardProps {
   member: Member;
   onPrev: () => void;
   onNext: () => void;
+  currentIndex: number;
+  onSelectIndex: (index: number) => void;
   sx?: SxProps<Theme>;
 }
 
-const MemberCard: React.FC<MemberCardProps> = ({ member, onPrev, onNext, sx }) => {
+const MemberCard: React.FC<MemberCardProps> = ({ member, onPrev, onNext, currentIndex, onSelectIndex, sx }) => {
 
   return (
     <Box sx={{
@@ -31,7 +34,12 @@ const MemberCard: React.FC<MemberCardProps> = ({ member, onPrev, onNext, sx }) =
             <MemberNavigationNext onClick={onNext}/>
         </Grid>
       </Grid>
-      <MemberHeader member={member} />
+      <DotNavigation 
+        count={3} 
+        activeIndex={currentIndex} 
+        onDotClick={onSelectIndex}
+      />
+      <MemberHeader member={member} sx={{mt:5,mb:3}}/>
       <MemberBio bio={member.bio} sx={{ px:1 }}/>
       <MemberThoughts thoughts={member.thoughts} />
     </Box>

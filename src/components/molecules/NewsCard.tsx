@@ -103,7 +103,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
 
               {/* 下段: 記事タイトル */}
               <Typography
-                variant="h6" // 少し小さめのフォント
+                variant="h5" // 少し小さめのフォント
                 component="p"
                 sx={{
                   // タイトルが長い場合に省略記号(...)を表示するスタイル

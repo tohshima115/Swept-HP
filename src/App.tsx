@@ -39,6 +39,7 @@ function App() {
               <Route path="/company" element={<Company/>} />
               <Route path="/news" element={<News />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/member/:slug" element={<Team />} />
             </Routes>
           </Box>
           <Footer />

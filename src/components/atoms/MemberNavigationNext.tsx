@@ -1,5 +1,5 @@
-import { IconButton, SxProps, Theme } from '@mui/material';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { CardActionArea, SxProps, Theme } from '@mui/material';
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 
 interface MemberNavigationNextProps {
   onClick: () => void;
@@ -7,17 +7,18 @@ interface MemberNavigationNextProps {
 }
 
 const MemberNavigationNext: React.FC<MemberNavigationNextProps> = ({ onClick, sx }) => (
-  <IconButton
+  <CardActionArea
     onClick={onClick}
     sx={{
-      bgcolor: 'rgba(255, 255, 255, 0.7)',
-      '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' },
-      pointerEvents: 'auto',
+      height:'100%',
+      display:'flex',
+      justifyContent:'center',
+      borderRadius:3,
       ...sx
     }}
   >
-    <ArrowForwardIosIcon fontSize="small" />
-  </IconButton>
+    <ArrowForwardIosRoundedIcon fontSize="large" sx={{color:'text.disabled'}}/>
+  </CardActionArea>
 );
 
 export default MemberNavigationNext; 

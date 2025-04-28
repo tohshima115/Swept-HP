@@ -1,5 +1,5 @@
 import { Box, SxProps, Theme } from '@mui/material';
-import TwitterIcon from '@mui/icons-material/Twitter';
+import XIcon from '@mui/icons-material/X';
 import { Member } from '../../types/member';
 import MemberTitle from '../atoms/MemberTitle';
 import MemberName from '../atoms/MemberName';
@@ -11,12 +11,12 @@ interface MemberHeaderProps {
 }
 
 const MemberHeader: React.FC<MemberHeaderProps> = ({ member, sx }) => (
-  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2, ...sx }}>
+  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2, mx:1, ...sx }}>
     <Box>
       <MemberTitle title={member.title} sx={{}} />
       <MemberName name={member.name} nameEn={member.nameEn} />
     </Box>
-    <SocialLink href={member.social.x} icon={<TwitterIcon />} />
+    <SocialLink href={member.social.x} icon={<XIcon />} />
   </Box>
 );
 

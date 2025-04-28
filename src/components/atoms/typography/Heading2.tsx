@@ -34,7 +34,7 @@ export const Heading2 = ({ title }: Heading2Props) => {
     <Box sx={{ mt: 5, mb: 3 }}> {/* 上下のマージン例 */}
       <StyledBox>
         <Typography
-          variant="h4"
+          variant="h3"
           component="h2"
           sx={{
             // --- スタイルのポイント ---

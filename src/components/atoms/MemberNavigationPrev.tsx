@@ -1,5 +1,5 @@
-import { IconButton, SxProps, Theme } from '@mui/material';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { CardActionArea, SxProps, Theme } from '@mui/material';
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 
 interface MemberNavigationPrevProps {
   onClick: () => void;
@@ -7,17 +7,18 @@ interface MemberNavigationPrevProps {
 }
 
 const MemberNavigationPrev: React.FC<MemberNavigationPrevProps> = ({ onClick, sx }) => (
-  <IconButton
-    onClick={onClick}
-    sx={{
-      bgcolor: 'rgba(255, 255, 255, 0.7)',
-      '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' },
-      pointerEvents: 'auto',
+  <CardActionArea
+  onClick={onClick}
+  sx={{
+    height:'100%',
+    display:'flex',
+    justifyContent:'center',
+    borderRadius:3,
       ...sx
     }}
   >
-    <ArrowBackIosNewIcon fontSize="small" />
-  </IconButton>
+    <ArrowBackIosRoundedIcon fontSize="large" sx={{color:'text.disabled'}}/>
+  </CardActionArea>
 );
 
 export default MemberNavigationPrev; 

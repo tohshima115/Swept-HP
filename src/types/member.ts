@@ -10,4 +10,5 @@ export interface Member {
   };
   bio: string; // 経歴
   thoughts: string; // 事業への想い
+  slug: string;
 } 

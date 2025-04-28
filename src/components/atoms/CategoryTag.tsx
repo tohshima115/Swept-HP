@@ -51,7 +51,7 @@ const CategoryTag: React.FC<CategoryTagProps> = ({
       {/* アイコンを表示 */}
       <tagConfig.IconComponent sx={{ fontSize: '24px', marginRight: 1 }} />
       {/* テキストを表示 */}
-      <Typography variant="body1" component="span" sx={{ width:'64px',textAlign:'center' }}>
+      <Typography variant="body1" component="span" sx={{ width: { xs: '64px', sm: '72px' }, textAlign:'center' }}>
         {displayText}
       </Typography>
     </Box>

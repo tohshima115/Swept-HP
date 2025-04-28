@@ -17,7 +17,7 @@ const Logo = ({ color = '#CC3750' }: LogoProps) => {
         textDecoration: 'none',
         color,
         '& svg': {
-          height: '40px',
+          height: '48px',
           width: 'auto',
           display: 'block'
         }

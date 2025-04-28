@@ -25,14 +25,14 @@ const Footer = () => {
         </svg>
       </Box>
       
-      <Box sx={{ background: '#CC3750', py: 2 }}>
-        <Container maxWidth="xs" sx={{ bgcolor: '#CC3750', borderRadius: '0 0 16px 16px', pb: 2 }}>
+      <Box sx={{ background: theme.palette.primary.main, py: 2 }}>
+        <Container maxWidth="sm" sx={{display:'flex',flexFlow:'column', gap:3}}>
           <FooterMenuList />
           <FooterSnsLinks />
         </Container>
       </Box>
       
-      <Box sx={{ bgcolor: '#fff', color: 'text.secondary', pt: 2, pb: 1 }}>
+      <Box sx={{ background: theme.palette.background.paper, color: 'text.secondary', pt: 2, pb: 1 }}>
         <FooterPolicyLinks />
         <FooterCopyright />
       </Box>

@@ -1,18 +1,22 @@
-import { Box } from '@mui/material';
+import { Grid } from '@mui/material';
 import FooterIcon from '../atoms/FooterIcon';
 import { menuItems } from '../../constants/menuItems';
 
 const FooterMenuList = () => (
-  <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+  <Grid container columnSpacing={2}>
     {menuItems.map((item) => (
-      <FooterIcon 
-        key={item.to} 
-        href={item.to} 
-        icon={item.icon} 
-        text={item.labelJa}
-      />
+      <Grid
+        key={item.to}
+        size={{xs:12,sm:6}}
+      >
+        <FooterIcon 
+          href={item.to} 
+          icon={item.icon} 
+          text={item.labelJa}
+        />
+      </Grid>
     ))}
-  </Box>
+  </Grid>
 );
 
 export default FooterMenuList;

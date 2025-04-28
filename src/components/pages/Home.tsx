@@ -1,13 +1,45 @@
-import { Box, Container, Typography, Grid } from '@mui/material'
+import { Box, Container, Typography, SxProps, Theme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import Button from '../atoms/Button'
 import NewsCard from '../NewsCard'
+import { News } from '../../types/news'
 
-const Home = () => {
+interface HomeProps {
+  sx?: SxProps<Theme>
+}
+
+const Home: React.FC<HomeProps> = ({ sx }) => {
   const navigate = useNavigate()
 
+  const newsItems: News[] = [
+    {
+      id: 1,
+      date: '2024-03-01',
+      title: '新サービス「Swept」のリリース',
+      content: '新サービス「Swept」をリリースしました。',
+      tag: 'ニュース',
+      imageUrl: '/images/news1.jpg',
+    },
+    {
+      id: 2,
+      date: '2024-02-15',
+      title: '採用情報更新',
+      content: '新規採用情報を更新しました。',
+      tag: '採用',
+      imageUrl: '/images/news2.jpg',
+    },
+    {
+      id: 3,
+      date: '2024-01-10',
+      title: 'オフィス移転のお知らせ',
+      content: 'オフィスを移転しました。',
+      tag: 'お知らせ',
+      imageUrl: '/images/news3.jpg',
+    },
+  ]
+
   return (
-    <Box>
+    <Box sx={sx}>
       {/* Hero Section */}
       <Box
         sx={{
@@ -74,35 +106,11 @@ const Home = () => {
           >
             お知らせ
           </Typography>
-          <Grid container spacing={4}>
-            <Grid size={{xs:12, md:4}}>
-              <NewsCard
-                date="2024.03.15"
-                title="Sweptが新サービスを開始しました"
-                tag="ニュース"
-                image="/images/news1.jpg"
-                onClick={() => navigate('/news/1')}
-              />
-            </Grid>
-            <Grid size={{xs:12, md:4}}>
-              <NewsCard
-                date="2024.03.10"
-                title="イベント開催のお知らせ"
-                tag="イベント"
-                image="/images/news2.jpg"
-                onClick={() => navigate('/news/2')}
-              />
-            </Grid>
-            <Grid size={{xs:12, md:4}}>
-              <NewsCard
-                date="2024.03.05"
-                title="採用情報を更新しました"
-                tag="ニュース"
-                image="/images/news3.jpg"
-                onClick={() => navigate('/news/3')}
-              />
-            </Grid>
-          </Grid>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {newsItems.map((news) => (
+              <NewsCard key={news.id} news={news} />
+            ))}
+          </Box>
         </Container>
       </Box>
     </Box>

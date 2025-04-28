@@ -1,41 +1,61 @@
 import { createTheme } from '@mui/material/styles'
 
-const BASE_FONT_SIZE_MOBILE = 16
-const BASE_FONT_SIZE_DESKTOP = 18
+export const BASE_FONT_SIZE_MOBILE = 16
+export const BASE_FONT_SIZE_DESKTOP = 18
+
+const breakpoints = {
+  values: {
+    xs: 0,
+    sm: 600,
+    md: 900,
+    lg: 1200,
+    xl: 1536,
+  },
+}
+
+const baseTheme = createTheme({ breakpoints })
 
 const calculateHeadingSize = (n: number) => ({
   fontSize: `calc(${BASE_FONT_SIZE_MOBILE}px * 8/${n})`,
-  '@media (min-width:600px)': {
+  [baseTheme.breakpoints.up('sm')]: {
     fontSize: `calc(${BASE_FONT_SIZE_DESKTOP}px * 8/${n})`,
   },
 })
 
 export const theme = createTheme({
+  breakpoints,
   palette: {
     mode: 'light',
     primary: {
-      main: '#334380',
-      light: '#E8EAF2',
-      dark: '#21295C',
+      main: '#CC3750',
+      light: '#FBE4E9',
+      dark: '#7E2442',
     },
     secondary: {
-      main: '#EFE47C',
-      light: '#FCFBE7',
-      dark: '#D97620',
+      main: '#CC379A',
+      light: '#F9E4F0',
+      dark: '#770070',
     },
     background: {
       default: '#FFFFFF',
-      paper: '#F4F4F5',
+      paper: '#F5F4F4',
     },
     text: {
-      primary: '#1F2337',
-      secondary: '#525460',
-      disabled: '#787A87',
+      primary: '#371F23',
+      secondary: '#605255',
+      disabled: '#87787A',
     },
-    divider: '#D5D5D8',
+    divider: '#D8D5D5',
+  },
+  components: {
+    MuiTypography: {
+      defaultProps: {
+        variant: 'overline',
+      },
+    },
   },
   typography: {
-    fontFamily: '"Noto Sans JP", "Caveat", sans-serif',
+    fontFamily: "Noto Sans JP",
     h1: {
       ...calculateHeadingSize(3),
       fontWeight: 700,
@@ -67,27 +87,19 @@ export const theme = createTheme({
       lineHeight: 1.4,
     },
     body1: {
-      fontSize: `${BASE_FONT_SIZE_MOBILE}px`,
+      ...calculateHeadingSize(8),
       fontWeight: 400,
       lineHeight: 1.5,
-      '@media (min-width:600px)': {
-        fontSize: `${BASE_FONT_SIZE_DESKTOP}px`,
-      },
     },
     body2: {
-      fontSize: `${BASE_FONT_SIZE_MOBILE}px`,
+      ...calculateHeadingSize(8),
       fontWeight: 700,
       lineHeight: 1.5,
-      '@media (min-width:600px)': {
-        fontSize: `${BASE_FONT_SIZE_DESKTOP}px`,
-      },
     },
     overline: {
-      fontSize: `${BASE_FONT_SIZE_MOBILE}px`,
+      ...calculateHeadingSize(8),
+      fontWeight: 400,
       lineHeight: 2,
-      '@media (min-width:600px)': {
-        fontSize: `${BASE_FONT_SIZE_DESKTOP}px`,
-      },
     },
   },
 }) 

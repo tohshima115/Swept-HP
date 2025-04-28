@@ -47,7 +47,7 @@ const Navbar = () => {
             <Grid size={{xs:6, md:3}} >
               <Logo />
             </Grid>
-            <Grid size={{xs:2, md:9}} offset={{xs:4, md:0}} sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'center' }}>
+            <Grid size={{xs:2,sm:1, md:9}} offset={{xs:4,sm:5, md:0}} sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'center' }}>
               <HamburgerMenu isOpen={isMenuOpen} onClick={toggleMenu} />
             </Grid>
             <Grid size={{xs:12, md:9}} sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>

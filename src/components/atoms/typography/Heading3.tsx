@@ -10,6 +10,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(1),
+  marginTop:'24px',
+  marginBottom:'16px',
 }));
 
 const VerticalBar = styled(Box)(({ theme }) => ({

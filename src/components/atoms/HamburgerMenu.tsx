@@ -16,16 +16,18 @@ const HamburgerButton = styled(Box)({
   justifyContent: 'center',
 });
 
-const Line = styled(Box)<{ isOpen: boolean }>(({ isOpen }) => ({
+const TRANSLATE_DISTANCE = 8.4;
+
+const Line = styled(Box)<{ isOpen: boolean }>(({ isOpen, theme }) => ({
   position: 'absolute',
   width: '32px',
   height: '3.2px',
-  backgroundColor: '#334380',
+  backgroundColor: theme.palette.primary.main,
   borderRadius:4,
   transition: 'all 0.3s ease',
   '&:nth-of-type(1)': {
     top: '12px',
-    transform: isOpen ? 'rotate(45deg) translate(8px, 8px)' : 'none',
+    transform: isOpen ? `rotate(45deg) translate(${TRANSLATE_DISTANCE}px, ${TRANSLATE_DISTANCE}px)` : 'none',
   },
   '&:nth-of-type(2)': {
     top: '24px',
@@ -33,7 +35,7 @@ const Line = styled(Box)<{ isOpen: boolean }>(({ isOpen }) => ({
   },
   '&:nth-of-type(3)': {
     top: '36px',
-    transform: isOpen ? 'rotate(-45deg) translate(8px, -8px)' : 'none',
+    transform: isOpen ? `rotate(-45deg) translate(${TRANSLATE_DISTANCE}px, -${TRANSLATE_DISTANCE}px)` : 'none',
   },
 }));
 

@@ -1,7 +1,7 @@
 import { Box, Container, Typography, Grid } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import Button from '../components/Button'
-import NewsCard from '../components/NewsCard'
+import Button from '../atoms/Button'
+import NewsCard from '../NewsCard'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -52,14 +52,7 @@ const Home = () => {
               安心できるつながりの中で
             </Typography>
             <Button
-              variant="contained"
               onClick={() => navigate('/contact')}
-              sx={{
-                bgcolor: '#21295C',
-                '&:hover': {
-                  bgcolor: '#1F2337',
-                },
-              }}
             >
               詳しく見る
             </Button>

@@ -12,6 +12,13 @@ const TitleEn = styled('span')(({ theme }) => ({
   fontFamily: 'Caveat, sans-serif',
   color: theme.palette.primary.main,
   lineHeight: 1.4,
+  textShadow: `
+    0.2px 0 0 ${theme.palette.primary.main},
+    -0.2px 0 0 ${theme.palette.primary.main},
+    0 0.2px 0 ${theme.palette.primary.main},
+    0 -0.2px 0 ${theme.palette.primary.main}
+  `,
+  fontWeight:700,
 }));
 
 const Slash = styled('span')(({ theme }) => ({
@@ -30,6 +37,12 @@ const TitleJa = styled('span')(({ theme }) => ({
   color: theme.palette.primary.main,
   height: '56px',
   lineHeight: '56px',
+  textShadow: `
+  0.2px 0 0 ${theme.palette.primary.main},
+  -0.2px 0 0 ${theme.palette.primary.main},
+  0 0.2px 0 ${theme.palette.primary.main},
+  0 -0.2px 0 ${theme.palette.primary.main}
+`,
 }));
 
 const StyledHeading1 = styled(Typography)<TypographyProps>(({ theme }) => ({

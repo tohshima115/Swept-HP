@@ -50,7 +50,7 @@ export const theme = createTheme({
   components: {
     MuiTypography: {
       defaultProps: {
-        variant: 'overline',
+        variant: 'body2',
       },
     },
   },
@@ -82,9 +82,9 @@ export const theme = createTheme({
       lineHeight: 1.4,
     },
     h6: {
-      ...calculateHeadingSize(7),
+      ...calculateHeadingSize(8),
       fontWeight: 700,
-      lineHeight: 1.4,
+      lineHeight: 1.5,
     },
     body1: {
       ...calculateHeadingSize(8),
@@ -92,11 +92,6 @@ export const theme = createTheme({
       lineHeight: 1.5,
     },
     body2: {
-      ...calculateHeadingSize(8),
-      fontWeight: 700,
-      lineHeight: 1.5,
-    },
-    overline: {
       ...calculateHeadingSize(8),
       fontWeight: 400,
       lineHeight: 2,

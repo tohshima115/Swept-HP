@@ -6,7 +6,7 @@ import { Container, Typography, Box } from '@mui/material'
 const Service = () => {
 
   return (
-    <Container maxWidth="lg" sx={{ pt: 3, pb:5 }}>
+    <Container maxWidth="md" sx={{ pt: 3, pb:5 }}>
     <Box sx={{ textAlign: 'center' }}>
       <Heading1 titleEn={'Service'} titleJa={'事業内容'}/>
     </Box>

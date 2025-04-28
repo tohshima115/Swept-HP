@@ -1,27 +1,43 @@
-import { Box, Container } from '@mui/material'
+import { Box, Container, useTheme } from '@mui/material'
 import FooterMenuList from '../molecules/FooterMenuList'
 import FooterSnsLinks from '../molecules/FooterSnsLinks'
 import FooterPolicyLinks from '../molecules/FooterPolicyLinks'
 import FooterCopyright from '../atoms/FooterCopyright'
 
-const Footer = () => (
-  <Box component="footer" sx={{ background: '#CC3750', color: '#fff', pt: 4, pb: 2 }}>
-    {/* 波型SVGはここに配置 */}
-    <Box sx={{ width: '100%', height: 32, mb: -1 }}>
-      {/* SVG波型 */}
-      <svg width="100%" height="32" viewBox="0 0 360 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 32V0C60 24 300 24 360 0V32H0Z" fill="#CC3750"/>
-      </svg>
+const Footer = () => {
+  const theme = useTheme();
+  return (
+    <Box component="footer" sx={{ position: 'relative', background: '#fff', color: '#fff',pt:5 }}>
+      {/* 波型SVG */}
+      <Box sx={{ 
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '40px',
+        overflow: 'hidden',
+      }}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 64" width="100%" height="40" preserveAspectRatio="none">
+          <path 
+            d="M -100 64 Q -50 64 0 32 Q 100 -32 200 32 Q 250 64 300 64 Q 350 64 400 32 Q 500 -32 600 32 Q 650 64 700 64 L 400 64 L 0 64 Z" 
+            fill={theme.palette.primary.main}
+          />
+        </svg>
+      </Box>
+      
+      <Box sx={{ background: '#CC3750', py: 2 }}>
+        <Container maxWidth="xs" sx={{ bgcolor: '#CC3750', borderRadius: '0 0 16px 16px', pb: 2 }}>
+          <FooterMenuList />
+          <FooterSnsLinks />
+        </Container>
+      </Box>
+      
+      <Box sx={{ bgcolor: '#fff', color: 'text.secondary', pt: 2, pb: 1 }}>
+        <FooterPolicyLinks />
+        <FooterCopyright />
+      </Box>
     </Box>
-    <Container maxWidth="xs" sx={{ bgcolor: '#CC3750', borderRadius: '0 0 16px 16px', pb: 2 }}>
-      <FooterMenuList />
-      <FooterSnsLinks />
-    </Container>
-    <Box sx={{ bgcolor: '#fff', color: 'text.secondary', pt: 2, pb: 1 }}>
-      <FooterPolicyLinks />
-      <FooterCopyright />
-    </Box>
-  </Box>
-)
+  )
+}
 
 export default Footer 

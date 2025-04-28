@@ -11,7 +11,7 @@ const Company = () => {
   }
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
         <Typography variant="h2" component="h1" gutterBottom>
           会社概要

@@ -18,33 +18,35 @@ const HamburgerButton = styled(Box)({
 
 const TRANSLATE_DISTANCE = 8.4;
 
-const Line = styled(Box)<{ isOpen: boolean }>(({ isOpen, theme }) => ({
+const Line = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})<{ open: boolean }>(({ open, theme }) => ({
   position: 'absolute',
   width: '32px',
   height: '3.2px',
   backgroundColor: theme.palette.primary.main,
-  borderRadius:4,
+  borderRadius: 4,
   transition: 'all 0.3s ease',
   '&:nth-of-type(1)': {
-    top: '12px',
-    transform: isOpen ? `rotate(45deg) translate(${TRANSLATE_DISTANCE}px, ${TRANSLATE_DISTANCE}px)` : 'none',
+    top: '8.8px',
+    transform: open ? `rotate(45deg) translate(${TRANSLATE_DISTANCE}px, ${TRANSLATE_DISTANCE}px)` : 'none',
   },
   '&:nth-of-type(2)': {
-    top: '24px',
-    transform: isOpen ? 'scaleX(0)' : 'none',
+    top: '20.8px',
+    transform: open ? 'scaleX(0)' : 'none',
   },
   '&:nth-of-type(3)': {
-    top: '36px',
-    transform: isOpen ? `rotate(-45deg) translate(${TRANSLATE_DISTANCE}px, -${TRANSLATE_DISTANCE}px)` : 'none',
+    top: '32.8px',
+    transform: open ? `rotate(-45deg) translate(${TRANSLATE_DISTANCE}px, -${TRANSLATE_DISTANCE}px)` : 'none',
   },
 }));
 
 const HamburgerMenu = ({ isOpen, onClick }: HamburgerMenuProps) => {
   return (
     <HamburgerButton onClick={onClick}>
-      <Line isOpen={isOpen} />
-      <Line isOpen={isOpen} />
-      <Line isOpen={isOpen} />
+      <Line open={isOpen} />
+      <Line open={isOpen} />
+      <Line open={isOpen} />
     </HamburgerButton>
   );
 };

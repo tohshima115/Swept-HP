@@ -7,7 +7,9 @@ interface MobileMenuProps {
   items: Array<{ to: string; label: string; labelJa: string }>;
 }
 
-const MenuOverlay = styled(Box)<{ isOpen: boolean }>(({ isOpen }) => ({
+const MenuOverlay = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})<{ open: boolean }>(({ open }) => ({
   position: 'fixed',
   top: '64px',
   left: 0,
@@ -15,7 +17,7 @@ const MenuOverlay = styled(Box)<{ isOpen: boolean }>(({ isOpen }) => ({
   bottom: 0,
   background: 'rgba(0, 0, 0, 0.86)', // 334380の色を95%の透明度で使用
   backdropFilter: 'blur(16px)',
-  display: isOpen ? 'flex' : 'none',
+  display: open ? 'flex' : 'none',
   flexDirection: 'column',
   height: 'calc(100vh - 64px)',
   zIndex: 1000,
@@ -26,7 +28,7 @@ const MenuOverlay = styled(Box)<{ isOpen: boolean }>(({ isOpen }) => ({
 
 const MobileMenu = ({ isOpen, items }: MobileMenuProps) => {
   return (
-    <MenuOverlay isOpen={isOpen}>
+    <MenuOverlay open={isOpen}>
       <Grid container spacing={2} m={2}>
         {items.map((item) => (
           <Grid key={item.to} size={{xs:6}}>

@@ -4,22 +4,7 @@ import Logo from '../atoms/Logo';
 import MenuButtonGroup from '../molecules/MenuButtonGroup';
 import MobileMenu from '../molecules/MobileMenu';
 import HamburgerMenu from '../atoms/HamburgerMenu';
-
-interface MenuItem {
-  to: string;
-  label: string;
-  labelJa: string;
-}
-
-const menuItems: MenuItem[] = [
-  { to: '/', label: 'Top', labelJa: 'トップページ' },
-  { to: '/vision', label: 'Vision', labelJa: 'ビジョン' },
-  { to: '/service', label: 'Service', labelJa: '事業内容' },
-  { to: '/team', label: 'Member', labelJa: 'メンバー' },
-  { to: '/news', label: 'News', labelJa: 'ニュース' },
-  { to: '/company', label: 'Company', labelJa: '会社案内' },
-  { to: '/contact', label: 'Contact', labelJa: 'お問い合わせ' },
-];
+import { menuItems } from '../../constants/menuItems';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -6,7 +6,7 @@ import ExpandableContents from '@/components/molecules/ExpandableContents';
 const Vision = () => {
 
   return (
-      <Container maxWidth="lg" sx={{ pt: 3, pb:5 }}>
+      <Container maxWidth="md" sx={{ pt: 3, pb:5 }}>
         <Box sx={{ textAlign: 'center' }}>
           <Heading1 titleEn={'Vision'} titleJa={'理念'}/>
           <Typography variant="h3" sx={{ 

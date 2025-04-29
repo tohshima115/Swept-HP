@@ -12,7 +12,7 @@ const ContactPageTemplate: React.FC = () => {
     return (
         <Container maxWidth="md" sx={{ py: 4 }}>
             <Heading1 titleEn={'Contact'} titleJa={'お問い合わせ'} />
-            <Grid container columnSpacing={2} rowSpacing={8}>
+            <Grid container columnSpacing={3} rowSpacing={8}>
                 <Grid size={{xs:12,md:8}} >
                     <ContactSection />
                 </Grid>

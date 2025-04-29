@@ -37,9 +37,9 @@ function App() {
               <Route path="/vision" element={<Vision/>} />
               <Route path="/service" element={<Service/>} />
               <Route path="/company" element={<Company/>} />
-              <Route path="/news" element={<News />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/member/:slug" element={<Team />} />
+              <Route path="/news" element={<News/>} />
+              <Route path="/contact" element={<Contact/>} />
+              <Route path="/member/:slug" element={<Team/>} />
             </Routes>
           </Box>
           <Footer />

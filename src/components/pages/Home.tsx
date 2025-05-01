@@ -1,8 +1,10 @@
 import { Box, Container, Typography, SxProps, Theme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import Button from '../atoms/Button'
-import NewsCard from '../NewsCard'
-import { News } from '../../types/news'
+import { newsItems } from '../../data/news'
+import { Heading1 } from '../atoms/typography'
+import { Image } from '../atoms/Image'
+import NewsCard from '../molecules/NewsCard'
 
 interface HomeProps {
   sx?: SxProps<Theme>
@@ -10,33 +12,6 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ sx }) => {
   const navigate = useNavigate()
-
-  const newsItems: News[] = [
-    {
-      id: 1,
-      date: '2024-03-01',
-      title: '新サービス「Swept」のリリース',
-      content: '新サービス「Swept」をリリースしました。',
-      tag: 'ニュース',
-      imageUrl: '/images/news1.jpg',
-    },
-    {
-      id: 2,
-      date: '2024-02-15',
-      title: '採用情報更新',
-      content: '新規採用情報を更新しました。',
-      tag: '採用',
-      imageUrl: '/images/news2.jpg',
-    },
-    {
-      id: 3,
-      date: '2024-01-10',
-      title: 'オフィス移転のお知らせ',
-      content: 'オフィスを移転しました。',
-      tag: 'お知らせ',
-      imageUrl: '/images/news3.jpg',
-    },
-  ]
 
   return (
     <Box sx={sx}>
@@ -83,11 +58,6 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
             >
               安心できるつながりの中で
             </Typography>
-            <Button
-              onClick={() => navigate('/contact')}
-            >
-              詳しく見る
-            </Button>
           </Box>
         </Container>
       </Box>
@@ -95,20 +65,56 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
       {/* News Section */}
       <Box sx={{ py: 8, bgcolor: 'white' }}>
         <Container maxWidth="lg">
-          <Typography
-            variant="h2"
-            sx={{
-              fontSize: '32px',
-              fontWeight: 700,
-              color: '#1F2337',
-              mb: 4,
-            }}
-          >
-            お知らせ
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box>
+            <Heading1 titleEn={'Vision'} titleJa={'ビジョン'}/>
+            <Typography variant='h3'>
+              自分の人生を<br/>
+              自分のものに
+            </Typography>
+            <Button
+                onClick={() => navigate('/vision')}
+              >
+                詳しく見る
+            </Button>
+          </Box>
+          <Box>
+            <Heading1 titleEn={'Service'} titleJa={'サービス'}/>
+            <Image src={'https://picsum.photos/1600/900'} alt={''}/>
+
+            <Typography variant='h3'>
+              ataccha
+            </Typography>
+            <Button
+                onClick={() => navigate('/service')}
+              >
+                詳しく見る
+            </Button>
+          </Box>
+          <Box>
+            <Heading1 titleEn={'Member'} titleJa={'メンバー'}/>
+            <Image src={'https://picsum.photos/1600/900'} alt={''}/>
+
+            <Typography variant='h3'>
+              ataccha
+            </Typography>
+            <Button
+                onClick={() => navigate('/member')}
+              >
+                詳しく見る
+            </Button>
+          </Box>
+          <Heading1 titleEn={'News'} titleJa={'ニュース'}/>
+          <Box>
             {newsItems.map((news) => (
-              <NewsCard key={news.id} news={news} />
+              <NewsCard
+              key={news.slug}
+              date={news.date}
+              title={news.title}
+              imageSrc={news.imageUrl}
+              imageAlt={news.title}
+              isNews={news.tag === 'ニュース'}
+              onClick={() => navigate(`/news/${news.slug}`)}
+              />
             ))}
           </Box>
         </Container>

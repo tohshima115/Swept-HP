@@ -1,7 +1,12 @@
 import { createTheme } from '@mui/material/styles'
 
-export const BASE_FONT_SIZE_MOBILE = 16
-export const BASE_FONT_SIZE_DESKTOP = 18
+declare module '@mui/material/styles' {
+  interface CustomTheme {
+    gradients: {
+      primary: string
+    }
+  }
+}
 
 const breakpoints = {
   values: {
@@ -12,6 +17,9 @@ const breakpoints = {
     xl: 1536,
   },
 }
+
+export const BASE_FONT_SIZE_MOBILE = 16
+export const BASE_FONT_SIZE_DESKTOP = 18
 
 const baseTheme = createTheme({ breakpoints })
 
@@ -48,6 +56,13 @@ export const theme = createTheme({
     divider: '#D8D5D5',
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        ':root': {
+          '--gradient-primary': 'linear-gradient(-20deg, #CC3778 0%, #cc3750 100%)',
+        },
+      },
+    },
     MuiTypography: {
       defaultProps: {
         variant: 'body2',

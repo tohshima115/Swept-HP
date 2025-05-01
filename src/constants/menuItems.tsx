@@ -34,7 +34,7 @@ export const menuItems: MenuItem[] = [
     icon: <BusinessIcon />
   },
   { 
-    to: '/team', 
+    to: '/member', 
     label: 'Member', 
     labelJa: 'メンバー',
     icon: <GroupIcon />

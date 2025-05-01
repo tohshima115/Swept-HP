@@ -4,6 +4,7 @@ import { theme } from './styles/theme'
 import Navbar from './components/organisms/Navbar'
 import Footer from './components/organisms/Footer.tsx'
 import News from './components/pages/News.tsx'
+import NewsDetail from './components/pages/NewsDetail.tsx'
 import Contact from './components/pages/Contact.tsx'
 import Home from './components/pages/Home.tsx'
 import Team from './components/pages/Team.tsx'
@@ -33,11 +34,12 @@ function App() {
           >
             <Routes>
               <Route path="/" element={<Home/>} />
-              <Route path="/team" element={<Team/>} />
+              <Route path="/member" element={<Team/>} />
               <Route path="/vision" element={<Vision/>} />
               <Route path="/service" element={<Service/>} />
               <Route path="/company" element={<Company/>} />
               <Route path="/news" element={<News/>} />
+              <Route path="/news/:slug" element={<NewsDetail/>} />
               <Route path="/contact" element={<Contact/>} />
               <Route path="/member/:slug" element={<Team/>} />
             </Routes>

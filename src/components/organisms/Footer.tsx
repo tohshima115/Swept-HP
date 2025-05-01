@@ -25,7 +25,7 @@ const Footer = () => {
         </svg>
       </Box>
       
-      <Box sx={{ background: theme.palette.primary.main, py: 2 }}>
+      <Box sx={{ background: 'var(--gradient-primary)', py: 2 }}>
         <Container maxWidth="sm" sx={{display:'flex',flexFlow:'column', gap:3}}>
           <FooterMenuList />
           <FooterSnsLinks />

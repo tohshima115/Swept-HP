@@ -13,7 +13,7 @@ const Service: React.FC<ServiceProps> = ({ sx }) => {
         <Heading1 titleEn={'Service'} titleJa={'事業内容'}/>
       </Box>
       <Box mx={1} mt={5}>
-        <Image src={'/src/assets/logo_yoko.svg'} alt={''} />
+        <Image src={'/assets/logo_yoko.svg'} alt={''} />
         {/* xs用 */}
         <Typography
           variant="h4"

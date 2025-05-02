@@ -34,7 +34,7 @@ export const menuItems: MenuItem[] = [
     icon: <BusinessIcon />
   },
   { 
-    to: '/member/niwa-katsuma', 
+    to: '/member#niwa-katsuma', 
     label: 'Member', 
     labelJa: 'メンバー',
     icon: <GroupIcon />

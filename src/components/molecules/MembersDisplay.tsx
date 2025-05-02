@@ -3,7 +3,7 @@ import { Box, SxProps, Theme } from '@mui/material';
 import { Member } from '../../types/member';
 import MemberCard from './MemberCard';
 import MemberThumbnailNav from './MemberThumbnailNav';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface MembersDisplayProps {
   members: Member[];
@@ -11,9 +11,12 @@ interface MembersDisplayProps {
 }
 
 const MembersDisplay: React.FC<MembersDisplayProps> = ({ members, sx }) => {
-  const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // hashからslugを取得（例: #niwa-katsuma）
+  const slug = location.hash ? location.hash.replace(/^#/, '') : undefined;
 
   useEffect(() => {
     if (slug) {
@@ -27,13 +30,13 @@ const MembersDisplay: React.FC<MembersDisplayProps> = ({ members, sx }) => {
   const handlePrev = () => {
     const newIndex = (currentIndex - 1 + members.length) % members.length;
     setCurrentIndex(newIndex);
-    navigate(`/member/${members[newIndex].slug}`);
+    navigate(`#${members[newIndex].slug}`);
   };
 
   const handleNext = () => {
     const newIndex = (currentIndex + 1) % members.length;
     setCurrentIndex(newIndex);
-    navigate(`/member/${members[newIndex].slug}`);
+    navigate(`#${members[newIndex].slug}`);
   };
 
   const handleSelectMember = (id: number) => {
@@ -41,13 +44,13 @@ const MembersDisplay: React.FC<MembersDisplayProps> = ({ members, sx }) => {
     if (member) {
       const newIndex = members.findIndex(m => m.id === id);
       setCurrentIndex(newIndex);
-      navigate(`/member/${member.slug}`);
+      navigate(`#${member.slug}`);
     }
   };
 
   const handleSelectIndex = (index: number) => {
     setCurrentIndex(index);
-    navigate(`/member/${members[index].slug}`);
+    navigate(`#${members[index].slug}`);
   };
 
   const currentMember = members[currentIndex];

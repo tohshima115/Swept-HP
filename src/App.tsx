@@ -34,13 +34,35 @@ function AnimatedRoutes() {
   const prevPathname = usePrevious(location.pathname)
   const isMemberTransition = isMemberPath(prevPathname) && isMemberPath(location.pathname)
 
+  if (isMemberTransition) {
+    // アニメーションなし
+    return (
+      <div style={{ flexGrow: 1, minHeight: '100vh', position: 'relative' }}>
+        <Box component="main" sx={{ flexGrow: 1, pt: 8 }}>
+          <Routes location={location}>
+            <Route path="/" element={<Home/>} />
+            <Route path="/member" element={<Team/>} />
+            <Route path="/vision" element={<Vision/>} />
+            <Route path="/service" element={<Service/>} />
+            <Route path="/information" element={<Company/>} />
+            <Route path="/news" element={<News/>} />
+            <Route path="/news/:slug" element={<NewsDetail/>} />
+            <Route path="/contact" element={<Contact/>} />
+            <Route path="/member/:slug" element={<Team/>} />
+          </Routes>
+        </Box>
+      </div>
+    )
+  }
+
+  // アニメーションあり
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={location.pathname}
-        initial={isMemberTransition ? undefined : { opacity: 0, y: 16 }}
-        animate={isMemberTransition ? undefined : { opacity: 1, y: 0 }}
-        exit={isMemberTransition ? undefined : { opacity: 0, y: -16 }}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -16 }}
         transition={{ duration: 0.3 }}
         style={{ flexGrow: 1, minHeight: '100vh', position: 'relative' }}
       >

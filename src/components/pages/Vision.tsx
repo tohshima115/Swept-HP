@@ -36,7 +36,7 @@ const Vision = () => {
 
           <Grid container sx={{mx:1}} spacing={2}>
             <Grid size={{xs:12,sm:4}}>
-              <Image src={'/src/assets/vision.avif'} alt={'Vision Image'} aspectRatio='16:9' margin='0'/>
+              <Image src={'/assets/vision.avif'} alt={'Vision Image'} aspectRatio='16:9' margin='0'/>
             </Grid>
             <Grid size={{xs:12,sm:8}}>
               <Typography >
@@ -75,7 +75,7 @@ const Vision = () => {
 
           <Grid container sx={{mx:1}} spacing={2}>
             <Grid size={{xs:12,sm:4}}>
-              <Image src={'/src/assets/mission.avif'} alt={'Mission Image'} aspectRatio='16:9' margin='0'/>
+              <Image src={'/assets/mission.avif'} alt={'Mission Image'} aspectRatio='16:9' margin='0'/>
             </Grid>
             <Grid size={{xs:12,sm:8}}>
               <Typography >

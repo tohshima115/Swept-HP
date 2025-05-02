@@ -108,7 +108,7 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
                 zIndex: 1,
               },
             })}>
-              <Image src={'/src/assets/logo_yoko.svg'} alt={''} />
+              <Image src={'/assets/logo_yoko.svg'} alt={''} />
             </Box>
             <Typography variant='h3' color='primary.main' mt={2}>
               ataccha（アタッチャ）

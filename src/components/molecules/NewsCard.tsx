@@ -63,7 +63,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
         sx={{ width: '100%', py: 1, borderRadius: '16px' }} // Flexbox を有効に
       >
         <Grid container spacing={2}>
-          <ImageContainer size={{xs:4,sm:3}} sx={{pl:1}}>
+          <ImageContainer size={{xs:4,sm:3,md:2}} sx={{pl:1}}>
             {/* 画像表示エリア */}
             {/* 作成済みのImageコンポーネントを使用 */}
             <Image 
@@ -74,7 +74,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
             />
           </ImageContainer>
 
-          <Grid size={{xs:8,sm:9}} sx={{pr:1}}>
+          <Grid size={{xs:8,sm:9,md:10}} sx={{pr:1}}>
             {/* テキストコンテンツエリア */}
             <CardContent
               sx={{

@@ -3,7 +3,7 @@ import { Member } from '../../types/member';
 import MemberImage from '../atoms/MemberImage';
 import MemberHeader from './MemberHeader';
 import MemberBio from '../atoms/MemberBio';
-import MemberThoughts from './MemberThoughts';
+// import MemberThoughts from './MemberThoughts';
 import MemberNavigationPrev from '../atoms/MemberNavigationPrev';
 import MemberNavigationNext from '../atoms/MemberNavigationNext';
 import DotNavigation from './DotNavigation';
@@ -41,7 +41,7 @@ const MemberCard: React.FC<MemberCardProps> = ({ member, onPrev, onNext, current
       />
       <MemberHeader member={member} sx={{mt:5,mb:3}}/>
       <MemberBio bio={member.bio} sx={{ px:1 }}/>
-      <MemberThoughts thoughts={member.thoughts} />
+      {/* <MemberThoughts thoughts={member.thoughts} /> */}
     </Box>
   );
 };

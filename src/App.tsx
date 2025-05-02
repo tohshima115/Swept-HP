@@ -51,7 +51,7 @@ function AnimatedRoutes() {
           <Route path="/member" element={<Team/>} />
           <Route path="/vision" element={<Vision/>} />
           <Route path="/service" element={<Service/>} />
-          <Route path="/company" element={<Company/>} />
+          <Route path="/information" element={<Company/>} />
           <Route path="/news" element={<News/>} />
           <Route path="/news/:slug" element={<NewsDetail/>} />
           <Route path="/contact" element={<Contact/>} />
@@ -84,7 +84,7 @@ function AnimatedRoutes() {
             <Route path="/member" element={<Team/>} />
             <Route path="/vision" element={<Vision/>} />
             <Route path="/service" element={<Service/>} />
-            <Route path="/company" element={<Company/>} />
+            <Route path="/information" element={<Company/>} />
             <Route path="/news" element={<News/>} />
             <Route path="/news/:slug" element={<NewsDetail/>} />
             <Route path="/contact" element={<Contact/>} />

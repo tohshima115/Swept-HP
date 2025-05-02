@@ -1,45 +1,42 @@
-import { Container, Typography, Box, Grid, Paper } from '@mui/material'
+import { Container, Typography, Box, Grid } from '@mui/material'
+import { Heading1, Heading2 } from '../atoms/typography'
+import ContactDetails from '../organisms/ContactDetails'
 
 const Company = () => {
   const companyInfo = {
-    name: '株式会社Swept',
+    name: 'ataccha（アタッチャ）',
     establishment: '2024年1月',
-    capital: '1,000万円',
-    location: '東京都渋谷区',
-    business: 'ITソリューション開発・提供',
-    employees: '10名',
+    ceo: '丹羽勝麻',
+    location: '東京都小平市',
+    business: 'メンタルヘルスサービス提供',
+    employees: '3名',
   }
 
   return (
     <Container maxWidth="md">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h2" component="h1" gutterBottom>
-          会社概要
-        </Typography>
-        <Grid container spacing={4}>
+      <Box sx={{ my: 3 }}>
+        <Heading1 titleEn={'Info'} titleJa={'運営者情報'}/>
+        <Grid container columnSpacing={3}>
           <Grid size={{ xs:12, md:6 }}>
-            <Paper elevation={3} sx={{ p: 3 }}>
-              <Typography variant="h5" gutterBottom>
-                基本情報
-              </Typography>
-              <Box component="dl" sx={{ mt: 2 }}>
+              <Heading2 title={'基本情報'}/>
+              <Box component="dl" ml={1} sx={{ mt: 2 }}>
                 <Box sx={{ display: 'flex', mb: 2 }}>
                   <Typography component="dt" sx={{ width: '120px', fontWeight: 'bold' }}>
-                    会社名
+                    チーム名
                   </Typography>
                   <Typography component="dd">{companyInfo.name}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', mb: 2 }}>
                   <Typography component="dt" sx={{ width: '120px', fontWeight: 'bold' }}>
-                    設立
+                    結成
                   </Typography>
                   <Typography component="dd">{companyInfo.establishment}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', mb: 2 }}>
                   <Typography component="dt" sx={{ width: '120px', fontWeight: 'bold' }}>
-                    資本金
+                    代表
                   </Typography>
-                  <Typography component="dd">{companyInfo.capital}</Typography>
+                  <Typography component="dd">{companyInfo.ceo}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', mb: 2 }}>
                   <Typography component="dt" sx={{ width: '120px', fontWeight: 'bold' }}>
@@ -55,25 +52,14 @@ const Company = () => {
                 </Box>
                 <Box sx={{ display: 'flex', mb: 2 }}>
                   <Typography component="dt" sx={{ width: '120px', fontWeight: 'bold' }}>
-                    従業員数
+                    メンバー数
                   </Typography>
                   <Typography component="dd">{companyInfo.employees}</Typography>
                 </Box>
               </Box>
-            </Paper>
           </Grid>
           <Grid size={{ xs:12, md:6 }}>
-            <Paper elevation={3} sx={{ p: 3 }}>
-              <Typography variant="h5" gutterBottom>
-                アクセス
-              </Typography>
-              <Typography variant="body1" paragraph>
-                東京都渋谷区の最寄り駅から徒歩5分
-              </Typography>
-              <Typography variant="body1" paragraph>
-                ※詳細なアクセス情報はお問い合わせください
-              </Typography>
-            </Paper>
+          <ContactDetails />
           </Grid>
         </Grid>
       </Box>

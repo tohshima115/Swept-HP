@@ -64,7 +64,7 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
 
       {/* News Section */}
       <Box sx={{ py: 8, bgcolor: 'white' }}>
-        <Container maxWidth="lg">
+        <Container maxWidth="md">
           <Box my={5}>
             <Heading1 titleEn={'Vision'} titleJa={'ビジョン'}/>
             <Typography variant='h3'>
@@ -79,8 +79,28 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
           </Box>
           <Box my={5}>
             <Heading1 titleEn={'Service'} titleJa={'サービス'}/>
-            <Image src={'https://picsum.photos/1600/900'} alt={''}/>
-
+            <Box p={3} sx={theme => ({
+              position: 'relative',
+              borderRadius: '24px',
+              zIndex: 0,
+              overflow: 'hidden',
+              background: theme.palette.background.default,
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '24px',
+                padding: '4px',
+                background: 'var(--gradient-primary)',
+                WebkitMask:
+                  'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                WebkitMaskComposite: 'xor',
+                pointerEvents: 'none',
+                zIndex: 1,
+              },
+            })}>
+              <Image src={'/src/assets/logo_yoko.svg'} alt={''} />
+            </Box>
             <Typography variant='h3'>
               ataccha
             </Typography>

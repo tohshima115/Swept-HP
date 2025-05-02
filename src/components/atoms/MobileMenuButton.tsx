@@ -1,9 +1,11 @@
 import { styled } from '@mui/material/styles';
 import { Button, ButtonProps } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
-interface MobileMenuButtonProps extends ButtonProps {
+interface MobileMenuButtonProps extends Omit<ButtonProps, 'to' | 'href'> {
   label: string;
   labelJa: string;
+  to: string;
 }
 
 const StyledButton = styled(Button)({
@@ -30,9 +32,9 @@ const LabelJa = styled('span')({
   fontFamily: '"Yorutegaki", "Noto Sans JP", sans-serif',
 });
 
-const MobileMenuButton = ({ label, labelJa, ...props }: MobileMenuButtonProps) => {
+const MobileMenuButton = ({ label, labelJa, to, ...restProps }: MobileMenuButtonProps) => {
   return (
-    <StyledButton {...props}>
+    <StyledButton component={RouterLink} {...restProps} {...{ to }}>
       {label}
       <LabelJa>{labelJa}</LabelJa>
     </StyledButton>

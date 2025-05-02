@@ -65,7 +65,7 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
       {/* News Section */}
       <Box sx={{ py: 8, bgcolor: 'white' }}>
         <Container maxWidth="lg">
-          <Box>
+          <Box my={5}>
             <Heading1 titleEn={'Vision'} titleJa={'ビジョン'}/>
             <Typography variant='h3'>
               自分の人生を<br/>
@@ -77,7 +77,7 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
                 詳しく見る
             </Button>
           </Box>
-          <Box>
+          <Box my={5}>
             <Heading1 titleEn={'Service'} titleJa={'サービス'}/>
             <Image src={'https://picsum.photos/1600/900'} alt={''}/>
 
@@ -90,7 +90,7 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
                 詳しく見る
             </Button>
           </Box>
-          <Box>
+          <Box my={5}>
             <Heading1 titleEn={'Member'} titleJa={'メンバー'}/>
             <Image src={'https://picsum.photos/1600/900'} alt={''}/>
 
@@ -103,19 +103,21 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
                 詳しく見る
             </Button>
           </Box>
-          <Heading1 titleEn={'News'} titleJa={'ニュース'}/>
-          <Box>
-            {newsItems.map((news) => (
-              <NewsCard
-              key={news.slug}
-              date={news.date}
-              title={news.title}
-              imageSrc={news.imageUrl}
-              imageAlt={news.title}
-              isNews={news.tag === 'ニュース'}
-              onClick={() => navigate(`/news/${news.slug}`)}
-              />
-            ))}
+          <Box my={5}>
+            <Heading1 titleEn={'News'} titleJa={'ニュース'}/>
+            <Box>
+              {newsItems.map((news) => (
+                <NewsCard
+                key={news.slug}
+                date={news.date}
+                title={news.title}
+                imageSrc={news.imageUrl}
+                imageAlt={news.title}
+                isNews={news.tag === 'ニュース'}
+                onClick={() => navigate(`/news/${news.slug}`)}
+                />
+              ))}
+            </Box>
           </Box>
         </Container>
       </Box>

@@ -5,6 +5,7 @@ import MobileMenuButton from '../atoms/MobileMenuButton';
 interface MobileMenuProps {
   isOpen: boolean;
   items: Array<{ to: string; label: string; labelJa: string }>;
+  onClose?: () => void;
 }
 
 const MenuOverlay = styled(Box, {
@@ -26,13 +27,13 @@ const MenuOverlay = styled(Box, {
   },
 }));
 
-const MobileMenu = ({ isOpen, items }: MobileMenuProps) => {
+const MobileMenu = ({ isOpen, items, onClose }: MobileMenuProps) => {
   return (
     <MenuOverlay open={isOpen}>
       <Grid container spacing={2} m={2}>
         {items.map((item) => (
           <Grid key={item.to} size={{xs:6}}>
-            <MobileMenuButton label={item.label} labelJa={item.labelJa} href={item.to} />
+            <MobileMenuButton label={item.label} labelJa={item.labelJa} to={item.to} onClick={onClose} />
           </Grid>
         ))}
       </Grid>

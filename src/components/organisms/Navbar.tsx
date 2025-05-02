@@ -15,6 +15,8 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleCloseMenu = () => setIsMenuOpen(false);
+
   return (
     <AppBar 
       position="fixed"
@@ -41,7 +43,7 @@ const Navbar = () => {
           </Grid>
         </Box>
       </Toolbar>
-      {isMobile && <MobileMenu isOpen={isMenuOpen} items={menuItems} />}
+      {isMobile && <MobileMenu isOpen={isMenuOpen} items={menuItems} onClose={handleCloseMenu} />}
     </AppBar>
   );
 };

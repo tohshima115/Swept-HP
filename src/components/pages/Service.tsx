@@ -14,7 +14,7 @@ const Service: React.FC<ServiceProps> = ({ sx }) => {
         <Heading1 titleEn={'Service'} titleJa={'事業内容'}/>
       </Box>
       <Box mx={1} mt={5}>
-        <Image src={'https://picsum.photos/1600/900'} alt={''} />
+        <Image src={'https://picsum.photos/1600/900'} alt={''} aspectRatio='16:9'/>
         <ExpandableContents>
           <Typography >
             これは非常に長い文章の始まりです。最初は指定された高さまで表示され、
@@ -43,7 +43,7 @@ const Service: React.FC<ServiceProps> = ({ sx }) => {
         </ExpandableContents>
 
         <Heading2 title={'ターゲット顧客'}/>
-        <Image src={'https://picsum.photos/1600/900'} alt={''}/>
+        <Image src={'https://picsum.photos/1600/900'} alt={''} aspectRatio='16:9'/>
         <ExpandableContents >
           <Typography >
             これは非常に長い文章の始まりです。最初は指定された高さまで表示され、
@@ -71,7 +71,7 @@ const Service: React.FC<ServiceProps> = ({ sx }) => {
         </ExpandableContents>
 
         <Heading2 title={'ターゲットの課題'}/>
-        <Image src={'https://picsum.photos/1600/900'} alt={''}/>
+        <Image src={'https://picsum.photos/1600/900'} alt={''} aspectRatio='16:9'/>
         <ExpandableContents >
           <Typography >
             これは非常に長い文章の始まりです。最初は指定された高さまで表示され、
@@ -100,7 +100,7 @@ const Service: React.FC<ServiceProps> = ({ sx }) => {
         </ExpandableContents>
 
         <Heading2 title={'与える価値'}/>
-        <Image src={'https://picsum.photos/1600/900'} alt={''}/>
+        <Image src={'https://picsum.photos/1600/900'} alt={''} aspectRatio='16:9'/>
         <ExpandableContents >
           <Typography >
             これは非常に長い文章の始まりです。最初は指定された高さまで表示され、
@@ -129,7 +129,7 @@ const Service: React.FC<ServiceProps> = ({ sx }) => {
         </ExpandableContents>
 
         <Heading2 title={'市場規模と機会'}/>
-        <Image src={'https://picsum.photos/1600/900'} alt={''}/>
+        <Image src={'https://picsum.photos/1600/900'} alt={''} aspectRatio='16:9'/>
         <ExpandableContents >
           <Typography >
             これは非常に長い文章の始まりです。最初は指定された高さまで表示され、
@@ -158,7 +158,7 @@ const Service: React.FC<ServiceProps> = ({ sx }) => {
         </ExpandableContents>
 
         <Heading2 title={'ビジネスモデル'}/>
-        <Image src={'https://picsum.photos/1600/900'} alt={''}/>
+        <Image src={'https://picsum.photos/1600/900'} alt={''} aspectRatio='16:9'/>
         <ExpandableContents >
           <Typography >
             これは非常に長い文章の始まりです。最初は指定された高さまで表示され、

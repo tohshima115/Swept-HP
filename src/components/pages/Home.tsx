@@ -128,7 +128,7 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
 
           <Box my={13}>
             <Heading1 titleEn={'Member'} titleJa={'メンバー'}/>
-            <Image src={'src/assets/member.avif'} alt={''} aspectRatio='16:9'/>
+            <Image src={'/assets/member.avif'} alt={''} aspectRatio='16:9'/>
 
             <Typography variant='h3'>
               ataccha

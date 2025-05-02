@@ -1,10 +1,13 @@
-import { Box, Container, Typography, SxProps, Theme } from '@mui/material'
+import { Box, Container, Typography, SxProps, Theme, Grid } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import Button from '../atoms/Button'
 import { newsItems } from '../../data/news'
 import { Heading1 } from '../atoms/typography'
 import { Image } from '../atoms/Image'
 import NewsCard from '../molecules/NewsCard'
+import { membersData } from '../../data/members'
+import MemberJumpButton from '../molecules/MemberJumpButton'
+// import Spline from '@splinetool/react-spline'
 
 interface HomeProps {
   sx?: SxProps<Theme>
@@ -23,7 +26,7 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          bgcolor: '#F5F5F5',
+          bgcolor: 'background.paper',
         }}
       >
         <Container maxWidth="lg">
@@ -37,18 +40,19 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
             }}
           >
             <Box>
-            <Typography variant="h1" mb={1}
+            <Typography variant="h1" mb={1} fontSize={{sm:'64px'}}
               sx={{
                 background: 'var(--gradient-primary)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
                 color: 'transparent',
+                fontSize: { xs: undefined, sm: '64px' },
               }}
             >
               自分の人生を
             </Typography>
-            <Typography variant="h1"
+            <Typography variant="h1" fontSize={{sm:'64px'}}
               sx={{
                 background: 'var(--gradient-primary)',
                 WebkitBackgroundClip: 'text',
@@ -60,22 +64,44 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
             自分のものに
             </Typography>
             </Box>
+            {/* xs用 */}
             <Typography
-              variant="h4" fontWeight={400} color='text.secondary'
+              variant="h4"
+              fontWeight={400}
+              color="text.secondary"
+              sx={{
+                display: { xs: 'block', sm: 'none' },
+              }}
             >
               ありのままを受け入れて、<br/>
               あなたの人生を歩む第一歩に
             </Typography>
+            {/* sm以上用 */}
+            <Typography
+              variant="h3"
+              fontWeight={400}
+              color="text.secondary"
+              sx={{
+                display: { xs: 'none', sm: 'block' },
+              }}
+            >
+              ありのままを受け入れて、<br/>
+              あなたの人生を歩む第一歩に
+            </Typography>
+            {/* Spline 3D Viewer (Reactコンポーネント版) */}
+            {/* <Box sx={{ width: '100%', maxWidth: 600, mx: 'auto', my: 4, height: '272px' }}>
+              <Spline scene="https://prod.spline.design/cV1MggwTiqcCzcum/scene.splinecode" />
+            </Box> */}
           </Box>
         </Container>
       </Box>
 
       {/* News Section */}
-      <Box sx={{ py: 8, bgcolor: 'white' }}>
+      <Box sx={{ bgcolor: 'white' }}>
         <Container maxWidth="sm">
           <Box my={13}>
             <Heading1 titleEn={'Vision'} titleJa={'理念'}/>
-            <Typography variant='h3' mt={3} mb={5} color='primary.main' sx={{display:'flex', justifyContent:'center'}}>
+            <Typography variant='h3' mt={3} mb={5} color='text.primary' sx={{display:'flex', justifyContent:'center'}}>
               自分の人生を
               自分のものに
             </Typography>
@@ -110,7 +136,7 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
             })}>
               <Image src={'/assets/logo_yoko.svg'} alt={''} />
             </Box>
-            <Typography variant='h3' color='primary.main' mt={2}>
+            <Typography variant='h3' color='text.primary' mt={2}>
               ataccha（アタッチャ）
             </Typography>
             <Typography variant='h6' color='text.secondary' mt={1}>
@@ -129,19 +155,27 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
           <Box my={13}>
             <Heading1 titleEn={'Member'} titleJa={'メンバー'}/>
             <Image src={'/assets/member.avif'} alt={''} aspectRatio='16:9'/>
-
-            <Typography variant='h3'>
-              ataccha
-            </Typography>
+            <Grid container spacing={2} sx={{ mt: 2, mb:5 }}>
+              {membersData.map(member => (
+                <Grid size={{xs:4}}>
+                <MemberJumpButton
+                  key={member.slug}
+                  title={member.title}
+                  name={member.name}
+                  slug={member.slug}
+                />
+                </Grid>
+              ))}
+            </Grid>
             <Button
                 onClick={() => navigate('/member')}
               >
                 詳しく見る
             </Button>
           </Box>
-          <Box my={5}>
+          <Box my={13}>
             <Heading1 titleEn={'News'} titleJa={'ニュース'}/>
-            <Box>
+            <Box mb={5}>
               {newsItems.map((news) => (
                 <NewsCard
                 key={news.slug}

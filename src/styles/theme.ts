@@ -49,7 +49,7 @@ export const theme = createTheme({
       paper: '#F5F4F4',
     },
     text: {
-      primary: '#371F23',
+      primary: '#4b3539',
       secondary: '#605255',
       disabled: '#87787A',
     },
@@ -110,6 +110,11 @@ export const theme = createTheme({
       ...calculateHeadingSize(8),
       fontWeight: 400,
       lineHeight: 2,
+    },
+    subtitle1:{
+      ...calculateHeadingSize(9),
+      fontWeight: 400,
+      lineHeight: 1.5,
     },
   },
 }) 

@@ -19,7 +19,7 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
       <Box
         sx={{
           position: 'relative',
-          height: '100vh',
+          height: 'calc(100dvh - 64px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -36,27 +36,35 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
               gap: 4,
             }}
           >
-            <Typography
-              variant="h1"
+            <Box>
+            <Typography variant="h1" mb={1}
               sx={{
-                fontSize: '48px',
-                fontWeight: 700,
-                color: '#1F2337',
-                lineHeight: 1.2,
+                background: 'var(--gradient-primary)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                color: 'transparent',
               }}
             >
-              自分らしく輝ける社会へ
+              自分の人生を
             </Typography>
-            <Typography
-              variant="h2"
+            <Typography variant="h1"
               sx={{
-                fontSize: '24px',
-                fontWeight: 400,
-                color: '#525460',
-                lineHeight: 1.5,
+                background: 'var(--gradient-primary)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                color: 'transparent',
               }}
             >
-              安心できるつながりの中で
+            自分のものに
+            </Typography>
+            </Box>
+            <Typography
+              variant="h4" fontWeight={400} color='text.secondary'
+            >
+              ありのままを受け入れて、<br/>
+              あなたの人生を歩む第一歩に
             </Typography>
           </Box>
         </Container>
@@ -64,11 +72,11 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
 
       {/* News Section */}
       <Box sx={{ py: 8, bgcolor: 'white' }}>
-        <Container maxWidth="md">
-          <Box my={5}>
-            <Heading1 titleEn={'Vision'} titleJa={'ビジョン'}/>
-            <Typography variant='h3'>
-              自分の人生を<br/>
+        <Container maxWidth="sm">
+          <Box my={13}>
+            <Heading1 titleEn={'Vision'} titleJa={'理念'}/>
+            <Typography variant='h3' mt={3} mb={5} color='primary.main' sx={{display:'flex', justifyContent:'center'}}>
+              自分の人生を
               自分のものに
             </Typography>
             <Button
@@ -77,9 +85,10 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
                 詳しく見る
             </Button>
           </Box>
-          <Box my={5}>
-            <Heading1 titleEn={'Service'} titleJa={'サービス'}/>
-            <Box p={3} sx={theme => ({
+
+          <Box my={13}>
+            <Heading1 titleEn={'Service'} titleJa={'事業内容'}/>
+            <Box p={3} mt={3} sx={theme => ({
               position: 'relative',
               borderRadius: '24px',
               zIndex: 0,
@@ -101,8 +110,14 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
             })}>
               <Image src={'/src/assets/logo_yoko.svg'} alt={''} />
             </Box>
-            <Typography variant='h3'>
-              ataccha
+            <Typography variant='h3' color='primary.main' mt={2}>
+              ataccha（アタッチャ）
+            </Typography>
+            <Typography variant='h6' color='text.secondary' mt={1}>
+              あなたの最初の「こころの安全基地」となるAI
+            </Typography>
+            <Typography mb={5} mt={2}>
+            あなたが過去の経験と向き合い、自分自身や他者とのより良い関係性を築くための信頼できる最初の相談相手となり、人生をともに歩んでいきます。
             </Typography>
             <Button
                 onClick={() => navigate('/service')}
@@ -110,9 +125,10 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
                 詳しく見る
             </Button>
           </Box>
-          <Box my={5}>
+
+          <Box my={13}>
             <Heading1 titleEn={'Member'} titleJa={'メンバー'}/>
-            <Image src={'https://picsum.photos/1600/900'} alt={''}/>
+            <Image src={'src/assets/member.avif'} alt={''} aspectRatio='16:9'/>
 
             <Typography variant='h3'>
               ataccha
@@ -138,6 +154,11 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
                 />
               ))}
             </Box>
+            <Button
+                onClick={() => navigate('/news')}
+              >
+                詳しく見る
+            </Button>
           </Box>
         </Container>
       </Box>

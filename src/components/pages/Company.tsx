@@ -17,7 +17,7 @@ const Company = () => {
       <Box sx={{ my: 3 }}>
         <Heading1 titleEn={'Info'} titleJa={'運営者情報'}/>
         <Grid container columnSpacing={3}>
-          <Grid size={{ xs:12, md:6 }}>
+          <Grid size={{ xs:12, md:8 }}>
               <Heading2 title={'基本情報'}/>
               <Box component="dl" ml={1} sx={{ mt: 2 }}>
                 <Box sx={{ display: 'flex', mb: 2 }}>
@@ -58,7 +58,7 @@ const Company = () => {
                 </Box>
               </Box>
           </Grid>
-          <Grid size={{ xs:12, md:6 }}>
+          <Grid size={{ xs:12, md:4 }}>
           <ContactDetails />
           </Grid>
         </Grid>

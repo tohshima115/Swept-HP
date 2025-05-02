@@ -1,12 +1,12 @@
 import { Box, Grid, SxProps, Theme } from '@mui/material';
 import { Member } from '../../types/member';
-import MemberImage from '../atoms/MemberImage';
 import MemberHeader from './MemberHeader';
 import MemberBio from '../atoms/MemberBio';
 // import MemberThoughts from './MemberThoughts';
 import MemberNavigationPrev from '../atoms/MemberNavigationPrev';
 import MemberNavigationNext from '../atoms/MemberNavigationNext';
 import DotNavigation from './DotNavigation';
+import { Image } from '../atoms/Image';
 
 interface MemberCardProps {
   member: Member;
@@ -28,7 +28,7 @@ const MemberCard: React.FC<MemberCardProps> = ({ member, onPrev, onNext, current
             <MemberNavigationPrev onClick={onPrev}/>
         </Grid>
         <Grid size={{xs:8}}>
-            <MemberImage src={member.imageUrl} alt={member.name} />
+            <Image src={member.imageUrl} alt={member.name} aspectRatio='3:4' margin='0'/>
         </Grid>
         <Grid size={{xs:2}}>
             <MemberNavigationNext onClick={onNext}/>

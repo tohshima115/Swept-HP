@@ -24,7 +24,7 @@ export const menuItems: MenuItem[] = [
   { 
     to: '/vision', 
     label: 'Vision', 
-    labelJa: 'ビジョン',
+    labelJa: '理念',
     icon: <InfoIcon />
   },
   { 

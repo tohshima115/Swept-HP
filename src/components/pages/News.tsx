@@ -8,21 +8,23 @@ const News = () => {
   const navigate = useNavigate()
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="md" >
       <Box sx={{ mt: 3, mb: 5 }}>
         <Heading1 titleEn={'News'} titleJa={'ニュース'} />
-        <Box sx={{ mt: 5 }}>
-          {newsItems.map((news) => (
-            <NewsCard
-              key={news.slug}
-              date={news.date}
-              title={news.title}
-              imageSrc={news.imageUrl}
-              imageAlt={news.title}
-              isNews={news.tag === 'ニュース'}
-              onClick={() => navigate(`/news/${news.slug}`)}
-            />
-          ))}
+        <Box sx={{display:'flex',flexFlow:'column',alignItems:'center' }}>
+          <Box maxWidth="sm" sx={{ mt: 5,display:'flex',flexFlow:'column',alignItems:'center' }}>
+            {newsItems.map((news) => (
+              <NewsCard
+                key={news.slug}
+                date={news.date}
+                title={news.title}
+                imageSrc={news.imageUrl}
+                imageAlt={news.title}
+                isNews={news.tag === 'ニュース'}
+                onClick={() => navigate(`/news/${news.slug}`)}
+              />
+            ))}
+          </Box>
         </Box>
       </Box>
     </Container>

@@ -30,7 +30,7 @@ const MemberThumbnailNav: React.FC<MemberThumbnailNavProps> = ({ members, curren
             transition: 'opacity 0.2s',
           }}
         >
-          <Avatar src={member.imageUrl} alt={member.name} sx={{ width: 48, height: 48, mb: 0.5 }} />
+          <Avatar src={member.imageUrl} alt={member.name} sx={{ width: 64, height: 64, mb: 0.5 }} />
           <Typography variant="caption" sx={{ textAlign: 'center', lineHeight: 1.2 }}>{member.title}</Typography>
           <Typography variant="caption" sx={{ textAlign: 'center', lineHeight: 1.2, fontWeight: 'medium' }}>{member.name}</Typography>
         </ButtonBase>

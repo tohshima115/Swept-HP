@@ -29,21 +29,6 @@ const StyledImage = styled('img')({
   flexShrink: 0,
 });
 
-// アスペクト比から高さを計算する関数
-const calculateHeightFromAspectRatio = (aspectRatio: string | undefined, width: number | string): string | undefined => {
-  if (!aspectRatio) return undefined;
-
-  const [w, h] = aspectRatio.split(':').map(Number);
-  if (!w || !h) return undefined;
-
-  if (typeof width === 'number') {
-    return `${(width * h) / w}px`;
-  } else if (width === '100%') {
-    return `${(100 * h) / w}%`;
-  }
-  return undefined;
-};
-
 export const Image = ({
   src,
   alt,
@@ -67,18 +52,30 @@ export const Image = ({
     };
   }, [src]);
 
-  const calculatedHeight = aspectRatio ? calculateHeightFromAspectRatio(aspectRatio, width) : height;
+  const aspectRatioValue = aspectRatio
+    ? (() => {
+        const [w, h] = aspectRatio.split(':').map(Number);
+        if (!w || !h) return undefined;
+        return w / h;
+      })()
+    : undefined;
 
   return (
-    <ImageContainer 
-      sx={{ 
-        width, 
-        height: calculatedHeight, 
-        borderRadius, 
-        margin, 
+    <ImageContainer
+      sx={{
+        width,
+        ...(aspectRatioValue
+          ? {
+              aspectRatio: `${aspectRatioValue}`,
+              height: 'auto',
+              minHeight: 0,
+              maxHeight: '100%',
+            }
+          : { height }),
+        borderRadius,
+        margin,
         overflow: 'hidden',
         position: 'relative',
-        paddingTop: aspectRatio ? calculateHeightFromAspectRatio(aspectRatio, '100%') : undefined
       }}
     >
       {isLoading ? (
@@ -88,7 +85,7 @@ export const Image = ({
           height="100%"
           animation="wave"
           sx={{
-            position: aspectRatio ? 'absolute' : 'relative',
+            position: 'absolute',
             top: 0,
             left: 0
           }}
@@ -102,7 +99,7 @@ export const Image = ({
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: 'grey.200',
-            position: aspectRatio ? 'absolute' : 'relative',
+            position: 'absolute',
             top: 0,
             left: 0
           }}

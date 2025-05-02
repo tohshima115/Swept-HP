@@ -2,12 +2,17 @@ import { Box, Container, Typography, SxProps, Theme } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { newsItems } from '../../data/news'
 import { Image } from '../atoms/Image'
+import CategoryTag from '../atoms/CategoryTag'
+import Button from '../atoms/Button'
+import { useNavigate } from 'react-router-dom'
 
 interface NewsDetailProps {
   sx?: SxProps<Theme>
 }
 
 const NewsDetail: React.FC<NewsDetailProps> = ({ sx }) => {
+
+const navigate = useNavigate()
   const { slug } = useParams<{ slug: string }>()
   const news = newsItems.find(item => item.slug === slug)
 
@@ -23,45 +28,34 @@ const NewsDetail: React.FC<NewsDetailProps> = ({ sx }) => {
 
   return (
     <Box sx={sx}>
-      <Container maxWidth="lg">
-        <Box sx={{ py: 8 }}>
-          <Typography
-            variant="h1"
-            sx={{
-              fontSize: '32px',
-              fontWeight: 700,
-              color: '#1F2337',
-              mb: 2,
-            }}
-          >
-            {news.title}
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 4 }}>
-            <Typography variant="body2" color="text.secondary">
+      <Container maxWidth="md">
+        <Box mt={3} mb={5}>
+            <Image src={news.imageUrl} alt={news.title} aspectRatio='16:9'/>
+          <Box mb={2} sx={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}>
+            <CategoryTag isNews={news.tag === 'ニュース'}/>
+            <Typography variant="body1" color="text.secondary">
               {news.date}
             </Typography>
+          </Box>
             <Typography
-              variant="body2"
+              variant="h3"
               sx={{
-                bgcolor: '#F5F5F5',
-                px: 2,
-                py: 0.5,
-                borderRadius: 1,
+                fontSize: '32px',
+                fontWeight: 700,
+                color: 'text.primary',
+                mb: 3,
               }}
             >
-              {news.tag}
+              {news.title}
             </Typography>
-          </Box>
-          <Image src={news.imageUrl} alt={news.title} aspectRatio='16:9'/>
-          <Typography
-            variant="body1"
-            sx={{
-              whiteSpace: 'pre-line',
-              lineHeight: 1.8,
-            }}
-          >
+          <Typography mb={5}>
             {news.content}
           </Typography>
+          <Button
+                onClick={() => navigate('/news')}
+              >
+                ニュース一覧に戻る
+            </Button>
         </Box>
       </Container>
     </Box>

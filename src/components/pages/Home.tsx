@@ -1,12 +1,11 @@
-import { Box, Container, Typography, SxProps, Theme, Grid } from '@mui/material'
+import { Box, Container, Typography, SxProps, Theme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import Button from '../atoms/Button'
-import { newsItems } from '../../data/news'
-import { Heading1 } from '../atoms/typography'
-import { Image } from '../atoms/Image'
-import NewsCard from '../molecules/NewsCard'
 import { membersData } from '../../data/members'
-import MemberJumpButton from '../molecules/MemberJumpButton'
+import HomeVisionSection from '../organisms/HomeVisionSection'
+import HomeServiceSection from '../organisms/HomeServiceSection'
+import HomeMemberSection from '../organisms/HomeMemberSection'
+import HomeNewsSection from '../organisms/HomeNewsSection'
+import ResponsiveTypography from '../atoms/ResponsiveTypography'
 // import Spline from '@splinetool/react-spline'
 
 interface HomeProps {
@@ -15,6 +14,10 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ sx }) => {
   const navigate = useNavigate()
+
+  // メンバー表示順をカスタム（2,0,1の順）
+  const customOrder = [2, 0, 1];
+  const orderedMembers = customOrder.map(i => membersData[i]);
 
   return (
     <Box sx={sx}>
@@ -64,30 +67,15 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
             自分のものに
             </Typography>
             </Box>
-            {/* xs用 */}
-            <Typography
-              variant="h4"
+            <ResponsiveTypography
+              variantXs="h4"
+              variantSm="h3"
               fontWeight={400}
               color="text.secondary"
-              sx={{
-                display: { xs: 'block', sm: 'none' },
-              }}
             >
               ありのままを受け入れて、<br/>
               あなたの人生を歩む第一歩に
-            </Typography>
-            {/* sm以上用 */}
-            <Typography
-              variant="h3"
-              fontWeight={400}
-              color="text.secondary"
-              sx={{
-                display: { xs: 'none', sm: 'block' },
-              }}
-            >
-              ありのままを受け入れて、<br/>
-              あなたの人生を歩む第一歩に
-            </Typography>
+            </ResponsiveTypography>
             {/* Spline 3D Viewer (Reactコンポーネント版) */}
             {/* <Box sx={{ width: '100%', maxWidth: 600, mx: 'auto', my: 4, height: '272px' }}>
               <Spline scene="https://prod.spline.design/cV1MggwTiqcCzcum/scene.splinecode" />
@@ -96,105 +84,14 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
         </Container>
       </Box>
 
-      {/* News Section */}
+      {/* News Section（各セクションをコンポーネント化） */}
       <Box sx={{ bgcolor: 'white' }}>
-        <Container maxWidth="sm">
-          <Box my={13}>
-            <Heading1 titleEn={'Vision'} titleJa={'理念'}/>
-            <Typography variant='h3' mt={3} mb={5} color='text.primary' sx={{display:'flex', justifyContent:'center'}}>
-              自分の人生を
-              自分のものに
-            </Typography>
-            <Button
-                onClick={() => navigate('/vision')}
-              >
-                詳しく見る
-            </Button>
-          </Box>
-
-          <Box my={13}>
-            <Heading1 titleEn={'Service'} titleJa={'事業内容'}/>
-            <Box p={3} mt={3} sx={theme => ({
-              position: 'relative',
-              borderRadius: '24px',
-              zIndex: 0,
-              overflow: 'hidden',
-              background: theme.palette.background.default,
-              '&::before': {
-                content: '""',
-                position: 'absolute',
-                inset: 0,
-                borderRadius: '24px',
-                padding: '4px',
-                background: 'var(--gradient-primary)',
-                WebkitMask:
-                  'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                WebkitMaskComposite: 'xor',
-                pointerEvents: 'none',
-                zIndex: 1,
-              },
-            })}>
-              <Image src={'/assets/logo_yoko.svg'} alt={''} />
-            </Box>
-            <Typography variant='h3' color='text.primary' mt={2}>
-              ataccha（アタッチャ）
-            </Typography>
-            <Typography variant='h6' color='text.secondary' mt={1}>
-              あなたの最初の「こころの安全基地」となるAI
-            </Typography>
-            <Typography mb={5} mt={2}>
-            あなたが過去の経験と向き合い、自分自身や他者とのより良い関係性を築くための信頼できる最初の相談相手となり、人生をともに歩んでいきます。
-            </Typography>
-            <Button
-                onClick={() => navigate('/service')}
-              >
-                詳しく見る
-            </Button>
-          </Box>
-
-          <Box my={13}>
-            <Heading1 titleEn={'Member'} titleJa={'メンバー'}/>
-            <Image src={'/assets/member.avif'} alt={''} aspectRatio='16:9'/>
-            <Grid container spacing={2} sx={{ mt: 2, mb:5 }}>
-              {membersData.map(member => (
-                <Grid size={{xs:4}}>
-                <MemberJumpButton
-                  key={member.slug}
-                  title={member.title}
-                  name={member.name}
-                  slug={member.slug}
-                />
-                </Grid>
-              ))}
-            </Grid>
-            <Button
-                onClick={() => navigate('/member')}
-              >
-                詳しく見る
-            </Button>
-          </Box>
-          <Box my={13}>
-            <Heading1 titleEn={'News'} titleJa={'ニュース'}/>
-            <Box mb={5}>
-              {newsItems.map((news) => (
-                <NewsCard
-                key={news.slug}
-                date={news.date}
-                title={news.title}
-                imageSrc={news.imageUrl}
-                imageAlt={news.title}
-                isNews={news.tag === 'ニュース'}
-                onClick={() => navigate(`/news/${news.slug}`)}
-                />
-              ))}
-            </Box>
-            <Button
-                onClick={() => navigate('/news')}
-              >
-                詳しく見る
-            </Button>
-          </Box>
-        </Container>
+      <Container maxWidth="sm">
+      <HomeVisionSection navigate={navigate} />
+      <HomeServiceSection navigate={navigate} />
+      <HomeMemberSection navigate={navigate} orderedMembers={orderedMembers} />
+      <HomeNewsSection navigate={navigate} />
+      </Container>
       </Box>
     </Box>
   )

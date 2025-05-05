@@ -13,7 +13,7 @@ interface RadioGroupFieldProps {
 
 const RadioGroupField = ({ label, name, value, onChange, options, required, sx }: RadioGroupFieldProps) => {
     return (
-        <FormControl component="fieldset" required={required} sx={{ mb: 2, ...sx }}>
+        <FormControl component="fieldset" required={required} sx={{ mb: 2, mt: -3, ...sx }}>
             <Heading3 title={label} required={required}/>
             <RadioGroup
                 name={name}
@@ -27,7 +27,7 @@ const RadioGroupField = ({ label, name, value, onChange, options, required, sx }
                         control={<Radio size="small" />}
                         label={option}
                         sx={{
-                            '& .MuiFormControlLabel-label': { fontSize: '0.875rem' },
+                            '& .MuiFormControlLabel-label': { fontSize: '1rem' },
                             p: 2,
                             border: 'solid 2px',
                             borderColor: value === option ? 'primary.main' : 'divider',

@@ -1,5 +1,5 @@
 import { Box, SxProps, Theme } from '@mui/material';
-import TwitterIcon from '@mui/icons-material/Twitter';
+import XIcon from '@mui/icons-material/X';
 import ContactInfoItem from '../molecules/ContactInfoItem';
 import { Heading2 } from '../atoms/typography';
 
@@ -17,24 +17,24 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ sx }) => (
     <Box sx={sx}>
         <Heading2 title={'各種連絡先'}/>
         <Box sx={{px:1}}>
-            <ContactInfoItem
+            {/* <ContactInfoItem
                 label="SNS"
-                value="X (Twitter)"
+                value="@Swept_skt"
                 link={contactInfo.sns.x}
-                icon={<TwitterIcon />}
-            />
+                icon={<XIcon />}
+            /> */}
             <ContactInfoItem
                 label="メールアドレス"
                 value={contactInfo.email}
                 link={`mailto:${contactInfo.email}`}
                 showCopy
             />
-            <ContactInfoItem
+            {/* <ContactInfoItem
                 label="電話番号"
                 value={contactInfo.phone}
                 link={`tel:${contactInfo.phone.replace(/-/g, '')}`}
                 showCopy
-            />
+            /> */}
         </Box>
     </Box>
 );

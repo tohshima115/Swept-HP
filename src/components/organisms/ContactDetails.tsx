@@ -1,5 +1,5 @@
 import { Box, SxProps, Theme } from '@mui/material';
-import XIcon from '@mui/icons-material/X';
+// import XIcon from '@mui/icons-material/X';
 import ContactInfoItem from '../molecules/ContactInfoItem';
 import { Heading2 } from '../atoms/typography';
 

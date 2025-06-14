@@ -7,7 +7,7 @@ import FooterCopyright from '../atoms/FooterCopyright'
 const Footer = () => {
   const theme = useTheme();
   return (
-    <Box component="footer" sx={{ position: 'relative', background: '#fff', color: '#fff',pt:5 }}>
+    <Box component="footer" sx={{ position: 'relative', background: 'background.default', color: 'primary.contrastText',pt:5 }}>
       {/* 波型SVG */}
       <Box sx={{ 
         position: 'absolute',
@@ -25,14 +25,14 @@ const Footer = () => {
         </svg>
       </Box>
       
-      <Box sx={{ background: 'var(--gradient-primary)', py: 2 }}>
-        <Container maxWidth="sm" sx={{display:'flex',flexFlow:'column', gap:3}}>
+      <Box sx={{ bgcolor: 'primary.main', py: 2 }}>
+        <Container maxWidth="sm" sx={{display:'flex',flexFlow:'column', gap:3,}}>
           <FooterMenuList />
           <FooterSnsLinks />
         </Container>
       </Box>
       
-      <Box sx={{ background: theme.palette.background.paper, color: 'text.secondary', pt: 2, pb: 1 }}>
+      <Box sx={{ bgcolor:'background.paper', color: 'primaryTonal.contrastText', pt: 2, pb: 1 }}>
         <FooterPolicyLinks />
         <FooterCopyright />
       </Box>

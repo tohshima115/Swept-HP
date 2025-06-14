@@ -6,6 +6,14 @@ declare module '@mui/material/styles' {
       primary: string
     }
   }
+  interface Palette {
+    primaryTonal: Palette['primary'];
+    secondaryTonal: Palette['secondary'];
+  }
+  interface PaletteOptions {
+    primaryTonal?: PaletteOptions['primary'];
+    secondaryTonal?: PaletteOptions['secondary'];
+  }
 }
 
 const breakpoints = {
@@ -35,34 +43,33 @@ export const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#CC3750',
-      light: '#FBE4E9',
-      dark: '#7E2442',
+      main: '#01677D',
+      contrastText: '#FFFFFF',
+    },
+    primaryTonal: {
+      main: '#B2EBFF',
+      contrastText: '#004E5F',
     },
     secondary: {
-      main: '#CC379A',
-      light: '#F9E4F0',
-      dark: '#770070',
+      main: '#4B626A',
+      contrastText: '#FFFFFF',
+    },
+    secondaryTonal: {
+      main: '#CEE6F0',
+      contrastText: '#344A52',
     },
     background: {
-      default: '#FFFFFF',
-      paper: '#F5F4F4',
+      default: '#F5FAFD',
+      paper: '#DBE4E8',
     },
     text: {
-      primary: '#4b3539',
-      secondary: '#605255',
+      primary: '#171C1E',
+      secondary: '#40484B',
       disabled: '#87787A',
     },
-    divider: '#D8D5D5',
+    divider: '#BFC8CC',
   },
   components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        ':root': {
-          '--gradient-primary': 'linear-gradient(-20deg, #CC3778 0%, #cc3750 100%)',
-        },
-      },
-    },
     MuiTypography: {
       defaultProps: {
         variant: 'body2',
@@ -70,7 +77,7 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Noto Sans JP",
+    fontFamily: "M PLUS 1",
     h1: {
       ...calculateHeadingSize(3),
       fontWeight: 700,

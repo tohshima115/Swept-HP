@@ -18,7 +18,7 @@ const MemberJumpButton = ({ title, name, slug }: MemberJumpButtonProps) => {
         width:'100%',
         transition: 'all 0.2s',
         '&:hover': {
-          bgcolor: 'primary.light',
+          bgcolor: 'primaryTonal.main',
         },
       }}
     >

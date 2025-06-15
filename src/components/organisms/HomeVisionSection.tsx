@@ -7,13 +7,13 @@ interface HomeVisionSectionProps {
 }
 
 const HomeVisionSection = ({ navigate }: HomeVisionSectionProps) => (
-      <Box my={13}>
+      <Box my={13} sx={{display:'flex',flexDirection:'column'}}>
         <Heading1 titleEn={'Vision'} titleJa={'理念'}/>
         <Typography variant='h3' mt={3} mb={5} color='text.primary' sx={{display:'flex', justifyContent:'center'}}>
           自分の人生を
           自分のものに
         </Typography>
-        <Button onClick={() => navigate('/vision')}>
+        <Button color='primaryTonal' onClick={() => navigate('/vision')}>
           詳しく見る
         </Button>
       </Box>

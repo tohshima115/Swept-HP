@@ -2,7 +2,7 @@ import { Box, Container, SxProps, Theme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { membersData } from '../../data/members'
 import HomeVisionSection from '../organisms/HomeVisionSection'
-import HomeServiceSection from '../organisms/HomeServiceSection'
+// import HomeServiceSection from '../organisms/HomeServiceSection'
 import HomeMemberSection from '../organisms/HomeMemberSection'
 import HomeNewsSection from '../organisms/HomeNewsSection'
 import HeroGsapScene from '../atoms/HeroGsapScene'
@@ -38,7 +38,7 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
       <Box >
       <Container maxWidth="sm">
       <HomeVisionSection navigate={navigate} />
-      <HomeServiceSection navigate={navigate} />
+      {/* <HomeServiceSection navigate={navigate} /> */}
       <HomeMemberSection navigate={navigate} orderedMembers={orderedMembers} />
       <HomeNewsSection navigate={navigate} />
       </Container>

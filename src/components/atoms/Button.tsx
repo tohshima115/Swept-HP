@@ -1,66 +1,81 @@
-import { Button as MuiButton, ButtonProps, Typography, Grid } from '@mui/material'
+import { Button as MuiButton, ButtonProps, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import React from 'react'
 
-const StyledButton = styled(MuiButton)(() => ({
-  height: '48px',
-  borderRadius: '24px',
-  width: '100%',
-  background: 'var(--gradient-primary)',
-  '&:hover': {
-    background: 'var(--gradient-primary)',
-    opacity: 0.9,
-    transform: 'translateY(-1px)',
-    transition: 'all 0.3s ease',
+const sizeStyles = {
+  small: {
+    height: '40px',
+    padding: '0 16px',
+    gap: '8px',
+    fontSize: '1rem',
   },
-  '&.Mui-disabled': {
-    background: 'rgba(0, 0, 0, 0.12)',
-    color: 'rgba(0, 0, 0, 0.26)',
-    transform: 'none',
+  medium: {
+    height: '56px',
+    padding: '0 24px',
+    gap: '8px',
+    fontSize: '1.125rem',
   },
-  '&.MuiButton-outlined': {
-    background: 'transparent',
-    border: '2px solid transparent',
-    backgroundImage: 'linear-gradient(#fff, #fff), var(--gradient-primary)',
-    backgroundOrigin: 'border-box',
-    backgroundClip: 'content-box, border-box',
-    boxShadow: '2px 1000px 1px #fff inset',
-    '&:hover': {
-      background: 'transparent',
-      border: '2px solid transparent',
-      backgroundImage: 'linear-gradient(#fff, #fff), var(--gradient-primary)',
-      backgroundOrigin: 'border-box',
-      backgroundClip: 'content-box, border-box',
-      boxShadow: '2px 1000px 1px #fff inset',
-      opacity: 0.9,
-      transform: 'translateY(-1px)',
-      transition: 'all 0.3s ease',
-    },
-    '&.Mui-disabled': {
-      background: 'transparent',
-      border: '2px solid rgba(0, 0, 0, 0.12)',
-      backgroundImage: 'none',
-      boxShadow: 'none',
-      color: 'rgba(0, 0, 0, 0.26)',
-      transform: 'none',
-    }
-  }
-}))
-
-interface CustomButtonProps extends ButtonProps {
-  variant?: 'contained' | 'outlined'
+  large: {
+    height: '96px',
+    padding: '0 48px',
+    gap: '12px',
+    fontSize: '1.25rem',
+  },
 }
 
-const Button = ({ children, variant = 'contained', ...props }: CustomButtonProps) => {
+interface CustomButtonProps extends ButtonProps {
+  sizeType?: 'small' | 'medium' | 'large'
+  color?: 'primary' | 'primaryTonal'
+  startIcon?: React.ReactNode
+  endIcon?: React.ReactNode
+}
+
+const StyledButton = styled(MuiButton)<{
+  sizeType: 'small' | 'medium' | 'large'
+  color: 'primary' | 'primaryTonal'
+}>(({ sizeType }) => ({
+  ...sizeStyles[sizeType],
+  borderRadius: '100px',
+  minWidth: 0,
+  width: 'auto',
+  boxSizing: 'border-box',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  textTransform: 'none',
+  fontWeight: 700,
+  transition: 'all 0.3s ease',
+}))
+
+const Button = ({
+  children,
+  sizeType = 'medium',
+  color = 'primary',
+  startIcon,
+  endIcon,
+  ...props
+}: CustomButtonProps) => {
+  const gap = sizeStyles[sizeType].gap
   return (
-    <Grid container sx={{width:'100%'}}>
-      <Grid size={{xs:8}} offset={{ xs: 2}}>
-        <StyledButton variant={variant} {...props}>
-          <Typography variant="h6" component="span">
-            {children}
-          </Typography>
-        </StyledButton>
-      </Grid>
-    </Grid>
+    <StyledButton
+      sizeType={sizeType}
+      color={color}
+      variant='contained'
+      disableElevation
+      {...props}
+    >
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap }}>
+        {startIcon}
+        <Typography
+          variant="h6"
+          component="span"
+          sx={{ fontSize: sizeStyles[sizeType].fontSize, fontWeight: 700 }}
+        >
+          {children}
+        </Typography>
+        {endIcon}
+      </span>
+    </StyledButton>
   )
 }
 

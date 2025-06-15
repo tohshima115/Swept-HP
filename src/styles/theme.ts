@@ -125,3 +125,12 @@ export const theme = createTheme({
     },
   },
 }) 
+
+import '@mui/material/Button';
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    primaryTonal: true;
+    secondaryTonal: true;
+  }
+}

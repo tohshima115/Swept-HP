@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/attachart(/.*)?",
+      "destination": "https://attachart-tohshima115s-projects.vercel.app/attachart$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

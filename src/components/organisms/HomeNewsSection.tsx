@@ -9,7 +9,7 @@ interface HomeNewsSectionProps {
 }
 
 const HomeNewsSection = ({ navigate }: HomeNewsSectionProps) => (
-      <Box my={13} sx={{display:'flex',flexDirection:'column'}}>
+      <Box  sx={{display:'flex',flexDirection:'column'}}>
         <Heading1 titleEn={'News'} titleJa={'ニュース'}/>
         <Box mb={5}>
           {newsItems.map((news) => (

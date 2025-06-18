@@ -10,7 +10,7 @@ import ContactSection from '../organisms/ContactSection';
 const ContactPageTemplate: React.FC = () => {
 
     return (
-        <Container maxWidth="md" sx={{ mt:3,mb:5  }}>
+        <Container maxWidth="md" sx={{ mt:16,mb:5  }}>
             <Heading1 titleEn={'Contact'} titleJa={'お問い合わせ'} />
             <Grid container columnSpacing={3} rowSpacing={8}>
                 <Grid size={{xs:12,md:8}} >

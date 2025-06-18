@@ -21,14 +21,14 @@ const CategoryTag: React.FC<CategoryTagProps> = ({
   // isNews の値に基づいてスタイルと内容を決定
   const tagConfig = isNews
     ? {
-        bgColor: theme.palette.primary.light,
-        color: theme.palette.primary.main,
+        bgColor: theme.palette.primaryTonal.main,
+        color: theme.palette.primaryTonal.contrastText,
         IconComponent: NewspaperIcon,
         defaultText: 'ニュース', // デフォルトテキスト (ニュース)
       }
     : {
-        bgColor: theme.palette.secondary.light,
-        color: theme.palette.secondary.main,
+        bgColor: theme.palette.secondaryTonal.main,
+        color: theme.palette.secondaryTonal.contrastText,
         IconComponent: ArticleIcon,
         defaultText: 'ノート', // デフォルトテキスト (ノート)
       };

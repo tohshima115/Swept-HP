@@ -6,7 +6,7 @@ export interface Heading1Props {
   titleJa: string;
 }
 
-export const Heading1 = ({ titleEn, titleJa }: Heading1Props) => {
+export const Heading1 = ({ titleEn  }: Heading1Props) => {
   const theme = useTheme();
   return (
     <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 1 }}>
@@ -21,7 +21,7 @@ export const Heading1 = ({ titleEn, titleJa }: Heading1Props) => {
       >
         {titleEn}
       </Typography>
-      <Typography
+      {/* <Typography
         variant="h1"
         sx={{
           fontFamily: 'Gill Sans MT',
@@ -33,7 +33,7 @@ export const Heading1 = ({ titleEn, titleJa }: Heading1Props) => {
         /
       </Typography>
       <Typography
-        variant="h2"
+        variant="h3"
         sx={{
           fontFamily: 'M PLUS 1',
           color: theme.palette.primary.main,
@@ -42,7 +42,7 @@ export const Heading1 = ({ titleEn, titleJa }: Heading1Props) => {
         }}
       >
         {titleJa}
-      </Typography>
+      </Typography> */}
     </Box>
   );
 }; 

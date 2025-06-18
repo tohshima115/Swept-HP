@@ -9,7 +9,7 @@ interface MemberPageTemplateProps {
 }
 
 const MemberPageTemplate: React.FC<MemberPageTemplateProps> = ({ members, sx }) => (
-  <Container maxWidth="md" sx={{ py: 4, ...sx }}>
+  <Container maxWidth="md" sx={{ pt: 16,pb:5, ...sx }}>
     <Box sx={{ textAlign: 'center', mb: 4 }}>
       <Heading1 titleEn="Member" titleJa="メンバー" />
     </Box>

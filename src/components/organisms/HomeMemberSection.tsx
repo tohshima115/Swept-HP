@@ -16,7 +16,7 @@ interface HomeMemberSectionProps {
 }
 
 const HomeMemberSection = ({ navigate, orderedMembers }: HomeMemberSectionProps) => (
-      <Box my={13} sx={{display:'flex',flexDirection:'column'}}>
+      <Box sx={{display:'flex',flexDirection:'column'}}>
         <Heading1 titleEn={'Member'} titleJa={'メンバー'}/>
         <Image src={'/assets/member.avif'} alt={''} aspectRatio='16:9'/>
         <Grid container spacing={2} sx={{ mt: 2, mb:5 }}>

@@ -9,7 +9,7 @@ interface ContactDetailsProps {
 
 const contactInfo = {
     sns: { x: 'https://twitter.com/example' },
-    email: 'swept@gmail.com',
+    email: 'info@swept.jp',
     phone: '123-456-7890',
 };
 

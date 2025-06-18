@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AppBar, Box, Grid, useMediaQuery, useTheme, Slide } from '@mui/material';
 import Logo from '../atoms/Logo';
 import MenuButtonGroup from '../molecules/MenuButtonGroup';
@@ -15,6 +15,14 @@ const Navbar = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scrollDirection = useScrollDirection();
 
+  useEffect(() => {
+    const handleScroll = () => {
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -26,15 +34,16 @@ const Navbar = () => {
       <Slide in={scrollDirection === 'up'} direction="down" timeout={400} appear={false}>
         <AppBar 
           position="fixed"
+          elevation={0}
           sx={{
             backgroundColor: 'rgba(255, 255, 255, 0.66)',
             backdropFilter: 'blur(16px)',
-            boxShadow: 8,
-            borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
             m: 2,
             p: 1,
             borderRadius: '100px',
             width: 'calc(100% - 32px)',
+            boxShadow:'0px 4px 20px rgba(0,0,0,0.12)',
+            transition: 'box-shadow 0.3s',
           }}
         >
           <Box sx={{ flexGrow: 1 }}>

@@ -25,9 +25,9 @@ function AnimatedRoutes() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -16 }}
         transition={{ duration: 0.3 }}
-        style={{ flexGrow: 1, minHeight: '100vh', position: 'relative' }}
+        style={{ flexGrow: 1, position: 'relative' }}
       >
-        <Box component="main" sx={{ flexGrow: 1, pt: 8, bgcolor:'background.default' }}>
+        <Box component="main" sx={{ flexGrow: 1,  bgcolor:'background.default' }}>
           <Routes location={location}>
             <Route path="/" element={<Home/>} />
             <Route path="/member" element={<Team/>} />

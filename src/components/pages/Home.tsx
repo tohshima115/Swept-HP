@@ -5,44 +5,89 @@ import HomeVisionSection from '../organisms/HomeVisionSection'
 // import HomeServiceSection from '../organisms/HomeServiceSection'
 import HomeMemberSection from '../organisms/HomeMemberSection'
 import HomeNewsSection from '../organisms/HomeNewsSection'
-import HeroGsapScene from '../atoms/HeroGsapScene'
+import HeroFootprintScene from '../atoms/HeroFootprintScene'
 // import Spline from '@splinetool/react-spline'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface HomeProps {
   sx?: SxProps<Theme>
+}
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.2 + i * 0.25, duration: 0.7, ease: 'easeOut' },
+  }),
 }
 
 const Home: React.FC<HomeProps> = ({ sx }) => {
   const navigate = useNavigate()
 
   // メンバー表示順をカスタム（2,0,1の順）
-  const customOrder = [2, 0, 1];
-  const orderedMembers = customOrder.map(i => membersData[i]);
+  const customOrder = [2, 0, 1]
+  const orderedMembers = customOrder.map(i => membersData[i])
 
   return (
-    <Box sx={sx}>
-      {/* Hero Section */}
+    <Box sx={{ position: 'relative', minHeight: '200vh', overflow: 'hidden', ...sx }}>
+      {/* 固定背景（パララックスなし） */}
       <Box
         sx={{
-          position: 'relative',
-          height: 'calc(100dvh - 64px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100vh',
+          zIndex: 0,
+          pointerEvents: 'none',
         }}
       >
-        <HeroGsapScene />
+        <Box sx={{ width: '100%', height: '100vh' }}>
+          <HeroFootprintScene />
+        </Box>
       </Box>
 
-      {/* News Section（各セクションをコンポーネント化） */}
-      <Box >
-      <Container maxWidth="sm">
-      <HomeVisionSection navigate={navigate} />
-      {/* <HomeServiceSection navigate={navigate} /> */}
-      <HomeMemberSection navigate={navigate} orderedMembers={orderedMembers} />
-      <HomeNewsSection navigate={navigate} />
+      {/* フェードインで現れるセクション */}
+      <Container maxWidth="sm" sx={{ position: 'relative', zIndex: 1, pt: { xs: 8, md: 12 } }}>
+        <AnimatePresence>
+          {/* Visionセクションだけ中央寄せ */}
+          <Box sx={{ minHeight: '33vh' }} />
+
+            <motion.div
+              custom={0}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={sectionVariants}
+            >
+              <HomeVisionSection navigate={navigate} />
+            </motion.div>
+          <Box sx={{ minHeight: '33vh' }} />
+
+          {/* セクション間スペース */}
+          <motion.div
+            custom={1}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={sectionVariants}
+          >
+            <HomeMemberSection navigate={navigate} orderedMembers={orderedMembers} />
+          </motion.div>
+          <Box sx={{ minHeight: '33vh' }} />
+          <motion.div
+            custom={2}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={sectionVariants}
+          >
+            <HomeNewsSection navigate={navigate} />
+          </motion.div>
+          <Box sx={{ minHeight: '33vh' }} />
+        </AnimatePresence>
       </Container>
-      </Box>
     </Box>
   )
 }

@@ -14,7 +14,7 @@ const Company = () => {
 
   return (
     <Container maxWidth="md">
-      <Box sx={{ my: 8 }}>
+      <Box sx={{ mt: 16,mb:5 }}>
         <Heading1 titleEn={'Info'} titleJa={'運営者情報'}/>
         <Grid container columnSpacing={3}>
           <Grid size={{ xs:12, md:8 }}>

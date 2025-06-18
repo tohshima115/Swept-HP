@@ -8,7 +8,7 @@ interface HomeServiceSectionProps {
 }
 
 const HomeServiceSection = ({ navigate }: HomeServiceSectionProps) => (
-      <Box my={13}>
+      <Box >
         <Heading1 titleEn={'Service'} titleJa={'事業内容'}/>
         <Box p={3} mt={3} sx={theme => ({
           position: 'relative',

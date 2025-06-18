@@ -19,7 +19,8 @@ const MenuButtonGroup = ({ items, color }: MenuButtonGroupProps) => {
           key={item.to}
           to={item.to}
           label={item.label}
-          color={color}
+          color={color as 'primary' | 'primaryTonal' | undefined}
+          variant={item.to === '/contact' ? 'contained' : 'text'}
         />
       ))}
     </Box>

@@ -1,27 +1,24 @@
-import { Typography } from '@mui/material'
+import Button from './Button'
 import { Link } from 'react-router-dom'
 
 interface MenuButtonProps {
   to: string
   label: string
-  color?: string
+  color?: 'primary' | 'primaryTonal'
+  variant?: 'contained' | 'text'
 }
 
-const MenuButton = ({ to, label, color = 'text.primary' }: MenuButtonProps) => {
+const MenuButton = ({ to, label, color = 'primary', variant = 'text' }: MenuButtonProps) => {
   return (
-    <Typography
+    <Button
       component={Link}
       to={to}
-      sx={{
-        textDecoration: 'none',
-        color,
-        '&:hover': {
-          color: 'primary.main',
-        },
-      }}
+      color={color}
+      variant={variant}
+      sizeType="medium"
     >
       {label}
-    </Typography>
+    </Button>
   )
 }
 

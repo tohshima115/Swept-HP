@@ -1,16 +1,19 @@
 import { useState } from 'react';
-import { AppBar, Toolbar, Box, Grid, useMediaQuery, useTheme, Button as MuiButton } from '@mui/material';
+import { AppBar, Box, Grid, useMediaQuery, useTheme, Slide } from '@mui/material';
 import Logo from '../atoms/Logo';
 import MenuButtonGroup from '../molecules/MenuButtonGroup';
 import MobileMenu from '../molecules/MobileMenu';
 import { menuItems } from '../../constants/menuItems';
 import { Link as RouterLink } from 'react-router-dom';
 import HamburgerMenuFab from '../atoms/HamburgerMenuFab';
+import Button from '../atoms/Button';
+import { useScrollDirection } from '../../hooks/useScrollDirection';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const scrollDirection = useScrollDirection();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -20,61 +23,50 @@ const Navbar = () => {
 
   return (
     <>
-      <AppBar 
-        position="fixed"
-        sx={{
-          backgroundColor: 'rgba(255, 255, 255, 0.66)',
-          backdropFilter: 'blur(16px)',
-          boxShadow: 'none',
-          borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
-          height: '64px',
-        }}
-      >
-        <Toolbar sx={{ minHeight: '64px' }}>
+      <Slide in={scrollDirection === 'up'} direction="down" timeout={400} appear={false}>
+        <AppBar 
+          position="fixed"
+          sx={{
+            backgroundColor: 'rgba(255, 255, 255, 0.66)',
+            backdropFilter: 'blur(16px)',
+            boxShadow: 8,
+            borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+            m: 2,
+            p: 1,
+            borderRadius: '100px',
+            width: 'calc(100% - 32px)',
+          }}
+        >
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2} alignItems="center">
               <Grid size={{xs:6, md:3}} >
-                <Logo />
+                <Logo size={isMobile ? 'medium' : 56} />
               </Grid>
-              <Grid size={{xs:6, md:9}} sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'flex-end', alignItems: 'center' }}>
-                <MuiButton
+              <Grid size={{xs:6, md:9}} sx={{pr:'4px', display: { xs: 'flex', md: 'none' }, justifyContent: 'flex-end', alignItems: 'center' }}>
+                <Button
                   component={RouterLink}
                   to="/contact"
+                  color="primary"
                   variant="contained"
-                  sx={{
-                    minWidth: 0,
-                    px: 2,
-                    py: 1,
-                    height: '40px',
-                    borderRadius: '20px',
-                    fontWeight: 700,
-                    fontSize: '1rem',
-                    background: theme.palette.primary.main,
-                    color: theme.palette.primary.contrastText,
-                    boxShadow: 'none',
-                    '&:hover': {
-                      background: theme.palette.primary.dark || theme.palette.primary.main,
-                    },
-                    whiteSpace: 'nowrap',
-                  }}
+                  sizeType="small"
                 >
                   お問い合わせ
-                </MuiButton>
+                </Button>
               </Grid>
               <Grid size={{xs:12, md:9}} sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
                 <MenuButtonGroup items={menuItems} />
               </Grid>
             </Grid>
           </Box>
-        </Toolbar>
-        {isMobile && <MobileMenu isOpen={isMenuOpen} items={menuItems} onClose={handleCloseMenu} />}
-      </AppBar>
+        </AppBar>
+      </Slide>
+      {isMobile && <MobileMenu isOpen={isMenuOpen} items={menuItems} onClose={handleCloseMenu} />}
       {isMobile && (
         <HamburgerMenuFab
           isOpen={isMenuOpen}
           onClick={toggleMenu}
-          bgcolor={theme.palette.primaryTonal.main}
-          iconColor={theme.palette.primaryTonal.contrastText}
+          bgcolor={isMenuOpen ? theme.palette.primary.main : theme.palette.primaryTonal.main}
+          iconColor={isMenuOpen ? theme.palette.primary.contrastText : theme.palette.primaryTonal.contrastText}
         />
       )}
     </>

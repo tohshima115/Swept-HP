@@ -1,6 +1,6 @@
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
-import BusinessIcon from '@mui/icons-material/Business';
+// import BusinessIcon from '@mui/icons-material/Business';
 import GroupIcon from '@mui/icons-material/Group';
 import ArticleIcon from '@mui/icons-material/Article';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
@@ -27,12 +27,12 @@ export const menuItems: MenuItem[] = [
     labelJa: '理念',
     icon: <InfoIcon />
   },
-  { 
-    to: '/service', 
-    label: 'Service', 
-    labelJa: '事業内容',
-    icon: <BusinessIcon />
-  },
+  // { 
+  //   to: '/service', 
+  //   label: 'Service', 
+  //   labelJa: '事業内容',
+  //   icon: <BusinessIcon />
+  // },
   { 
     to: '/member#niwa-katsuma', 
     label: 'Member', 

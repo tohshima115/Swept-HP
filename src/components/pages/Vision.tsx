@@ -7,7 +7,7 @@ import TextBlock from '../molecules/TextBlock';
 const Vision = () => {
 
   return (
-      <Container maxWidth="md" sx={{ pt: 3, pb:5 }}>
+      <Container maxWidth="md" sx={{ pt: 8, pb:5 }}>
         <Box sx={{ textAlign: 'center' }}>
           <Heading1 titleEn={'Vision'} titleJa={'理念'}/>
           <ResponsiveTypography

@@ -4,7 +4,7 @@ import ContactDetails from '../organisms/ContactDetails'
 
 const Company = () => {
   const companyInfo = {
-    name: 'ataccha（アタッチャ）',
+    name: 'Swept（スウィプト）',
     establishment: '2024年1月',
     ceo: '丹羽勝麻',
     location: '東京都小平市',
@@ -14,7 +14,7 @@ const Company = () => {
 
   return (
     <Container maxWidth="md">
-      <Box sx={{ my: 3 }}>
+      <Box sx={{ my: 8 }}>
         <Heading1 titleEn={'Info'} titleJa={'運営者情報'}/>
         <Grid container columnSpacing={3}>
           <Grid size={{ xs:12, md:8 }}>

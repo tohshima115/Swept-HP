@@ -9,7 +9,7 @@ const News = () => {
 
   return (
     <Container maxWidth="md" >
-      <Box sx={{ mt: 3, mb: 5 }}>
+      <Box sx={{ mt: 8, mb: 5 }}>
         <Heading1 titleEn={'News'} titleJa={'ニュース'} />
         <Box sx={{display:'flex',flexFlow:'column',alignItems:'center' }}>
           <Box maxWidth="sm" sx={{ mt: 5,display:'flex',flexFlow:'column',alignItems:'center' }}>

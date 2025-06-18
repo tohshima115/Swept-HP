@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import HamburgerMenu from './HamburgerMenu';
 
 interface HamburgerMenuFabProps {
@@ -8,7 +8,9 @@ interface HamburgerMenuFabProps {
   iconColor: string;
 }
 
-const HamburgerMenuFab = ({ isOpen, onClick, bgcolor, iconColor }: HamburgerMenuFabProps) => {
+const HamburgerMenuFab = ({ isOpen, onClick, bgcolor }: HamburgerMenuFabProps) => {
+  const theme = useTheme();
+  const iconColor = isOpen ? theme.palette.primary.contrastText : theme.palette.primaryTonal.contrastText;
   return (
     <Box
       sx={{

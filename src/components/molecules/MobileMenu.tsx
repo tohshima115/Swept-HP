@@ -1,6 +1,7 @@
-import { styled } from '@mui/material/styles';
-import { Box, Grid } from '@mui/material';
-import MobileMenuButton from '../atoms/MobileMenuButton';
+import { Box } from '@mui/material';
+import Button from '../atoms/Button';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -8,36 +9,67 @@ interface MobileMenuProps {
   onClose?: () => void;
 }
 
-const MenuOverlay = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<{ open: boolean }>(({ open }) => ({
-  position: 'fixed',
-  top: '64px',
-  left: 0,
-  right: 0,
-  bottom: 0,
-  background: 'rgba(0, 0, 0, 0.86)', // 334380の色を95%の透明度で使用
-  backdropFilter: 'blur(16px)',
-  display: open ? 'flex' : 'none',
-  flexDirection: 'column',
-  height: 'calc(100vh - 64px)',
-  zIndex: 1000,
-  '@media (min-width: 768px)': {
-    display: 'none',
+const containerVariants = {
+  visible: {
+    transition: {
+      staggerChildren: 0.06,
+    },
   },
-}));
+  hidden: {
+    transition: {
+      staggerChildren: 0.06,
+      staggerDirection: -1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 104, transition: { duration: 0.3, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
 
 const MobileMenu = ({ isOpen, items, onClose }: MobileMenuProps) => {
   return (
-    <MenuOverlay open={isOpen}>
-      <Grid container spacing={2} m={2}>
-        {items.map((item) => (
-          <Grid key={item.to} size={{xs:6}}>
-            <MobileMenuButton label={item.label} labelJa={item.labelJa} to={item.to} onClick={onClose} />
-          </Grid>
-        ))}
-      </Grid>
-    </MenuOverlay>
+    <AnimatePresence>
+      {isOpen && (
+        <Box
+          component={motion.div}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          sx={{
+            position: 'fixed',
+            right: 24,
+            bottom: 104, // FabButtonの上に8px間隔
+            zIndex: 1300,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            gap: 0.5, // 4px
+          }}
+        >
+          {items.map((item) => (
+            <Box
+              key={item.to}
+              component={motion.div}
+              variants={itemVariants}
+            >
+              <Button
+                to={item.to}
+                component={Link}
+                color="primaryTonal"
+                variant="contained"
+                sizeType="medium"
+                onClick={onClose}
+              >
+                {item.labelJa || item.label}
+              </Button>
+            </Box>
+          ))}
+        </Box>
+      )}
+    </AnimatePresence>
   );
 };
 

@@ -1,5 +1,4 @@
 import { Button as MuiButton, ButtonProps, Typography } from '@mui/material'
-import { styled } from '@mui/material/styles'
 import React from 'react'
 
 const sizeStyles = {
@@ -28,24 +27,10 @@ interface CustomButtonProps extends ButtonProps {
   color?: 'primary' | 'primaryTonal'
   startIcon?: React.ReactNode
   endIcon?: React.ReactNode
+  variant?: 'contained' | 'text'
+  to?: string
+  component?: React.ElementType
 }
-
-const StyledButton = styled(MuiButton)<{
-  sizeType: 'small' | 'medium' | 'large'
-  color: 'primary' | 'primaryTonal'
-}>(({ sizeType }) => ({
-  ...sizeStyles[sizeType],
-  borderRadius: '100px',
-  minWidth: 0,
-  width: 'auto',
-  boxSizing: 'border-box',
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  textTransform: 'none',
-  fontWeight: 700,
-  transition: 'all 0.3s ease',
-}))
 
 const Button = ({
   children,
@@ -53,29 +38,45 @@ const Button = ({
   color = 'primary',
   startIcon,
   endIcon,
+  variant = 'contained',
+  to,
+  component,
   ...props
 }: CustomButtonProps) => {
-  const gap = sizeStyles[sizeType].gap
+  const extraProps: Record<string, unknown> = {};
+  if (component) extraProps.component = component;
+  if (to) extraProps.to = to;
   return (
-    <StyledButton
-      sizeType={sizeType}
+    <MuiButton
       color={color}
-      variant='contained'
+      variant={variant}
       disableElevation
+      sx={{
+        ...sizeStyles[sizeType],
+        borderRadius: '100px',
+        minWidth: 0,
+        width: 'auto',
+        boxSizing: 'border-box',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textTransform: 'none',
+        fontWeight: 700,
+        transition: 'all 0.3s ease',
+      }}
+      startIcon={startIcon}
+      endIcon={endIcon}
+      {...extraProps}
       {...props}
     >
-      <span style={{ display: 'inline-flex', alignItems: 'center', gap }}>
-        {startIcon}
-        <Typography
-          variant="h6"
-          component="span"
-          sx={{ fontSize: sizeStyles[sizeType].fontSize, fontWeight: 700 }}
-        >
-          {children}
-        </Typography>
-        {endIcon}
-      </span>
-    </StyledButton>
+      <Typography
+        variant="h6"
+        component="span"
+        sx={{ fontSize: sizeStyles[sizeType].fontSize, fontWeight: 700 }}
+      >
+        {children}
+      </Typography>
+    </MuiButton>
   )
 }
 

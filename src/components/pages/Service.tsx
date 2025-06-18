@@ -35,7 +35,7 @@ const valueTexts = [
 
 const Service: React.FC<ServiceProps> = ({ sx }) => {
   return (
-    <Container maxWidth="md" sx={{ pt: 3, pb:5, ...sx }}>
+    <Container maxWidth="md" sx={{ pt: 8, pb:5, ...sx }}>
       <Box sx={{ textAlign: 'center' }}>
         <Heading1 titleEn={'Service'} titleJa={'事業内容'}/>
       </Box>

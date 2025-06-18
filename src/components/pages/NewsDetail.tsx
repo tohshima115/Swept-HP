@@ -29,7 +29,7 @@ const navigate = useNavigate()
   return (
     <Box sx={sx}>
       <Container maxWidth="md">
-        <Box mt={3} mb={5}>
+        <Box mt={8} mb={5}>
             <Image src={news.imageUrl} alt={news.title} aspectRatio='16:9'/>
           <Box mb={2} sx={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}>
             <CategoryTag isNews={news.tag === 'ニュース'}/>

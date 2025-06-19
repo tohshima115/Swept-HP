@@ -1,24 +1,31 @@
 import { Button as MuiButton, ButtonProps, Typography } from '@mui/material'
 import React from 'react'
+import { Box } from '@mui/material'
 
 const sizeStyles = {
   small: {
     height: '40px',
+    minWidth: '40px',
     padding: '0 16px',
     gap: '8px',
     fontSize: '1rem',
+    iconSize: '24px',
   },
   medium: {
     height: '56px',
+    minWidth: '56px',
     padding: '0 24px',
     gap: '8px',
     fontSize: '1.125rem',
+    iconSize: '24px',
   },
   large: {
     height: '96px',
+    minWidth: '96px',
     padding: '0 48px',
     gap: '12px',
     fontSize: '1.25rem',
+    iconSize: '32px',
   },
 }
 
@@ -46,6 +53,31 @@ const Button = ({
   const extraProps: Record<string, unknown> = {};
   if (component) extraProps.component = component;
   if (to) extraProps.to = to;
+
+  // アイコンをサイズに応じてラップする
+  const wrapIcon = (icon: React.ReactNode, position: 'start' | 'end') => {
+    if (!icon) return null;
+    return (
+      <Box
+        component="span"
+        sx={{
+          display: 'inline-flex',
+          width: sizeStyles[sizeType].iconSize,
+          height: sizeStyles[sizeType].iconSize,
+          '& > *': {
+            width: '100%',
+            height: '100%',
+          },
+          margin: '0 !important',
+          marginLeft: position === 'start' ? '0 !important' : undefined,
+          marginRight: position === 'end' ? '0 !important' : undefined,
+        }}
+      >
+        {icon}
+      </Box>
+    );
+  };
+
   return (
     <MuiButton
       color={color}
@@ -54,7 +86,6 @@ const Button = ({
       sx={{
         ...sizeStyles[sizeType],
         borderRadius: '100px',
-        minWidth: 0,
         width: 'auto',
         boxSizing: 'border-box',
         display: 'inline-flex',
@@ -63,19 +94,25 @@ const Button = ({
         textTransform: 'none',
         fontWeight: 700,
         transition: 'all 0.3s ease',
+        ...(children ? {} : { padding: '8px' }),
+        '& .MuiButton-startIcon, & .MuiButton-endIcon': {
+          margin: '0 !important',
+        },
       }}
-      startIcon={startIcon}
-      endIcon={endIcon}
+      startIcon={wrapIcon(startIcon, 'start')}
+      endIcon={wrapIcon(endIcon, 'end')}
       {...extraProps}
       {...props}
     >
-      <Typography
-        variant="h6"
-        component="span"
-        sx={{ fontSize: sizeStyles[sizeType].fontSize, fontWeight: 700 }}
-      >
-        {children}
-      </Typography>
+      {children && (
+        <Typography
+          variant="h6"
+          component="span"
+          sx={{ fontSize: sizeStyles[sizeType].fontSize, fontWeight: 700 }}
+        >
+          {children}
+        </Typography>
+      )}
     </MuiButton>
   )
 }

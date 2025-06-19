@@ -13,6 +13,7 @@ import Service from './components/pages/Service.tsx'
 import Company from './components/pages/Company.tsx'
 import { AnimatePresence, motion } from 'framer-motion'
 import useScrollToTop from './hooks/useScrollToTop'
+import AttachartApp from './attachart/App'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -38,6 +39,7 @@ function AnimatedRoutes() {
             <Route path="/news/:slug" element={<NewsDetail/>} />
             <Route path="/contact" element={<Contact/>} />
             <Route path="/member/:slug" element={<Team/>} />
+            <Route path="/attachart/*" element={<AttachartApp />} />
           </Routes>
         </Box>
       </motion.div>
@@ -45,22 +47,30 @@ function AnimatedRoutes() {
   )
 }
 
+function AppWithLocationBasedLayout() {
+  const location = useLocation();
+  const isAttachart = location.pathname.startsWith('/attachart');
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+      }}
+    >
+      {!isAttachart && <Navbar />}
+      <AnimatedRoutes />
+      {!isAttachart && <Footer />}
+    </Box>
+  );
+}
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: '100vh',
-          }}
-        >
-          <Navbar />
-          <AnimatedRoutes />
-          <Footer />
-        </Box>
+        <AppWithLocationBasedLayout />
       </Router>
     </ThemeProvider>
   )

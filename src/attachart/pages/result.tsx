@@ -177,7 +177,7 @@ export default function Result() {
         color: 'var(--color-on-surface)',
       }}
     >
-      <Typography variant="h5" component="h3" sx={{ mb: 2, textAlign: 'center' }}>
+      <Typography variant="h2" sx={{ mb: 2, textAlign: 'center' }}>
         診断結果
       </Typography>
       <Box

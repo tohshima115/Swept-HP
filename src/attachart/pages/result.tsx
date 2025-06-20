@@ -46,10 +46,12 @@ export default function Result() {
       }
 
       setFeedback({ open: true, message: '診断結果をメールで送信しました！', severity: 'success' });
+      return Promise.resolve();
 
     } catch (error) {
       const message = error instanceof Error ? error.message : '不明なエラーが発生しました。';
       setFeedback({ open: true, message: `送信に失敗しました: ${message}`, severity: 'error' });
+      return Promise.reject(error);
     } finally {
       setIsSubmitting(false);
     }

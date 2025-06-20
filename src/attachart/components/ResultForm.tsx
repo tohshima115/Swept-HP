@@ -14,12 +14,23 @@ export interface FormData {
 }
 
 interface ResultFormProps {
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData) => Promise<void>;
   isSubmitting: boolean;
 }
 
 const ageRanges = ['10代以下', '20代', '30代', '40代', '50代', '60代以上'];
 const genders = ['男性', '女性', 'その他', '無回答'];
+
+const isDataEqual = (data1: FormData, data2: FormData | null): boolean => {
+  if (!data2) return false;
+  return (
+    data1.nickname === data2.nickname &&
+    data1.ageRange === data2.ageRange &&
+    data1.gender === data2.gender &&
+    data1.email === data2.email &&
+    data1.interviewAccepted === data2.interviewAccepted
+  );
+};
 
 export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
   const [nickname, setNickname] = useState('');
@@ -28,6 +39,8 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
   const [email, setEmail] = useState('');
   const [privacyPolicyAccepted, setPrivacyPolicyAccepted] = useState(false);
   const [interviewAccepted, setInterviewAccepted] = useState(false);
+  const [submissionCount, setSubmissionCount] = useState(0);
+  const [lastSubmittedData, setLastSubmittedData] = useState<FormData | null>(null);
 
   const [emailError, setEmailError] = useState(false);
 
@@ -52,22 +65,27 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
     validateEmail(email);
   };
 
+  const currentFormData: FormData = { nickname, ageRange, gender, email, interviewAccepted };
+  const isDataUnchanged = isDataEqual(currentFormData, lastSubmittedData);
+  const isSubmissionLimitReached = submissionCount >= 4;
+
   const isFormValid = ageRange !== '' && gender !== '' && email !== '' && !emailError && privacyPolicyAccepted;
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!isFormValid) {
+    if (!isFormValid || isSubmitting || isDataUnchanged || isSubmissionLimitReached) {
       if(email === '') validateEmail(email);
       return;
     }
     
-    onSubmit({
-      nickname,
-      ageRange,
-      gender,
-      email,
-      interviewAccepted,
-    });
+    try {
+      await onSubmit(currentFormData);
+      setLastSubmittedData(currentFormData);
+      setSubmissionCount(prev => prev + 1);
+    } catch (error) {
+      // エラーハンドリングは親コンポーネントに任せる
+      console.error('Submission failed in parent component:', error);
+    }
   };
 
   return (
@@ -169,9 +187,9 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
         type="submit"
         variant="contained"
         sizeType='large'
-        disabled={!isFormValid || isSubmitting}
+        disabled={!isFormValid || isSubmitting || isDataUnchanged || isSubmissionLimitReached}
       >
-        {isSubmitting ? '送信中...' : '結果をメールで受け取る'}
+        {isSubmitting ? '送信中...' : isSubmissionLimitReached ? '送信回数の上限に達しました' : isDataUnchanged ? 'メールが送信されました' : '結果をメールで受け取る'}
       </Button>
       </Box>
     </Box>

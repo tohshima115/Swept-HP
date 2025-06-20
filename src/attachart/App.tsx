@@ -1,21 +1,22 @@
-import { Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';
-import { Box } from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+import { AnimatePresence, motion } from 'framer-motion';
 import { theme } from './theme';
+import { useEffect } from 'react';
 import Home from './pages/Home';
 import Quiz from './pages/quiz';
 import Result from './pages/result';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import AttachartHeader from './components/AttachartHeader';
 import AttachartFooter from './components/AttachartFooter';
-import { useEffect } from 'react';
 
 function App() {
+  const location = useLocation();
+
   useEffect(() => {
     const originalTitle = document.title;
     const originalFavicon = document.querySelector("link[rel*='icon']")?.getAttribute('href') || '';
     
-    // --- Set Meta Tags ---
     const metaInfo = {
       title: 'attachart | 愛着スタイル診断テスト',
       description: 'あなたの愛着スタイルを診断し、人間関係のパターンを理解するためのテストです。簡単な質問に答えて、自分のタイプを見つけましょう。',
@@ -58,13 +59,11 @@ function App() {
       }
     });
 
-    // --- Set Favicon ---
     const favicon = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
     if (favicon) {
       favicon.href = '/assets/logoMark-attachart.svg';
     }
 
-    // --- Cleanup ---
     return () => {
       document.title = originalTitle;
       if (favicon) {
@@ -85,23 +84,39 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'var(--color-surface)' }}>
         <AttachartHeader />
         <Box 
           component="main" 
           sx={{ 
             flexGrow: 1, 
-            display: 'flex', 
+            display: 'flex',
             flexDirection: 'column',
-            pt: '96px', // ヘッダーの高さ + 余白
-            minHeight: 'calc(100vh - 80px)', // 画面の高さからヘッダーの高さを引く
+            width: '100%',
+            maxWidth: '900px',
+            mx: 'auto',
+            px: 2,
+            pt: '104px', // Header height (64px) + margin (32px)
+            pb: 4,
           }}
         >
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="quiz/:page" element={<Quiz />} />
-            <Route path="result" element={<Result />} />
-          </Routes>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', width: '100%' }}
+            >
+              <Routes>
+                <Route index element={<Home />} />
+                <Route path="quiz/:page" element={<Quiz />} />
+                <Route path="result" element={<Result />} />
+                <Route path="privacy-policy" element={<PrivacyPolicy />} />
+              </Routes>
+            </motion.div>
+          </AnimatePresence>
         </Box>
         <AttachartFooter />
       </Box>

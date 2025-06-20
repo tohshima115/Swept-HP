@@ -1,0 +1,179 @@
+import { useState } from 'react';
+import { Box, TextField, Checkbox, FormControlLabel, Typography } from '@mui/material';
+import Button from '@/components/atoms/Button';
+import { OptionsButtonGroup } from '@/components/molecules/OptionsButtonGroup';
+
+
+// 将来的にAPIに渡すデータの型
+export interface FormData {
+  nickname: string;
+  ageRange: string;
+  gender: string;
+  email: string;
+  interviewAccepted: boolean;
+}
+
+interface ResultFormProps {
+  onSubmit: (data: FormData) => void;
+  isSubmitting: boolean;
+}
+
+const ageRanges = ['10代以下', '20代', '30代', '40代', '50代', '60代以上'];
+const genders = ['男性', '女性', 'その他', '無回答'];
+
+export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
+  const [nickname, setNickname] = useState('');
+  const [ageRange, setAgeRange] = useState('');
+  const [gender, setGender] = useState('');
+  const [email, setEmail] = useState('');
+  const [privacyPolicyAccepted, setPrivacyPolicyAccepted] = useState(false);
+  const [interviewAccepted, setInterviewAccepted] = useState(false);
+
+  const [emailError, setEmailError] = useState(false);
+
+  const validateEmail = (value: string) => {
+    if (!value) {
+      setEmailError(true);
+      return false;
+    }
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    setEmailError(!isValid);
+    return isValid;
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    if (emailError) {
+      validateEmail(e.target.value);
+    }
+  };
+  
+  const handleEmailBlur = () => {
+    validateEmail(email);
+  };
+
+  const isFormValid = ageRange !== '' && gender !== '' && email !== '' && !emailError && privacyPolicyAccepted;
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!isFormValid) {
+      if(email === '') validateEmail(email);
+      return;
+    }
+    
+    onSubmit({
+      nickname,
+      ageRange,
+      gender,
+      email,
+      interviewAccepted,
+    });
+  };
+
+  return (
+    <Box component="form" onSubmit={handleSubmit} 
+    sx={{ display:'flex', flexDirection:'column' }}>
+      <Typography variant="h4" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
+        診断結果をメールで受け取る
+      </Typography>
+      <Box sx={{            p: 3,
+            borderRadius: 4,
+            border: '1px solid',
+            borderColor: 'divider',
+            bgcolor: 'var(--color-surface-variant)',
+            position: 'relative',
+            overflow: 'hidden',display:'flex', flexDirection:'column'}}>
+      <TextField
+        label="ニックネーム（任意）"
+        fullWidth
+        value={nickname}
+        onChange={(e) => setNickname(e.target.value)}
+        margin="normal"
+        slotProps={{ inputLabel: { shrink: true } }}
+        placeholder="アタッチャート太郎"
+      />
+      <TextField
+        label="メールアドレス"
+        type="email"
+        fullWidth
+        required
+        value={email}
+        onChange={handleEmailChange}
+        onBlur={handleEmailBlur}
+        error={emailError}
+        helperText={emailError ? '有効なメールアドレスを入力してください。' : ''}
+        margin="normal"
+        slotProps={{ inputLabel: { shrink: true } }}
+        placeholder="hello@example.com（必須）"
+      />
+      <Box sx={{ my: 1.5 }}>
+        <Typography component="p" sx={{ fontWeight: 'bold', mb: 1 }}>
+          年齢<span style={{ color: 'red', marginLeft: '4px' }}>*</span>
+        </Typography>
+        <OptionsButtonGroup
+          options={ageRanges}
+          value={ageRange}
+          onChange={setAgeRange}
+          columns={{ xs: 3, sm: 6 }}
+        />
+      </Box>
+      <Box sx={{ my: 1.5 }}>
+        <Typography component="p" sx={{ fontWeight: 'bold', mb: 1 }}>
+          性別<span style={{ color: 'red', marginLeft: '4px' }}>*</span>
+        </Typography>
+        <OptionsButtonGroup
+          options={genders}
+          value={gender}
+          onChange={setGender}
+          columns={4}
+        />
+      </Box>
+      <Box sx={{ my: 1.5 }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={privacyPolicyAccepted}
+              onChange={(e) => setPrivacyPolicyAccepted(e.target.checked)}
+            />
+          }
+          label={
+            <Typography 
+              variant="body2"
+              sx={{
+                '& a': {
+                  color: 'primary.main',
+                },
+              }}
+            >
+              <a href="/attachart/privacy-policy" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意する
+              <span style={{ color: 'red', marginLeft: '4px' }}>*</span>
+            </Typography>
+          }
+        />
+        <Typography variant="caption" display="block" color="text.secondary" sx={{ml:4}}>
+          送信されたデータは、個人が特定されない形でサービスの改善に活用させていただきます。
+        </Typography>
+      </Box>
+      <Box sx={{ mt: 1.5,mb:3 }}>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={interviewAccepted}
+            onChange={(e) => setInterviewAccepted(e.target.checked)}
+          />
+        }
+        label="今後のインタビューにご協力いただけますか？（任意）"
+      />
+      </Box>
+      <Button
+        type="submit"
+        variant="contained"
+        sizeType='large'
+        disabled={!isFormValid || isSubmitting}
+      >
+        {isSubmitting ? '送信中...' : '結果をメールで受け取る'}
+      </Button>
+      </Box>
+    </Box>
+  );
+}; 

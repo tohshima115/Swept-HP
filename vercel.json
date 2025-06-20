@@ -1,19 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/attachart",
-      "has": [
-        {
-          "type": "header",
-          "key": "User-Agent",
-          "value": ".*(Twitterbot|facebookexternalhit|line-poker|Discordbot).*"
-        }
-      ],
-      "destination": "/api/ogp"
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
     },
     {
-      "source": "/:path((?!.*\\.).*)",
+      "source": "/((?!api/|_next/|assets/|static/).*)",
       "destination": "/index.html"
     }
   ]
-} 
+}

@@ -40,7 +40,7 @@ const ReferenceBookCard = ({ title, url }: ReferenceBookCardProps) => {
           amzn.to
         </Typography>
         <Button
-
+        color='primaryTonal'
         >
           Amazon.co.jpで見る
         </Button>

@@ -1,18 +1,74 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
+import { GoogleAuth } from 'google-auth-library';
+import { google } from 'googleapis';
 
-interface EmailProps {
+// フォームからと診断結果から来るデータの型定義
+interface RequestBody {
+  nickname?: string;
+  age: string;
+  gender: string;
+  email: string;
+  privacyConsent: boolean;
+  interviewConsent?: boolean;
+  score: { A: number; B: number; C: number };
   resultType: string;
   resultFeature: string;
-  score: { A: number; B: number; C: number };
-  recommendedBook: { title: string; url: string };
-  referenceBook: { title: string; url: string };
-  nickname: string;
+  recommendedBookTitle: string;
+  referenceBookTitle: string;
+  answers: { [key: string]: number };
+}
+
+// スプレッドシート書き込み関数
+async function appendToSheet(data: RequestBody) {
+  try {
+    const auth = new GoogleAuth({
+      credentials: {
+        client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      },
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    });
+
+    const sheets = google.sheets({ version: 'v4', auth });
+    const spreadsheetId = process.env.SPREADSHEET_ID;
+    
+    // スプレッドシートのヘッダー順に合わせてデータを整形
+    const timestamp = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
+    const answersInOrder = Array.from({ length: 30 }, (_, i) => data.answers[`q${i + 1}`] || '');
+    
+    const newRow = [
+      timestamp,
+      data.nickname || '',
+      data.age,
+      data.gender,
+      data.email,
+      data.interviewConsent ? 'はい' : 'いいえ',
+      data.score.A,
+      data.score.B,
+      data.score.C,
+      data.resultType,
+      ...answersInOrder,
+    ];
+
+    await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range: 'シート1!A1', // 'シート1'は実際のシート名に合わせてください
+      valueInputOption: 'USER_ENTERED',
+      requestBody: {
+        values: [newRow],
+      },
+    });
+    console.log('Successfully appended data to Google Sheet.');
+  } catch (error) {
+    console.error('Error writing to Google Sheet:', error);
+    // ここでエラーを投げず、コンソールに出力するだけにして処理を続行させる
+  }
 }
 
 // メールHTMLを生成する関数
-const createEmailHtml = (props: EmailProps) => {
-  const { resultType, resultFeature, score, recommendedBook, referenceBook, nickname } = props;
+const createEmailHtml = (props: RequestBody) => {
+  const { resultType, resultFeature, score, recommendedBookTitle, referenceBookTitle, nickname } = props;
   return `
   <html lang="ja">
     <head>
@@ -51,15 +107,13 @@ const createEmailHtml = (props: EmailProps) => {
         <div class="section">
           <h2 class="section-title">あなたへのおすすめ書籍</h2>
           <p>
-            <strong>${recommendedBook.title}</strong><br />
-            <a href="${recommendedBook.url}" target="_blank" rel="noopener noreferrer">Amazonで見る</a>
+            <strong>${recommendedBookTitle}</strong><br />
           </p>
         </div>
         <div class="section">
           <h2 class="section-title">この診断の参考にさせて頂いた書籍</h2>
           <p>
-            <strong>${referenceBook.title}</strong><br />
-            <a href="${referenceBook.url}" target="_blank" rel="noopener noreferrer">Amazonで見る</a>
+            <strong>${referenceBookTitle}</strong><br />
           </p>
         </div>
         <div class="footer">
@@ -81,10 +135,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const body = req.body;
+    const body: RequestBody = req.body;
     if (!body.email || !body.resultType) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
+
+    // Googleスプレッドシートへの書き込み (非同期だが待たない)
+    appendToSheet(body);
     
     const emailHtml = createEmailHtml(body);
 
@@ -100,8 +157,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: 'Failed to send email', details: error.message, resendError: error });
     }
     
-    // ToDo: Googleスプレッドシートへの書き込み処理
-
     return res.status(200).json({ success: true, message: 'Email sent successfully', emailId: data?.id });
 
   } catch (error) {

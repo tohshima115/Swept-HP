@@ -5,11 +5,13 @@ import ExplanationModal from '../components/ExplanationModal';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Button from '@/components/atoms/Button';
 import { useQuizResult } from '../hooks/useQuizResult';
+import { useQuizAnswers } from '../hooks/useQuizAnswers';
 import { RadarChart } from '../components/RadarChart';
 import { ResultForm, FormData } from '../components/ResultForm';
 
 export default function Result() {
   const { score, resultType, resultFeature, recommendedBook, referenceBook } = useQuizResult();
+  const { answers } = useQuizAnswers();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({
@@ -26,8 +28,9 @@ export default function Result() {
       score,
       resultType,
       resultFeature,
-      recommendedBook,
-      referenceBook,
+      recommendedBookTitle: recommendedBook.title,
+      referenceBookTitle: referenceBook.title,
+      answers: { ...answers },
     };
 
     try {

@@ -1,4 +1,4 @@
-import { Button as MuiButton, ButtonProps, Typography } from '@mui/material'
+import { Button as MuiButton, ButtonProps, Typography, TypographyProps } from '@mui/material'
 import React from 'react'
 import { Box } from '@mui/material'
 
@@ -28,6 +28,12 @@ const sizeStyles = {
     iconSize: '32px',
   },
 }
+
+const typographyVariantMap: Record<'small' | 'medium' | 'large', TypographyProps['variant']> = {
+  small: 'button',
+  medium: 'h6',
+  large: 'h4',
+};
 
 interface CustomButtonProps extends ButtonProps {
   sizeType?: 'small' | 'medium' | 'large'
@@ -106,7 +112,7 @@ const Button = ({
     >
       {children && (
         <Typography
-          variant="button"
+          variant={typographyVariantMap[sizeType]}
           component="span"
         >
           {children}

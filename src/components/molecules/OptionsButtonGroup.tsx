@@ -68,11 +68,9 @@ export const OptionsButtonGroup = <T extends string>({
               sx={{
                 width: '100%',
                 height: '48px',
-                // Always set button's own radius, wrapper will clip it.
                 borderRadius: isSelected ? '100px' : '12px',
-                // The transition is now on the button itself.
-                transition: theme.transitions.create(['background-color'], {
-                  duration: theme.transitions.duration.short,
+                transition: theme.transitions.create(['background-color', 'border-radius'], {
+                  duration: theme.transitions.duration.standard,
                 }),
               }}
             >

@@ -15,6 +15,7 @@ const AttachartHeader = () => {
   const isHome = location.pathname === '/attachart' || location.pathname === '/attachart/';
   const isQuiz = location.pathname.startsWith('/attachart/quiz');
   const isResult = location.pathname.startsWith('/attachart/result');
+  const isPrivacyPolicy = location.pathname.startsWith('/attachart/privacy-policy');
 
   // 左端ボタン
   let leftButton = null;
@@ -28,7 +29,7 @@ const AttachartHeader = () => {
         Sweptへ
       </Button>
     );
-  } else if (isQuiz) {
+  } else if (isQuiz || isPrivacyPolicy) {
     leftButton = (
       <Button 
         color="primaryTonal" 

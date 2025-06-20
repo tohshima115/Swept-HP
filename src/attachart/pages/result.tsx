@@ -68,7 +68,7 @@ export default function Result() {
       <Box
         component="main"
         sx={{
-          maxWidth: '600px',
+         maxWidth:'800px',
           mx: 'auto',
           py: 4,
           px: 2,
@@ -122,10 +122,10 @@ export default function Result() {
             </Button>
             </Box>
         </Box>
-        <Box sx={{ mt: 6, mb: 6 }}>
+        <Box sx={{ my: 8 }}>
           <ResultForm onSubmit={handleFormSubmit} isSubmitting={isSubmitting} />
         </Box>
-        <Box sx={{ mt: 6 }}>
+        <Box sx={{ my: 8 }}>
           <Typography variant="h5" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
             あなたへのおすすめ書籍
           </Typography>
@@ -134,7 +134,7 @@ export default function Result() {
             title={recommendedBook.title}
           />
         </Box>
-        <Box sx={{ mt: 6 }}>
+        <Box sx={{ my: 8 }}>
           <Typography variant="h5" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
             この診断の参考にさせて頂いた書籍
           </Typography>

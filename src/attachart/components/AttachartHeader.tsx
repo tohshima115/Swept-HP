@@ -1,5 +1,5 @@
 import { AppBar, Box, useMediaQuery, useTheme } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import logoMark from '../assets/logoMark.svg?url';
 import ShareIcon from '@mui/icons-material/Share';
 import Button from '@/components/atoms/Button';
@@ -101,7 +101,9 @@ const AttachartHeader = () => {
           <Box sx={{ minWidth: {xs:100,md:144} }}>{leftButton}</Box>
           {/* 中央ロゴ */}
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <img src={logoMark} alt="attachartロゴ" style={{ height: 48, width: 'auto' }} />
+            <Link to="/attachart" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <img src={logoMark} alt="attachartロゴ" style={{ height: 48, width: 'auto' }} />
+            </Link>
           </Box>
           {/* 右端ボタン or 進捗ドット */}
           <Box sx={{ minWidth: {xs:100,md:144}, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>

@@ -106,9 +106,8 @@ const Button = ({
     >
       {children && (
         <Typography
-          variant="h6"
+          variant="button"
           component="span"
-          sx={{ fontSize: sizeStyles[sizeType].fontSize, fontWeight: 700 }}
         >
           {children}
         </Typography>

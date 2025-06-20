@@ -122,6 +122,11 @@ export const theme = createTheme({
       ...calculateHeadingSize(9),
       fontWeight: 400,
       lineHeight: 1.5,
+    },    
+    button:{
+      ...calculateHeadingSize(8),
+      fontWeight: 500,
+      lineHeight: 1.5,
     },
   },
 }) 

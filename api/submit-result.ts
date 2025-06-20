@@ -6,11 +6,10 @@ import { google } from 'googleapis';
 // フォームからと診断結果から来るデータの型定義
 interface RequestBody {
   nickname?: string;
-  age: string;
+  ageRange: string;
   gender: string;
   email: string;
-  privacyConsent: boolean;
-  interviewConsent?: boolean;
+  interviewAccepted: boolean;
   score: { A: number; B: number; C: number };
   resultType: string;
   resultFeature: string;
@@ -35,15 +34,22 @@ async function appendToSheet(data: RequestBody) {
     
     // スプレッドシートのヘッダー順に合わせてデータを整形
     const timestamp = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
-    const answersInOrder = Array.from({ length: 30 }, (_, i) => data.answers[`q${i + 1}`] || '');
     
+    // 受け取った回答オブジェクトのキーをソートして、正しい順番の回答配列を生成する
+    const questionKeys = Object.keys(data.answers).sort((a, b) => {
+      const numA = parseInt(a.substring(1), 10);
+      const numB = parseInt(b.substring(1), 10);
+      return numA - numB;
+    });
+    const answersInOrder = questionKeys.map(key => data.answers[key] ?? '');
+
     const newRow = [
       timestamp,
       data.nickname || '',
-      data.age,
+      data.ageRange,
       data.gender,
       data.email,
-      data.interviewConsent ? 'はい' : 'いいえ',
+      data.interviewAccepted ? 'はい' : 'いいえ',
       data.score.A,
       data.score.B,
       data.score.C,
@@ -140,7 +146,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Googleスプレッドシートへの書き込み (非同期だが待たない)
+    // Googleスプレッドシートへの書き込み
     appendToSheet(body);
     
     const emailHtml = createEmailHtml(body);

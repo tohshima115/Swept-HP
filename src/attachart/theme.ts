@@ -16,6 +16,28 @@ declare module '@mui/material/styles' {
     }
   }
 
+  const breakpoints = {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  }
+
+export const BASE_FONT_SIZE_MOBILE = 16
+export const BASE_FONT_SIZE_DESKTOP = 18
+
+const baseTheme = createTheme({ breakpoints })
+
+const calculateHeadingSize = (n: number) => ({
+    fontSize: `calc(${BASE_FONT_SIZE_MOBILE}px * 8/${n})`,
+    [baseTheme.breakpoints.up('sm')]: {
+        fontSize: `calc(${BASE_FONT_SIZE_DESKTOP}px * 8/${n})`,
+    },
+})
+
 export const theme = createTheme({
   palette: {
     primary: {
@@ -35,41 +57,68 @@ export const theme = createTheme({
         contrastText: '#5B3F46',
       },
     background: {
-      default: '#f5f5f5',
-      paper: '#ffffff',
+      default: '#FFF8F8',
+      paper: '#F3DDE1',
     },
     text: {
-      primary: '#212121',
-      secondary: '#757575',
+      primary: '#22191B',
+      secondary: '#514346',
+    },    
+    divider: '#D6C2C5',
+  },
+  components: {
+    MuiTypography: {
+      defaultProps: {
+        variant: 'body2',
+      },
     },
   },
   typography: {
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-    ].join(','),
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: '100px',
-          textTransform: 'none',
-          fontWeight: 700,
-        },
-      },
+    fontFamily: "M PLUS 1",
+    h1: {
+      ...calculateHeadingSize(3),
+      fontWeight: 700,
+      lineHeight: 1.4,
     },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          borderRadius: '12px',
-        },
-      },
+    h2: {
+      ...calculateHeadingSize(4),
+      fontWeight: 700,
+      lineHeight: 1.4,
+    },
+    h3: {
+      ...calculateHeadingSize(5),
+      fontWeight: 700,
+      lineHeight: 1.4,
+    },
+    h4: {
+      ...calculateHeadingSize(6),
+      fontWeight: 700,
+      lineHeight: 1.4,
+    },
+    h5: {
+      ...calculateHeadingSize(7),
+      fontWeight: 700,
+      lineHeight: 1.4,
+    },
+    h6: {
+      ...calculateHeadingSize(8),
+      fontWeight: 700,
+      lineHeight: 1.5,
+    },
+    body1: {
+      ...calculateHeadingSize(8),
+      fontWeight: 400,
+      lineHeight: 1.5,
+    },
+    body2: {
+      ...calculateHeadingSize(8),
+      fontWeight: 400,
+      lineHeight: 2,
+    },
+    subtitle1:{
+      ...calculateHeadingSize(9),
+      fontWeight: 400,
+      lineHeight: 1.5,
     },
   },
 }); 

@@ -52,13 +52,14 @@ const AttachartHeader = () => {
 
   // 右端ボタン
   const handleShare = () => {
+    const shareUrl = `${window.location.origin}/attachart`;
     if (navigator.share) {
       navigator.share({
         title: '愛着スタイル診断テスト',
-        url: window.location.href,
+        url: shareUrl,
       });
     } else {
-      navigator.clipboard.writeText(window.location.href);
+      navigator.clipboard.writeText(shareUrl);
       alert('URLをコピーしました');
     }
   };
@@ -97,13 +98,13 @@ const AttachartHeader = () => {
           px:{xs:'4px',md:'0px'}
         }}>
           {/* 左端ボタン */}
-          <Box sx={{ minWidth: 120 }}>{leftButton}</Box>
+          <Box sx={{ minWidth: {xs:100,md:144} }}>{leftButton}</Box>
           {/* 中央ロゴ */}
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img src={logoMark} alt="attachartロゴ" style={{ height: 48, width: 'auto' }} />
           </Box>
           {/* 右端ボタン or 進捗ドット */}
-          <Box sx={{ minWidth: 120, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+          <Box sx={{ minWidth: {xs:100,md:144}, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             {isQuiz ? (
               <QuizProgressDots />
             ) : (

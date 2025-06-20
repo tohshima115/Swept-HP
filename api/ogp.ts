@@ -4,7 +4,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   const title = 'attachart | 愛着スタイル診断テスト';
   const description = 'あなたの愛着スタイルを診断し、人間関係のパターンを理解するためのテストです。簡単な質問に答えて、自分のタイプを見つけましょう。';
   const url = 'https://www.swept.jp/attachart'; // ご自身のサイトのURLに適宜変更してください
-  const imageUrl = `${new URL(req.url ?? '/', `https://${req.headers.host}`).origin}/assets/logoMark-attachart.svg`;
+  const imageUrl = `${new URL(req.url ?? '/', `https://${req.headers.host}`).origin}/assets/logoMark-attachart.png`;
 
   const html = `
     <!DOCTYPE html>
@@ -22,7 +22,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
         <meta property="og:image" content="${imageUrl}" />
         
         <!-- Twitter -->
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="${url}" />
         <meta name="twitter:title" content="${title}" />
         <meta name="twitter:description" content="${description}" />

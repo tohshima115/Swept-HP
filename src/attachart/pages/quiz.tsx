@@ -6,7 +6,6 @@ import { questions, Choice } from '../questions';
 import { useQuizAnswers } from '../hooks/useQuizAnswers';
 
 const QUESTIONS_PER_PAGE = 15;
-const CHOICE_HEIGHT = 80; // px, 選択肢の高さを統一
 
 function getPageQuestions(page: number) {
   const start = (page - 1) * QUESTIONS_PER_PAGE;
@@ -33,15 +32,20 @@ export default function Quiz() {
   const handleSelect = (idx: number, value: string) => {
     const globalIdx = (pageNum - 1) * QUESTIONS_PER_PAGE + idx;
     setAnswer(globalIdx, value);
+
+    // 回答後の最新の回答リストを元に、次の未回答を探す
     const newAnswers = [...answers];
     newAnswers[globalIdx] = value;
     const firstUnanswered = newAnswers.findIndex(a => a === null);
-    // スクロール対象がこのページ内ならのみスクロール
-    if (firstUnanswered >= (pageNum - 1) * QUESTIONS_PER_PAGE && firstUnanswered < pageNum * QUESTIONS_PER_PAGE) {
-      const scrollIdx = Math.max(0, firstUnanswered - (pageNum - 1) * QUESTIONS_PER_PAGE - 2);
+
+    // 未回答の質問がこのページにある場合のみスクロール
+    if (firstUnanswered !== -1 && firstUnanswered >= (pageNum - 1) * QUESTIONS_PER_PAGE && firstUnanswered < pageNum * QUESTIONS_PER_PAGE) {
+      // ページ内でのインデックスに変換
+      const scrollIdx = firstUnanswered % QUESTIONS_PER_PAGE;
       const nextRef = questionRefs.current[scrollIdx];
       if (nextRef) {
-        nextRef.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // 画面の中央にスムーズにスクロール
+        nextRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
   };
@@ -69,18 +73,21 @@ export default function Quiz() {
       </Typography>
       <Box component="form">
         {pageQuestions.map((q, idx) => {
+          // グローバルインデックスを計算
+          const globalIdx = (pageNum - 1) * QUESTIONS_PER_PAGE + idx;
+          
           // カードの状態判定
-          const isAnswered = pageAnswers[idx] !== null;
-          const isFirstUnanswered = idx === firstUnansweredIdx;
+          const isAnswered = answers[globalIdx] !== null;
+          const isFirstUnanswered = globalIdx === firstUnansweredIdx;
           
           return (
             <Box
               key={q.id}
               ref={(el: HTMLDivElement | null) => { questionRefs.current[idx] = el; }}
-              sx={{
+              sx={(theme) => ({
                 position: 'relative',
                 borderRadius: 2,
-                bgcolor: 'var(--color-surface)',
+                bgcolor: 'background.default',
                 border: '1px solid',
                 borderColor: isAnswered ? 'var(--color-outline)' : 'var(--color-outline-variant)',
                 opacity: isAnswered ? 0.38 : 1,
@@ -90,15 +97,15 @@ export default function Quiz() {
                   position: 'absolute',
                   inset: -1,
                   m: '-5px',
-                  borderRadius: '16px',
-                  border: '3px solid var(--color-secondary)',
+                  borderRadius: '13px',
+                  border: `3px solid ${theme.palette.primary.main}`,
                   pointerEvents: 'none',
                   zIndex: 20,
                 } : {},
-              }}
+              })}
             >
               <Box sx={{ p: 2 }}>
-                <Typography sx={{ mb: 1, fontWeight: 500 }}>
+                <Typography variant='h6' color='text.primary'>
                   {q.id}. {q.question}
                 </Typography>
                 <RadioGroup
@@ -109,7 +116,7 @@ export default function Quiz() {
                     width: '100%',
                     gap: 0,
                     maxWidth: '100%',
-                    height: CHOICE_HEIGHT,
+                    alignItems: 'flex-end',
                   }}
                 >
                   {getSortedChoices(q.choices).map((choice, cidx) => (
@@ -120,15 +127,25 @@ export default function Quiz() {
                         flexDirection: 'column',
                         alignItems: 'center',
                         flex: 1,
-                        height: '100%',
+                        height: 'auto',
                         justifyContent: 'flex-end',
                         minWidth: 0,
-                        minHeight: CHOICE_HEIGHT,
+                        minHeight: 80,
                       }}
                     >
                       <FormControlLabel
                         value={choice.label}
-                        control={<Radio />}
+                        control={
+                          <Radio 
+                            sx={{ 
+                              '& .MuiSvgIcon-root': {
+                                width: choice.position !== 'center' ? 33.6 : 24,
+                                height: choice.position !== 'center' ? 33.6 : 24,
+                                transition: 'width 0.2s, height 0.2s',
+                              },
+                            }} 
+                          />
+                        }
                         label={choice.label}
                         onChange={() => handleSelect(idx, choice.label)}
                         sx={{
@@ -137,6 +154,9 @@ export default function Quiz() {
                           '.MuiFormControlLabel-label': {
                             fontSize: '0.875rem',
                             mt: 0.5,
+                            textAlign: 'center',
+                            lineHeight: 1.3,
+                            whiteSpace: 'pre-wrap'
                           },
                         }}
                       />

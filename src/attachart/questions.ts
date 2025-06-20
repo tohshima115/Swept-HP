@@ -126,8 +126,8 @@ export const questions: Question[] = [
     id: 13,
     question: 'そばにいなくなっても、一人の人のことを長く思い続ける方ですか。それとも、次の人をすぐ求めてしまう方ですか。',
     choices: [
-      { label: '一人のことを思い続ける', score: 'A', position: 'left' },
-      { label: '次の人を求めてしまう', score: 'B', position: 'right' },
+      { label: '一人のことを\n思い続ける', score: 'A', position: 'left' },
+      { label: '次の人を\n求めてしまう', score: 'B', position: 'right' },
       { label: '中立', score: null, position: 'center' }
     ]
   },

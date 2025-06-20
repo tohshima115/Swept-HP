@@ -61,7 +61,7 @@ function App() {
     // --- Set Favicon ---
     const favicon = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
     if (favicon) {
-      favicon.href = '/assets/logoMark.svg';
+      favicon.href = '/assets/logoMark-attachart.svg';
     }
 
     // --- Cleanup ---

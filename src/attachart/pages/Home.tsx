@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import logoMark from '../assets/logoMark.svg?url';
+import logoMark from '../assets/logoVerticle.svg?url';
 import Button from '@/components/atoms/Button';
 
 export default function Home() {
@@ -15,14 +15,18 @@ export default function Home() {
         justifyContent: 'center',
         gap: 4,
         flexGrow: 1,
+        px:2,
+        maxWidth: '1200px',
+        mx: 'auto',
       }}
     >
-      <img src={logoMark} alt="attachartロゴ" style={{ height: 90, width: 'auto' }} />
+      <img src={logoMark} alt="attachartロゴ" style={{ height: 168, width: 'auto' }} />
       <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold' }}>
         愛着スタイル診断テスト
       </Typography>
       <Typography sx={{ maxWidth: 'xl', textAlign: 'center' }}>
-        過去数年間のご自分の傾向を思い浮かべながら、45問の設問に答えてください。診断結果は、あなたの愛着スタイル（安定型・不安型・回避型）を判定し、今後の人間関係や自己理解に役立てることができます。
+        過去数年間のご自分の傾向を思い浮かべながら、45問の設問に答えてください。<br/>
+        診断結果は、あなたの愛着スタイル（安定型・不安型・回避型）を判定し、今後の人間関係や自己理解に役立てることができます。
       </Typography>
       <Button
         onClick={() => navigate('/attachart/quiz/1')}

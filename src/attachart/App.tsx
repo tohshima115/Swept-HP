@@ -8,8 +8,28 @@ import Quiz from './pages/quiz';
 import Result from './pages/result';
 import AttachartHeader from './components/AttachartHeader';
 import AttachartFooter from './components/AttachartFooter';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    const originalTitle = document.title;
+    const originalFavicon = document.querySelector("link[rel*='icon']")?.getAttribute('href') || '';
+
+    document.title = 'attachart | 愛着スタイル診断テスト';
+    
+    const favicon = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
+    if (favicon) {
+      favicon.href = '/src/attachart/assets/logoMark.svg';
+    }
+
+    return () => {
+      document.title = originalTitle;
+      if (favicon) {
+        favicon.href = originalFavicon;
+      }
+    };
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

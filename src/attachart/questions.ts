@@ -304,11 +304,11 @@ export const questions: Question[] = [
   },
   {
     id: 33,
-    question: '昔のことはあまり懐かしいと思いませんか。',
+    question: '昔のことは懐かしいですか。',
     choices: [
-      { label: 'はい', score: 'C', position: 'left' },
-      { label: 'いいえ', score: null, position: 'right' },
-      { label: '中立', score: null, position: 'center' }
+      { label: 'はい', score: null, position: 'left' },
+      { label: 'いいえ', score: 'C', position: 'right' },
+      { label: '中立', score: 'C', position: 'center' }
     ]
   },
   {

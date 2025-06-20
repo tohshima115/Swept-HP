@@ -3,6 +3,7 @@ import { useQuizAnswers } from '../hooks/useQuizAnswers';
 import { questions } from '../questions';
 import { useMemo } from 'react';
 import { determineAttachmentStyle } from '../utils/determineAttachmentStyle';
+import ReferenceBookCard from '../components/ReferenceBookCard';
 
 const RadarChart = ({ score }: { score: { A: number; B: number; C: number } }) => {
   const size = 240; // Increase size to prevent clipping
@@ -113,19 +114,70 @@ export default function Result() {
     return type ? type.description : '';
   }, [attachmentTypes, resultType]);
 
+  const recommendedBooks = useMemo(() => ({
+    A: { // 安定
+      title: '愛着障害は何歳からでも必ず修復できる',
+      url: 'https://amzn.to/3SZw08w',
+    },
+    B: { // 不安
+      title: '不安型愛着スタイル～他人の顔色に支配される人々～ (光文社新書)',
+      url: 'https://amzn.to/40cuB28',
+    },
+    C: { // 回避
+      title: '回避性愛着障害～絆が稀薄な人たち～ (光文社新書)',
+      url: 'https://amzn.to/4l8llnQ',
+    },
+    default: {
+      title: '愛着障害～子ども時代を引きずる人々～ (光文社新書)',
+      url: 'https://amzn.to/44aP6xG',
+    },
+  }), []);
+
+  const recommendedBook = useMemo(() => {
+    const { A, B, C } = score;
+    const scores = { A, B, C };
+
+    // どのスコアも0の場合はデフォルトを返す
+    if (A === 0 && B === 0 && C === 0) {
+      return recommendedBooks.default;
+    }
+
+    const maxScore = Math.max(A, B, C);
+
+    const highestScoringTypes = (Object.keys(scores) as Array<keyof typeof scores>).filter(
+      key => scores[key] === maxScore
+    );
+
+    // 最高スコアが1つだけの場合
+    if (highestScoringTypes.length === 1) {
+      return recommendedBooks[highestScoringTypes[0]];
+    }
+    
+    // 同点の場合のロジック
+    // 不安が含まれる場合
+    if (highestScoringTypes.includes('B')) {
+      return recommendedBooks.B;
+    }
+    // 回避と安定の場合
+    if (highestScoringTypes.includes('A') && highestScoringTypes.includes('C')) {
+      return recommendedBooks.C;
+    }
+
+    // 上記以外の同点（理論上発生しないが念のため）
+    return recommendedBooks.default;
+  }, [score, recommendedBooks]);
+
   return (
     <Box
       component="main"
       sx={{
         maxWidth: '600px',
         mx: 'auto',
-        py: 8,
-        mt: 8,
         px: 2,
         color: 'var(--color-on-surface)',
       }}
     >
-      <Typography variant="h4" component="h2" sx={{ mb: 3, fontWeight: 'bold' }}>
+      <Typography variant="h5" component="h3" sx={{ mb: 2, textAlign: 'center' }}>
         診断結果
       </Typography>
       <Box
@@ -133,7 +185,6 @@ export default function Result() {
           mb: 4,
           p: 3,
           borderRadius: 4,
-          boxShadow: 3,
           border: '1px solid',
           borderColor: 'divider',
           bgcolor: 'var(--color-surface-variant)',
@@ -162,6 +213,24 @@ export default function Result() {
         <Typography sx={{ mt: 2, color: 'var(--color-on-surface-variant)', textAlign: 'center' }}>
           {resultFeature}
         </Typography>
+      </Box>
+      <Box sx={{ mt: 6 }}>
+        <Typography variant="h5" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
+          あなたへのおすすめ書籍
+        </Typography>
+        <ReferenceBookCard
+          url={recommendedBook.url}
+          title={recommendedBook.title}
+        />
+      </Box>
+      <Box sx={{ mt: 6 }}>
+        <Typography variant="h5" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
+          この診断の参考にさせて頂いた書籍
+        </Typography>
+        <ReferenceBookCard
+          url={recommendedBooks.default.url}
+          title={recommendedBooks.default.title}
+        />
       </Box>
     </Box>
   );

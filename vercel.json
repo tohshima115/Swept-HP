@@ -1,11 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/attachart(/.*)?",
-      "destination": "https://attachart-tohshima115s-projects.vercel.app/attachart$1"
-    },
-    {
-      "source": "/(.*)",
+      "source": "/:path((?!.*\\.).*)",
       "destination": "/index.html"
     }
   ]

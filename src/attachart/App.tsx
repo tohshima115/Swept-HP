@@ -20,7 +20,7 @@ function App() {
       title: 'attachart | 愛着スタイル診断テスト',
       description: 'あなたの愛着スタイルを診断し、人間関係のパターンを理解するためのテストです。簡単な質問に答えて、自分のタイプを見つけましょう。',
       url: `${window.location.origin}/attachart`,
-      imageUrl: `${window.location.origin}/assets/logoMark.svg`,
+      imageUrl: `${window.location.origin}/assets/logoMark-attachart.svg`,
     };
 
     document.title = metaInfo.title;

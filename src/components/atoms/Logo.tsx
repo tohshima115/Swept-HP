@@ -1,10 +1,11 @@
 import { Box } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { ReactComponent as LogoHorizontal } from '../../../public/assets/logoHorizontal.svg'
+import { ReactComponent as LogoHorizontal } from '@/assets/logoHorizontal.svg'
 
 interface LogoProps {
   size?: 'small' | 'medium' | 'large' | number
   color?: 'default' | 'white'
+  variant?: 'horizontal' | 'vertical' | 'mark' | 'markNoMargin'
 }
 
 const sizeMap = {

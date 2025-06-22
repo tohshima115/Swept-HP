@@ -94,7 +94,7 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
       <Typography variant="h4" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
         診断結果をメールで受け取る
       </Typography>
-      <Box sx={{            p: 3,
+      <Box sx={{            p: 2,
             borderRadius: 4,
             border: '1px solid',
             borderColor: 'divider',
@@ -132,7 +132,7 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
           options={ageRanges}
           value={ageRange}
           onChange={setAgeRange}
-          columns={{ xs: 3, sm: 6 }}
+          columns={{ xs: 3, md: 6 }}
         />
       </Box>
       <Box sx={{ my: 1.5 }}>

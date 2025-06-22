@@ -10,7 +10,7 @@ const AboutSwept = () => {
       </Typography>
       <Box
         sx={{
-          p: 3,
+          p: 2,
           borderRadius: 4,
           border: '1px solid',
           borderColor: 'divider',

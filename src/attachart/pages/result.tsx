@@ -75,7 +75,6 @@ export default function Result() {
          maxWidth:'800px',
           mx: 'auto',
           py: 4,
-          px: 2,
           color: 'var(--color-on-surface)',
         }}
       >
@@ -85,7 +84,7 @@ export default function Result() {
         <Box
           sx={{
             mb: 4,
-            p: 3,
+            p: 2,
             borderRadius: 4,
             border: '1px solid',
             borderColor: 'divider',

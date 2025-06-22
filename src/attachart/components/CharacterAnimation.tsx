@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Box } from '@mui/material';
+import { Box, Stack, useTheme, useMediaQuery } from '@mui/material';
+import { determineCharacterPlacement } from '../utils/determineCharacterPlacement';
 
 interface Score {
   A: number;
@@ -11,71 +12,62 @@ interface CharacterAnimationProps {
   score: Score;
 }
 
-const getCharacterBaseNameFromScore = (score: Score): 'antei' | 'huan' | 'kaihi' => {
-  const { A, B, C } = score;
-  
-  if (A === 0 && B === 0 && C === 0) {
-    return 'antei'; // デフォルトは安定
-  }
-  
-  const maxScore = Math.max(A, B, C);
-  
-  // スコアが最大値であるキーを特定する
-  const highestScoringKeys: ('A' | 'B' | 'C')[] = [];
-  if (A === maxScore) highestScoringKeys.push('A');
-  if (B === maxScore) highestScoringKeys.push('B');
-  if (C === maxScore) highestScoringKeys.push('C');
+const ANIMATION_INTERVAL_MS = 120;
 
-  let characterTypeKey: 'A' | 'B' | 'C' = 'A';
-
-  if (highestScoringKeys.length === 1) {
-    characterTypeKey = highestScoringKeys[0];
-  } else {
-    if (highestScoringKeys.includes('B')) {
-      characterTypeKey = 'B'; // 不安(B)が優勢
-    } else if (highestScoringKeys.includes('C')) {
-      characterTypeKey = 'C'; // 回避(C)が優勢
-    } else {
-      characterTypeKey = 'A'; // 安定(A)
-    }
-  }
-
-  const typeMap = {
-    A: 'antei',
-    B: 'huan',
-    C: 'kaihi',
-  } as const;
-
-  return typeMap[characterTypeKey];
-};
-
-const ANIMATION_INTERVAL_MS = 120; // 0.2秒
-
-const CharacterAnimation = ({ score }: CharacterAnimationProps) => {
+// 単一のキャラクターアニメーションを担当するサブコンポーネント
+const AnimatedCharacter = ({ baseName, size }: { baseName: 'antei' | 'huan' | 'kaihi'; size: number }) => {
   const [frame, setFrame] = useState(1);
-  
-  const characterBaseName = getCharacterBaseNameFromScore(score);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setFrame((prevFrame) => (prevFrame % 5) + 1);
-    }, ANIMATION_INTERVAL_MS); // 0.2秒ごとにフレームを更新
-
+    }, ANIMATION_INTERVAL_MS);
     return () => clearInterval(interval);
   }, []);
 
-  const imageUrl = `/assets/${characterBaseName}_0${frame}.png`;
-
-  const altTextMap: { [key in 'antei' | 'huan' | 'kaihi']: string } = {
-    'antei': '安定型',
-    'huan': '不安型',
-    'kaihi': '回避型'
+  const imageUrl = `/assets/${baseName}_0${frame}.png`;
+  const altTextMap: { [key in typeof baseName]: string } = {
+    antei: '安定型',
+    huan: '不安型',
+    kaihi: '回避型',
   };
 
+  return <img src={imageUrl} alt={`${altTextMap[baseName]}のキャラクター`} style={{ width: `${size}px`, height: 'auto' }} />;
+};
+
+const CharacterAnimation = ({ score }: CharacterAnimationProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  // 画面サイズに応じて基準となるサイズを定義
+  const wrapperSize = isMobile ? 104 : 168;
+  const sizeMap: { [key: number]: number } = isMobile 
+    ? { 0: 104, 1: 64, 2: 40 } 
+    : { 0: 168, 1: 104, 2: 64 };
+
+  const finalPlacement = determineCharacterPlacement(score);
+  
+  const charactersWithSize = finalPlacement.map(charInfo => 
+    charInfo ? { ...charInfo, size: sizeMap[charInfo.rank] ?? (isMobile ? 40 : 64) } : null
+  );
+
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
-      <img src={imageUrl} alt={`${altTextMap[characterBaseName]}のキャラクター`} style={{ width: '168px', height: 'auto' }} />
-    </Box>
+    <Stack direction="row" justifyContent="center" alignItems="flex-end" sx={{ my: 3, minHeight: wrapperSize }}>
+      {charactersWithSize.map((charInfo, index) => (
+        <Box 
+          key={index}
+          sx={{
+            width: wrapperSize,
+            height: wrapperSize,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'flex-end',
+          }}
+        >
+          {charInfo && <AnimatedCharacter baseName={charInfo.baseName} size={charInfo.size} />}
+        </Box>
+      ))}
+    </Stack>
   );
 };
 

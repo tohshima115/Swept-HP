@@ -1,4 +1,4 @@
-import { Box, Typography, Snackbar, Alert } from '@mui/material';
+import { Box, Typography, Snackbar, Alert, Grid } from '@mui/material';
 import { useState } from 'react';
 import ReferenceBookCard from '../components/ReferenceBookCard';
 import ExplanationModal from '../components/ExplanationModal';
@@ -133,24 +133,26 @@ export default function Result() {
         <Box sx={{ my: 8 }}>
           <AboutSwept />
         </Box>
-        <Box sx={{ my: 8 }}>
-          <Typography variant="h5" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
-            あなたへのおすすめ書籍
-          </Typography>
-          <ReferenceBookCard
-            url={recommendedBook.url}
-            title={recommendedBook.title}
-          />
-        </Box>
-        <Box sx={{ my: 8 }}>
-          <Typography variant="h5" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
-            この診断の参考にさせて頂いた書籍
-          </Typography>
-          <ReferenceBookCard
-            url={referenceBook.url}
-            title={referenceBook.title}
-          />
-        </Box>
+        <Grid container spacing={4} sx={{ my: 8 }}>
+          <Grid size={{xs:12, md:6}}>
+            <Typography variant="h6" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
+              あなたへのおすすめ書籍
+            </Typography>
+            <ReferenceBookCard
+              url={recommendedBook.url}
+              title={recommendedBook.title}
+            />
+          </Grid>
+          <Grid size={{xs:12, md:6}}>
+            <Typography variant="h6" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
+              この診断の参考にさせて頂いた書籍
+            </Typography>
+            <ReferenceBookCard
+              url={referenceBook.url}
+              title={referenceBook.title}
+            />
+          </Grid>
+        </Grid>
       </Box>
       <Snackbar open={feedback.open} autoHideDuration={6000} onClose={handleCloseFeedback}>
         <Alert onClose={handleCloseFeedback} severity={feedback.severity} sx={{ width: '100%' }}>

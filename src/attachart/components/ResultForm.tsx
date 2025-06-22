@@ -118,6 +118,7 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
         value={email}
         onChange={handleEmailChange}
         onBlur={handleEmailBlur}
+        autoComplete="email"
         error={emailError}
         helperText={emailError ? '有効なメールアドレスを入力してください。' : ''}
         margin="normal"

@@ -8,6 +8,8 @@ import { useQuizResult } from '../hooks/useQuizResult';
 import { useQuizAnswers } from '../hooks/useQuizAnswers';
 import { RadarChart } from '../components/RadarChart';
 import { ResultForm, FormData } from '../components/ResultForm';
+import CharacterAnimation from '../components/CharacterAnimation';
+import AboutSwept from '../components/AboutSwept';
 
 export default function Result() {
   const { score, resultType, resultFeature, recommendedBook, referenceBook } = useQuizResult();
@@ -113,7 +115,8 @@ export default function Result() {
           <Typography sx={{ mt: 2, color: 'var(--color-on-surface-variant)', textAlign: 'center' }}>
             {resultFeature}
           </Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          <CharacterAnimation score={score} />
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
             <Button
             color='primaryTonal'
             onClick={() => setIsModalOpen(true)}
@@ -122,10 +125,13 @@ export default function Result() {
             >
                 愛着スタイルとは
             </Button>
-            </Box>
+          </Box>
         </Box>
         <Box sx={{ my: 8 }}>
           <ResultForm onSubmit={handleFormSubmit} isSubmitting={isSubmitting} />
+        </Box>
+        <Box sx={{ my: 8 }}>
+          <AboutSwept />
         </Box>
         <Box sx={{ my: 8 }}>
           <Typography variant="h5" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>

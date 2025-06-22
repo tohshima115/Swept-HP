@@ -119,7 +119,12 @@ export const theme = createTheme({
       ...calculateHeadingSize(9),
       fontWeight: 400,
       lineHeight: 1.5,
-    },    
+    },  
+    subtitle2:{
+        ...calculateHeadingSize(10),
+        fontWeight: 400,
+        lineHeight: 1.5,
+      },    
     button:{
         ...calculateHeadingSize(10),
         fontWeight: 500,

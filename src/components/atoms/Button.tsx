@@ -43,6 +43,8 @@ interface CustomButtonProps extends ButtonProps {
   variant?: 'contained' | 'text'
   to?: string
   component?: React.ElementType
+  target?: string
+  rel?: string
 }
 
 const Button = ({
@@ -54,11 +56,15 @@ const Button = ({
   variant = 'contained',
   to,
   component,
+  target,
+  rel,
   ...props
 }: CustomButtonProps) => {
   const extraProps: Record<string, unknown> = {};
   if (component) extraProps.component = component;
   if (to) extraProps.to = to;
+  if (target) extraProps.target = target;
+  if (rel) extraProps.rel = rel;
 
   // アイコンをサイズに応じてラップする
   const wrapIcon = (icon: React.ReactNode, position: 'start' | 'end') => {

@@ -1,5 +1,5 @@
 import { News } from '../types/news'
-import LogoUrl from '@/assets/logoHorizontal.svg'
+import LogoUrl from '@/assets/logoHorizontal.svg?url'
 
 export const newsItems: News[] = [
     {

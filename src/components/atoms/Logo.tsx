@@ -1,6 +1,9 @@
 import { Box } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { ReactComponent as LogoHorizontal } from '@/assets/logoHorizontal.svg'
+import { ReactComponent as LogoVertical } from '@/assets/logoVertical.svg'
+import { ReactComponent as LogoMark } from '@/assets/logoMark.svg'
+import { ReactComponent as LogoMarkNoMargin } from '@/assets/logoMarkNoMargin.svg'
 
 interface LogoProps {
   size?: 'small' | 'medium' | 'large' | number
@@ -14,8 +17,16 @@ const sizeMap = {
   large: 72,
 }
 
-const Logo = ({ size = 'medium', color = 'default' }: LogoProps) => {
+const Logo = ({ size = 'medium', color = 'default', variant = 'horizontal' }: LogoProps) => {
   const pxSize = typeof size === 'number' ? size : sizeMap[size]
+
+  const LogoComponent = {
+    horizontal: LogoHorizontal,
+    vertical: LogoVertical,
+    mark: LogoMark,
+    markNoMargin: LogoMarkNoMargin,
+  }[variant]
+
   return (
     <Box
       component={Link}
@@ -35,7 +46,7 @@ const Logo = ({ size = 'medium', color = 'default' }: LogoProps) => {
         },
       }}
     >
-      <LogoHorizontal />
+      <LogoComponent />
     </Box>
   )
 }

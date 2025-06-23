@@ -1,6 +1,5 @@
 import { create } from 'zustand'
-import { News, NewsListResponse } from '../types/news'
-import { client } from '../lib/microcms'
+import { News } from '../types/news'
 
 const CACHE_DURATION = 1000 * 60 * 60 // 1時間
 
@@ -35,8 +34,12 @@ const useStore = create<AppState>((set, get) => ({
     }
     
     try {
-      const res = await client.get<NewsListResponse>({ endpoint: 'news' })
-      set({ newsList: { data: res.contents, lastFetched: now } })
+      const res = await fetch('/api/news');
+      if (!res.ok) {
+        throw new Error(`API call failed with status: ${res.status}`);
+      }
+      const data: News[] = await res.json();
+      set({ newsList: { data, lastFetched: now } })
     } catch (error) {
       console.error('ニュース一覧の取得に失敗しました', error)
     }
@@ -53,7 +56,11 @@ const useStore = create<AppState>((set, get) => ({
     }
     
     try {
-      const data = await client.get<News>({ endpoint: 'news', contentId: id })
+      const res = await fetch(`/api/news/${id}`);
+      if (!res.ok) {
+        throw new Error(`API call failed with status: ${res.status}`);
+      }
+      const data: News = await res.json();
       set((state) => ({
         newsDetails: {
           ...state.newsDetails,

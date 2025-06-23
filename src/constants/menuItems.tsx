@@ -34,7 +34,7 @@ export const menuItems: MenuItem[] = [
   //   icon: <BusinessIcon />
   // },
   { 
-    to: '/member#niwa-katsuma', 
+    to: '/team#niwa-katsuma', 
     label: 'Member', 
     labelJa: 'メンバー',
     icon: <GroupIcon />
@@ -46,7 +46,7 @@ export const menuItems: MenuItem[] = [
     icon: <ArticleIcon />
   },
   { 
-    to: '/information', 
+    to: '/company', 
     label: 'Info', 
     labelJa: '運営者情報',
     icon: <BusinessCenterIcon />

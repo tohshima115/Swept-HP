@@ -14,6 +14,7 @@ import Company from './components/pages/Company'
 import { AnimatePresence } from 'framer-motion'
 import useScrollToTop from './hooks/useScrollToTop'
 import AttachartApp from './attachart/App'
+import PageTransition from './components/templates/PageTransition'
 
 function App() {
   const location = useLocation()
@@ -24,22 +25,24 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {!isAttachart && <Navbar />}
-      <Box component="main" sx={{ flexGrow: 1, position: 'relative' }}>
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route index element={<Home />} />
-            <Route path="/vision" element={<Vision />} />
-            <Route path="/service" element={<Service />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/news/:id" element={<NewsDetail />} />
-            <Route path="/company" element={<Company />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/attachart/*" element={<AttachartApp />} />
-          </Routes>
-        </AnimatePresence>
+      <Box component="main" sx={{ flexGrow: 1, position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ flexGrow: 1 }}>
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route index element={<PageTransition><Home /></PageTransition>} />
+              <Route path="/vision" element={<PageTransition><Vision /></PageTransition>} />
+              <Route path="/service" element={<PageTransition><Service /></PageTransition>} />
+              <Route path="/team" element={<PageTransition><Team /></PageTransition>} />
+              <Route path="/news" element={<PageTransition><News /></PageTransition>} />
+              <Route path="/news/:id" element={<PageTransition><NewsDetail /></PageTransition>} />
+              <Route path="/company" element={<PageTransition><Company /></PageTransition>} />
+              <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+              <Route path="/attachart/*" element={<AttachartApp />} />
+            </Routes>
+          </AnimatePresence>
+        </Box>
+        {!isAttachart && <Footer />}
       </Box>
-      {!isAttachart && <Footer />}
     </ThemeProvider>
   )
 }

@@ -52,9 +52,10 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
       <Container maxWidth="sm" sx={{ position: 'relative', zIndex: 1, pt: { xs: 8, md: 12 } }}>
         <AnimatePresence>
           {/* Visionセクションだけ中央寄せ */}
-          <Box sx={{ minHeight: '33vh' }} />
+          <Box key="spacer-1" sx={{ minHeight: '33vh' }} />
 
             <motion.div
+              key="vision"
               custom={0}
               initial="hidden"
               whileInView="visible"
@@ -63,10 +64,11 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
             >
               <HomeVisionSection navigate={navigate} />
             </motion.div>
-          <Box sx={{ minHeight: '33vh' }} />
+          <Box key="spacer-2" sx={{ minHeight: '33vh' }} />
 
           {/* セクション間スペース */}
           <motion.div
+            key="member"
             custom={1}
             initial="hidden"
             whileInView="visible"
@@ -75,8 +77,9 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
           >
             <HomeMemberSection navigate={navigate} orderedMembers={orderedMembers} />
           </motion.div>
-          <Box sx={{ minHeight: '33vh' }} />
+          <Box key="spacer-3" sx={{ minHeight: '33vh' }} />
           <motion.div
+            key="news"
             custom={2}
             initial="hidden"
             whileInView="visible"
@@ -85,7 +88,7 @@ const Home: React.FC<HomeProps> = ({ sx }) => {
           >
             <HomeNewsSection navigate={navigate} />
           </motion.div>
-          <Box sx={{ minHeight: '33vh' }} />
+          <Box key="spacer-4" sx={{ minHeight: '33vh' }} />
         </AnimatePresence>
       </Container>
     </Box>

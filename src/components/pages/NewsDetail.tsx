@@ -1,65 +1,79 @@
-import { Box, Container, Typography, SxProps, Theme } from '@mui/material'
-import { useParams } from 'react-router-dom'
-import { newsItems } from '../../data/news'
-import { Image } from '../atoms/Image'
-import CategoryTag from '../atoms/CategoryTag'
-import Button from '../atoms/Button'
-import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Container, Box, Typography, Chip } from '@mui/material';
+import useStore from '../../store/useStore';
+import logoUrl from '../../assets/logoHorizontal169.svg?url';
+import Button from '../atoms/Button';
+import parse, { domToReact, HTMLReactParserOptions, Element, DOMNode } from 'html-react-parser';
+import { Heading2, Heading3 } from '../atoms/typography';
+import { Image } from '../atoms/Image';
 
-interface NewsDetailProps {
-  sx?: SxProps<Theme>
-}
+const NewsDetail = () => {
+  const { id } = useParams<{ id: string }>();
+  const fetchNewsById = useStore((state) => state.fetchNewsById);
+  const news = useStore((state) => (id ? state.newsDetails[id]?.data : null));
+  const navigate = useNavigate();
 
-const NewsDetail: React.FC<NewsDetailProps> = ({ sx }) => {
-
-const navigate = useNavigate()
-  const { slug } = useParams<{ slug: string }>()
-  const news = newsItems.find(item => item.slug === slug)
+  useEffect(() => {
+    if (id) {
+      fetchNewsById(id);
+    }
+  }, [id, fetchNewsById]);
 
   if (!news) {
-    return (
-      <Box sx={sx}>
-        <Container maxWidth="lg">
-          <Typography variant="h1">記事が見つかりません</Typography>
-        </Container>
-      </Box>
-    )
+    return <Container maxWidth="md" sx={{ mt: 16, mb: 5 }}><p>読み込み中...</p></Container>;
   }
 
-  return (
-    <Box sx={sx}>
-      <Container maxWidth="md">
-        <Box mt={8} mb={5}>
-            <Image src={news.imageUrl} alt={news.title} aspectRatio='16:9'/>
-          <Box mb={2} sx={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}>
-            <CategoryTag isNews={news.tag === 'ニュース'}/>
-            <Typography variant="body1" color="text.secondary">
-              {news.date}
-            </Typography>
-          </Box>
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: '32px',
-                fontWeight: 700,
-                color: 'text.primary',
-                mb: 3,
-              }}
-            >
-              {news.title}
-            </Typography>
-          <Typography mb={5}>
-            {news.content}
-          </Typography>
-          <Button
-                onClick={() => navigate('/news')}
-              >
-                ニュース一覧に戻る
-            </Button>
-        </Box>
-      </Container>
-    </Box>
-  )
-}
+  const publishedDate = new Date(news.publishedAt || news.createdAt).toLocaleDateString();
 
-export default NewsDetail 
+  // html-react-parserのオプション
+  const options: HTMLReactParserOptions = {
+    replace: (domNode) => {
+      if (domNode instanceof Element) {
+        if (domNode.name === 'h2') {
+          return <Heading2 title={domToReact(domNode.children as DOMNode[], options) as string} />;
+        }
+        if (domNode.name === 'h3') {
+          return <Heading3 title={domToReact(domNode.children as DOMNode[], options) as string} />;
+        }
+        if (domNode.name === 'p') {
+          return <Typography >{domToReact(domNode.children as DOMNode[], options)}</Typography>;
+        }
+        if (domNode.name === 'img') {
+          const { src, alt } = domNode.attribs;
+          if (src) {
+            return <Image src={src} alt={alt || ''} />;
+          }
+          return null;
+        }
+      }
+    }
+  };
+
+  return (
+    <Container maxWidth="md" sx={{ mt: 16, mb: 5 }}>
+      <Box sx={{ mb: 5 }}>
+        <Image src={news.thumbnail?.url || logoUrl} alt={news.title} aspectRatio="16:9" />
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 3, mb: 2 }}>
+          <Typography variant="body1" color="textSecondary">
+            {publishedDate}
+          </Typography>
+          {news.category && <Chip label={news.category.name} />}
+        </Box>
+        <Typography variant="h2" component="h2" gutterBottom>
+          {news.title}
+        </Typography>
+        <Box>
+          {parse(news.content, options)}
+        </Box>
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
+        <Button sizeType="medium" color="primary" variant="contained" onClick={() => navigate('/news')}>
+          ニュース一覧に戻る
+        </Button>
+      </Box>
+    </Container>
+  );
+};
+
+export default NewsDetail; 

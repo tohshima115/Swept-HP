@@ -13,7 +13,8 @@ import AttachartFooter from './components/AttachartFooter';
 // Google Analytics gtag型定義
 declare global {
   interface Window {
-    gtag?: {
+    attachartGtagLoaded?: boolean;
+    attachartGtag?: {
       (command: 'js', config: string | Date): void;
       (command: 'config' | 'event', targetId: string, params?: Record<string, unknown>): void;
     };
@@ -92,8 +93,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (window.gtag) {
-      window.gtag('event', 'page_view', {
+    if (window.attachartGtagLoaded && window.attachartGtag) {
+      window.attachartGtag('event', 'page_view', {
         page_path: location.pathname + location.search,
         page_location: window.location.href,
       });

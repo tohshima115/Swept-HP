@@ -8,13 +8,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@100..900&display=swap" rel="stylesheet">
     <title>Swept</title>
-    <!-- Google tag (gtag.js) -->
+    <!-- Swept本体用GAタグ -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-K624B9TE9P"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-K624B9TE9P', { send_page_view: false }); // SPAなので手動で送信
+      gtag('config', 'G-K624B9TE9P', { send_page_view: false });
+    </script>
+    <!-- Attachart用GAタグ（/attachart配下のみ有効化） -->
+    <script id="attachart-gtag" async src="https://www.googletagmanager.com/gtag/js?id=G-1C8TXX7NEH"></script>
+    <script>
+      window.attachartGtagLoaded = false;
+      function attachartGtag(){dataLayer.push(arguments);}
+      if (window.location.pathname.startsWith('/attachart')) {
+        attachartGtag('js', new Date());
+        attachartGtag('config', 'G-1C8TXX7NEH', { send_page_view: false });
+        window.attachartGtagLoaded = true;
+      }
     </script>
   </head>
   <body>

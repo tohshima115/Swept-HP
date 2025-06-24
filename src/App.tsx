@@ -32,15 +32,15 @@ function App() {
   useScrollToTop(location)
   const isAttachart = location.pathname.startsWith('/attachart')
 
-  // Google Analyticsページビュー送信
+  // Google Analyticsページビュー送信（本体用のみ）
   useEffect(() => {
-    if (window.gtag) {
+    if (window.gtag && !isAttachart) {
       window.gtag('event', 'page_view', {
         page_path: location.pathname + location.search,
         page_location: window.location.href,
       });
     }
-  }, [location]);
+  }, [location, isAttachart]);
 
   return (
     <ThemeProvider theme={theme}>

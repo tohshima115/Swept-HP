@@ -30,11 +30,14 @@ export default async function handler(
       contentId: id,
     });
     return res.status(200).json(data);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(error);
     // microCMSは存在しないIDの場合に404エラーを返すのでハンドリング
-    if (error.status === 404) {
-      return res.status(404).json({ message: `Content with id ${id} not found` });
+    if (typeof error === 'object' && error !== null && 'status' in error) {
+      const err = error as { status?: number };
+      if (err.status === 404) {
+        return res.status(404).json({ message: `Content with id ${id} not found` });
+      }
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   }

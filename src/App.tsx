@@ -15,11 +15,32 @@ import { AnimatePresence } from 'framer-motion'
 import useScrollToTop from './hooks/useScrollToTop'
 import AttachartApp from './attachart/App'
 import PageTransition from './components/templates/PageTransition'
+import { useEffect } from 'react'
+
+// Google Analytics gtag型定義
+declare global {
+  interface Window {
+    gtag?: {
+      (command: 'js', config: string | Date): void;
+      (command: 'config' | 'event', targetId: string, params?: Record<string, unknown>): void;
+    };
+  }
+}
 
 function App() {
   const location = useLocation()
   useScrollToTop(location)
   const isAttachart = location.pathname.startsWith('/attachart')
+
+  // Google Analyticsページビュー送信
+  useEffect(() => {
+    if (window.gtag) {
+      window.gtag('event', 'page_view', {
+        page_path: location.pathname + location.search,
+        page_location: window.location.href,
+      });
+    }
+  }, [location]);
 
   return (
     <ThemeProvider theme={theme}>

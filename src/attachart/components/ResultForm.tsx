@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box, TextField, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import Button from '@/components/atoms/Button';
 import { OptionsButtonGroup } from '@/components/molecules/OptionsButtonGroup';
+import { sendGAEvent } from '@/lib/ga';
 
 
 // 将来的にAPIに渡すデータの型
@@ -82,6 +83,7 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
       await onSubmit(currentFormData);
       setLastSubmittedData(currentFormData);
       setSubmissionCount(prev => prev + 1);
+      sendGAEvent('send_result_mail', { label: '診断結果送信' });
     } catch (error) {
       // エラーハンドリングは親コンポーネントに任せる
       console.error('Submission failed in parent component:', error);

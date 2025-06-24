@@ -1,5 +1,6 @@
 import Button from '@/components/atoms/Button';
 import { Box, Typography } from '@mui/material';
+import { sendGAEvent } from '@/lib/ga';
 
 interface ReferenceBookCardProps {
   title: string;
@@ -13,6 +14,7 @@ const ReferenceBookCard = ({ title, url }: ReferenceBookCardProps) => {
       target="_blank"
       rel="noopener noreferrer"
       style={{ textDecoration: 'none', color: 'inherit' }}
+      onClick={() => sendGAEvent('click_amazon', { label: title })}
     >
       <Box
         sx={{

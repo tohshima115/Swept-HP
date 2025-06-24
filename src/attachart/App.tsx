@@ -10,6 +10,16 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import AttachartHeader from './components/AttachartHeader';
 import AttachartFooter from './components/AttachartFooter';
 
+// Google Analytics gtag型定義
+declare global {
+  interface Window {
+    gtag?: {
+      (command: 'js', config: string | Date): void;
+      (command: 'config' | 'event', targetId: string, params?: Record<string, unknown>): void;
+    };
+  }
+}
+
 function App() {
   const location = useLocation();
 
@@ -80,6 +90,15 @@ function App() {
       });
     };
   }, []);
+
+  useEffect(() => {
+    if (window.gtag) {
+      window.gtag('event', 'page_view', {
+        page_path: location.pathname + location.search,
+        page_location: window.location.href,
+      });
+    }
+  }, [location]);
 
   return (
     <ThemeProvider theme={theme}>

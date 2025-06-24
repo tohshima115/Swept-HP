@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import Logo from '@/components/atoms/Logo';
 import Button from '@/components/atoms/Button';
+import { sendGAEvent } from '@/lib/ga';
 
 const AboutSwept = () => {
   return (
@@ -36,6 +37,7 @@ const AboutSwept = () => {
           href="https://swept.jp"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => sendGAEvent('go_to_home', { label: 'Sweptホーム' })}
         >
           Sweptのサイトを見る
         </Button>

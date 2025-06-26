@@ -12,6 +12,7 @@ export interface FormData {
   gender: string;
   email: string;
   interviewAccepted: boolean;
+  receiveNewsletter: boolean;
 }
 
 interface ResultFormProps {
@@ -20,7 +21,7 @@ interface ResultFormProps {
 }
 
 const ageRanges = ['10代以下', '20代', '30代', '40代', '50代', '60代以上'];
-const genders = ['男性', '女性', 'その他', '無回答'];
+const genders = ['男性', '女性', 'その他'];
 
 const isDataEqual = (data1: FormData, data2: FormData | null): boolean => {
   if (!data2) return false;
@@ -29,7 +30,8 @@ const isDataEqual = (data1: FormData, data2: FormData | null): boolean => {
     data1.ageRange === data2.ageRange &&
     data1.gender === data2.gender &&
     data1.email === data2.email &&
-    data1.interviewAccepted === data2.interviewAccepted
+    data1.interviewAccepted === data2.interviewAccepted &&
+    data1.receiveNewsletter === data2.receiveNewsletter
   );
 };
 
@@ -40,6 +42,7 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
   const [email, setEmail] = useState('');
   const [privacyPolicyAccepted, setPrivacyPolicyAccepted] = useState(false);
   const [interviewAccepted, setInterviewAccepted] = useState(false);
+  const [receiveNewsletter, setReceiveNewsletter] = useState(false);
   const [submissionCount, setSubmissionCount] = useState(0);
   const [lastSubmittedData, setLastSubmittedData] = useState<FormData | null>(null);
 
@@ -66,11 +69,11 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
     validateEmail(email);
   };
 
-  const currentFormData: FormData = { nickname, ageRange, gender, email, interviewAccepted };
+  const currentFormData: FormData = { nickname, ageRange, gender, email, interviewAccepted, receiveNewsletter };
   const isDataUnchanged = isDataEqual(currentFormData, lastSubmittedData);
   const isSubmissionLimitReached = submissionCount >= 4;
 
-  const isFormValid = ageRange !== '' && gender !== '' && email !== '' && !emailError && privacyPolicyAccepted;
+  const isFormValid = email !== '' && !emailError && privacyPolicyAccepted;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -96,7 +99,7 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
       <Typography variant="h4" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
         診断結果をメールで受け取る
       </Typography>
-      <Box sx={{            p: 2,
+      <Box sx={{            p: 3,
             borderRadius: 4,
             border: '1px solid',
             borderColor: 'divider',
@@ -129,7 +132,7 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
       />
       <Box sx={{ my: 1.5 }}>
         <Typography component="p" sx={{ fontWeight: 'bold', mb: 1 }}>
-          年齢<span style={{ color: 'red', marginLeft: '4px' }}>*</span>
+          年齢<span style={{ fontSize:'0.8em',fontWeight:400,marginLeft: '4px' }}>（任意）</span>
         </Typography>
         <OptionsButtonGroup
           options={ageRanges}
@@ -138,53 +141,73 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
           columns={{ xs: 3, md: 6 }}
         />
       </Box>
-      <Box sx={{ my: 1.5 }}>
+      <Box sx={{ mt: 1.5 }}>
         <Typography component="p" sx={{ fontWeight: 'bold', mb: 1 }}>
-          性別<span style={{ color: 'red', marginLeft: '4px' }}>*</span>
+          性別<span style={{ fontSize:'0.8em',fontWeight:400,marginLeft: '4px' }}>（任意）</span>
         </Typography>
         <OptionsButtonGroup
           options={genders}
           value={gender}
           onChange={setGender}
-          columns={4}
+          columns={3}
         />
       </Box>
-      <Box sx={{ my: 1.5 }}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={privacyPolicyAccepted}
-              onChange={(e) => setPrivacyPolicyAccepted(e.target.checked)}
-            />
-          }
-          label={
-            <Typography 
-              variant="body2"
-              sx={{
-                '& a': {
-                  color: 'primary.main',
-                },
-              }}
-            >
-              <a href="/attachart/privacy-policy" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意する
-              <span style={{ color: 'red', marginLeft: '4px' }}>*</span>
-            </Typography>
-          }
-        />
-        <Typography variant="caption" display="block" color="text.secondary" sx={{ml:4}}>
-          送信されたデータは、個人が特定されない形でサービスの改善に活用させていただきます。
-        </Typography>
-      </Box>
-      <Box sx={{ mt: 1.5,mb:3 }}>
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={interviewAccepted}
-            onChange={(e) => setInterviewAccepted(e.target.checked)}
+      <Box sx={{my:3,ml:2}}>
+        <Box>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={privacyPolicyAccepted}
+                onChange={(e) => setPrivacyPolicyAccepted(e.target.checked)}
+              />
+            }
+            label={
+              <Typography 
+                variant="body1"
+                sx={{
+                  '& a': {
+                    color: 'primary.main',
+                  },
+                }}
+              >
+                <a href="/attachart/privacy-policy" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意する
+                <span style={{ color: 'red', marginLeft: '4px' }}>*</span>
+              </Typography>
+            }
           />
-        }
-        label="今後のインタビューにご協力いただけますか？（任意）"
-      />
+          <Typography variant="caption" display="block" color="text.secondary" sx={{ml:4,height:'16px'}}>
+            送信されたデータは、個人が特定されない形でサービスの改善に活用させていただきます。
+          </Typography>
+        </Box>
+        <Box sx={{ mt: 1,mb:3 }}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={interviewAccepted}
+                onChange={(e) => setInterviewAccepted(e.target.checked)}
+              />
+            }
+            label={
+              <Typography 
+                variant="body1">
+                  今後のインタビューにご協力いただけますか？<span style={{ fontSize:'0.8em',fontWeight:400,marginLeft: '4px' }}>（任意）</span>
+                </Typography>
+              }
+          />
+        </Box>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={receiveNewsletter}
+                onChange={(e) => setReceiveNewsletter(e.target.checked)}
+              />
+            }
+            label={
+              <Typography variant="body1">
+                Sweptからのお知らせをメールで受け取る<span style={{ fontSize:'0.8em',fontWeight:400,marginLeft: '4px' }}>（任意）</span>
+              </Typography>
+            }
+          />
       </Box>
       <Button
         type="submit"

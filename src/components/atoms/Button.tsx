@@ -40,7 +40,7 @@ interface CustomButtonProps extends ButtonProps {
   color?: 'primary' | 'primaryTonal'
   startIcon?: React.ReactNode
   endIcon?: React.ReactNode
-  variant?: 'contained' | 'text'
+  variant?: 'contained' | 'text' | 'outlined'
   to?: string
   component?: React.ElementType
   target?: string
@@ -81,6 +81,7 @@ const Button = ({
           '& > *': {
             width: '100%',
             height: '100%',
+            color: variant === 'text' ? 'text.secondary' : undefined,
           },
           margin: '0 !important',
           marginLeft: position === 'start' ? '0 !important' : undefined,
@@ -113,6 +114,11 @@ const Button = ({
         '& .MuiButton-startIcon, & .MuiButton-endIcon': {
           margin: '0 !important',
         },
+        ...(variant === 'outlined' ? {
+          backgroundColor: 'transparent',
+          border: '1px solid',
+          borderColor: 'divider',
+        } : {}),
       }}
       startIcon={wrapIcon(startIcon, 'start')}
       endIcon={wrapIcon(endIcon, 'end')}
@@ -123,6 +129,7 @@ const Button = ({
         <Typography
           variant={typographyVariantMap[sizeType]}
           component="span"
+          color={variant === 'text' ? 'text.secondary' : undefined}
         >
           {children}
         </Typography>

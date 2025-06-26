@@ -10,6 +10,7 @@ interface RequestBody {
   gender: string;
   email: string;
   interviewAccepted: boolean;
+  receiveNewsletter?: boolean;
   score: { A: number; B: number; C: number };
   resultType: string;
   resultFeature: string;
@@ -50,6 +51,7 @@ async function appendToSheet(data: RequestBody) {
       data.gender,
       data.email,
       data.interviewAccepted ? 'はい' : 'いいえ',
+      data.receiveNewsletter ? 'はい' : 'いいえ',
       data.score.A,
       data.score.B,
       data.score.C,

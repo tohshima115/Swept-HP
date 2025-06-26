@@ -9,6 +9,7 @@ import Result from './pages/result';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import AttachartHeader from './components/AttachartHeader';
 import AttachartFooter from './components/AttachartFooter';
+import SharedResult from './pages/SharedResult';
 
 // Google Analytics gtag型定義
 declare global {
@@ -133,6 +134,7 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="quiz/:page" element={<Quiz />} />
                 <Route path="result" element={<Result />} />
+                <Route path="result/:type/:scoreString" element={<SharedResult />} />
                 <Route path="privacy-policy" element={<PrivacyPolicy />} />
               </Routes>
             </motion.div>

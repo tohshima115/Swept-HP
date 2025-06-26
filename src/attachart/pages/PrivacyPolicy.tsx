@@ -29,7 +29,7 @@ const PrivacyPolicy = () => {
           本サービスでは、以下の情報を収集します。
         </Typography>
         <ul>
-          <li><Typography><strong>診断結果のメール送信に同意いただいた場合に収集する情報:</strong></Typography>
+          <li><Typography><strong>診断結果のSNSシェアまたはメール送信に同意いただいた場合に収集する情報:</strong></Typography>
             <ul>
               <li><Typography>診断への回答内容</Typography></li>
               <li><Typography>ニックネーム、年齢、性別、メールアドレス等のフォーム入力情報</Typography></li>

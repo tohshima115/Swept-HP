@@ -76,9 +76,13 @@ const CharacterAnimation = ({ score }: CharacterAnimationProps) => {
       size = sizes.rank1;
       wrapperSize = wrapperSizes.rank1_2;
     } else if (isTopTwoTie) {
-      // 1-2位同率なら、該当キャラは「1位のサイズ」
-      size = sizes.rank0;
-      wrapperSize = wrapperSizes.rank0;
+      // 1-2位同率なら、rank 0,1 のみ1位サイズ、rank2は表示しない
+      if (charInfo.rank === 0 || charInfo.rank === 1) {
+        size = sizes.rank0;
+        wrapperSize = wrapperSizes.rank0;
+      } else {
+        return null;
+      }
     } else {
       // 通常時
       size = sizes[`rank${charInfo.rank}` as keyof typeof sizes];
@@ -88,13 +92,22 @@ const CharacterAnimation = ({ score }: CharacterAnimationProps) => {
     return { ...charInfo, size, wrapperSize };
   });
 
+  // 追加: 1-2位同率時はスコアが一番低いキャラ（thirdScore）をnullにする
+  if (isTopTwoTie) {
+    const thirdScore = sortedScores[2];
+    charactersToRender.forEach((char, idx) => {
+      if (char && char.score === thirdScore) {
+        charactersToRender[idx] = null;
+      }
+    });
+  }
+
   return (
     <Stack direction="row" justifyContent="center" alignItems="flex-end" sx={{ my: 3, minHeight: wrapperSizes.rank0 }}>
       {charactersToRender.map((charInfo, index) => {
         // 表示情報がない場合は、レイアウトを維持するための空のBoxを配置
         if (!charInfo) {
-          const emptyWrapperSize = wrapperSizes.rank1_2;
-          return <Box key={index} sx={{ width: emptyWrapperSize, height: emptyWrapperSize }} />;
+          return null;
         }
 
         return (

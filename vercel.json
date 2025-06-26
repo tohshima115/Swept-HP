@@ -1,7 +1,7 @@
 {
   "rewrites": [
-    { "source": "/sitemap.xml", "destination": "/api/sitemap.xml" },
-    { "source": "/attachart/sitemap.xml", "destination": "/api/attachart-sitemap.xml" },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
+    { "source": "/attachart/sitemap.xml", "destination": "/api/attachart-sitemap" },
     {
       "source": "/api/:path*",
       "destination": "/api/:path*"

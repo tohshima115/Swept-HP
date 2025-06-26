@@ -17,21 +17,23 @@ const staticPaths = [
   'contact',
 ];
 
+type UrlEntry = { loc: string; lastmod?: string };
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // News一覧をmicroCMSから取得
-  let newsPaths: { loc: string; lastmod?: string }[] = [];
+  let newsPaths: UrlEntry[] = [];
   try {
     const news = await client.get<{ contents: { id: string; updatedAt?: string }[] }>({ endpoint: 'news' });
     newsPaths = news.contents.map(item => ({
       loc: `${SITE_URL}/news/${item.id}`,
       lastmod: item.updatedAt,
     }));
-  } catch (e) {
+  } catch {
     // エラー時は空配列
   }
 
   // サイトマップXML生成
-  const urls = [
+  const urls: UrlEntry[] = [
     ...staticPaths.map(path => ({
       loc: `${SITE_URL}/${path}`.replace(/\/$/, ''),
     })),

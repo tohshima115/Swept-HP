@@ -116,7 +116,7 @@ function App() {
             maxWidth: '900px',
             mx: 'auto',
             px: 2,
-            pt: '104px', // Header height (64px) + margin (32px)
+            pt: '120px', // Header height (64px) + margin (32px)
             pb: 4,
           }}
         >

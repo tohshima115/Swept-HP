@@ -45,6 +45,7 @@ interface CustomButtonProps extends ButtonProps {
   component?: React.ElementType
   target?: string
   rel?: string
+  fullWidth?: boolean
 }
 
 const Button = ({
@@ -58,6 +59,7 @@ const Button = ({
   component,
   target,
   rel,
+  fullWidth,
   ...props
 }: CustomButtonProps) => {
   const extraProps: Record<string, unknown> = {};
@@ -95,12 +97,13 @@ const Button = ({
       color={color}
       variant={variant}
       disableElevation
+      fullWidth={fullWidth}
       sx={{
         ...sizeStyles[sizeType],
         borderRadius: '100px',
-        width: 'auto',
+        width: fullWidth ? '100%' : 'auto',
+        display: fullWidth ? 'flex' : 'inline-flex',
         boxSizing: 'border-box',
-        display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
         textTransform: 'none',

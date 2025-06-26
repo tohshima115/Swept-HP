@@ -70,6 +70,9 @@ async function appendToSheet(data: RequestBody) {
     console.log('Successfully appended data to Google Sheet.');
   } catch (error) {
     console.error('Error writing to Google Sheet:', error);
+    console.error('appendToSheet payload:', JSON.stringify(data));
+    console.error('GOOGLE_SHEETS_CLIENT_EMAIL:', process.env.GOOGLE_SHEETS_CLIENT_EMAIL);
+    console.error('SPREADSHEET_ID:', process.env.SPREADSHEET_ID);
     // ここでエラーを投げず、コンソールに出力するだけにして処理を続行させる
   }
 }

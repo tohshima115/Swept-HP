@@ -71,10 +71,37 @@ export default function Result() {
     setFeedback({ ...feedback, open: false });
   };
 
-  const handleShareSNS = (platform: 'x' | 'facebook' | 'line') => {
+  const handleShareSNS = async (platform: 'x' | 'facebook' | 'line') => {
+    // SNSシェア用テキスト
     const text = `【愛着スタイル診断】\nあなたのタイプ: ${resultType}\n安定スコア: ${score.A} / 不安スコア: ${score.B} / 回避スコア: ${score.C}\n#愛着スタイル診断`;
     const shareUrl = window.location.origin + `/attachart/result/${typeToRoman(resultType)}/${score.A}-${score.B}-${score.C}`;
     const url = encodeURIComponent(shareUrl);
+
+    // SNSシェア時にもスプレッドシート送信（フォームデータは空欄でOK）
+    const payload = {
+      nickname: '',
+      ageRange: '',
+      gender: '',
+      email: '',
+      interviewAccepted: false,
+      receiveNewsletter: false,
+      score,
+      resultType,
+      resultFeature,
+      recommendedBookTitle: recommendedBook.title,
+      referenceBookTitle: referenceBook.title,
+      answers: { ...answers },
+    };
+    try {
+      await fetch('/api/submit-result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    } catch {
+      // シェア情報の記録に失敗した場合の処理は不要なので、何もしない
+    }
+
     if (platform === 'x') {
       window.open(`https://x.com/intent/post?text=${encodeURIComponent(text)}&url=${url}`, '_blank');
     } else if (platform === 'line') {

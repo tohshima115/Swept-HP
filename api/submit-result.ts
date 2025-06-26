@@ -147,29 +147,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const body: RequestBody = req.body;
-    if (!body.email || !body.resultType) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
-
-    // Googleスプレッドシートへの書き込み
+    // Googleスプレッドシートへの書き込み（email空でもOK）
     appendToSheet(body);
-    
-    const emailHtml = createEmailHtml(body);
 
-    const { data, error } = await resend.emails.send({
-      from: fromEmail,
-      to: [body.email],
-      subject: '愛着スタイル診断 結果',
-      html: emailHtml,
-    });
-
-    if (error) {
-      console.error('Resend Error:', error);
-      return res.status(500).json({ error: 'Failed to send email', details: error.message, resendError: error });
+    // メール送信はemailがある場合のみ
+    if (body.email && body.resultType) {
+      const emailHtml = createEmailHtml(body);
+      const { data, error } = await resend.emails.send({
+        from: fromEmail,
+        to: [body.email],
+        subject: '愛着スタイル診断 結果',
+        html: emailHtml,
+      });
+      if (error) {
+        console.error('Resend Error:', error);
+        return res.status(500).json({ error: 'Failed to send email', details: error.message, resendError: error });
+      }
+      return res.status(200).json({ success: true, message: 'Email sent successfully', emailId: data?.id });
+    } else {
+      // メール送信しない場合（SNSシェア等）はスプレッドシート記録のみ
+      return res.status(200).json({ success: true, message: 'Sheet only (no email)' });
     }
-    
-    return res.status(200).json({ success: true, message: 'Email sent successfully', emailId: data?.id });
-
   } catch (error) {
     console.error('Server Error Caught:', error);
     const message = error instanceof Error ? error.message : 'An unknown error occurred';

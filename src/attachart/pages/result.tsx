@@ -188,7 +188,7 @@ export default function Result() {
             {resultFeature}
           </Typography>
           <CharacterAnimation score={score} />
-          <Box sx={{my:3,ml:2}}>
+          <Box sx={{mt:3,ml:2}}>
           <FormControlLabel
             control={<Checkbox checked={agreePrivacy} onChange={e => setAgreePrivacy(e.target.checked)} />}
             label={
@@ -205,7 +205,7 @@ export default function Result() {
               </Typography>
             }
           />
-                    <Typography variant="caption" display="block" color="text.secondary" sx={{ml:4,height:'16px'}}>
+                    <Typography variant="caption" display="block" color="text.secondary" sx={{ml:4,lineHeight:'16px',mb:1}}>
             送信されたデータは、個人が特定されない形でサービスの改善に活用させていただきます。
           </Typography>
           </Box>

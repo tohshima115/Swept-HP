@@ -175,11 +175,11 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
               </Typography>
             }
           />
-          <Typography variant="caption" display="block" color="text.secondary" sx={{ml:4,height:'16px'}}>
+          <Typography variant="caption" display="block" color="text.secondary" sx={{ml:4,lineHeight:'16px',mb:1}}>
             送信されたデータは、個人が特定されない形でサービスの改善に活用させていただきます。
           </Typography>
         </Box>
-        <Box sx={{ mt: 1,mb:3 }}>
+        <Box sx={{ mb:3 }}>
           <FormControlLabel
             control={
               <Checkbox

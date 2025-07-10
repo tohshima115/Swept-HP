@@ -1,8 +1,9 @@
+import React, { ChangeEvent, useState } from 'react';
 import { Box, Snackbar, Alert, SxProps, Theme } from '@mui/material';
 import RadioGroupField from './RadioGroupField';
 import TextFieldMolecule from './TextFieldMolecule';
 import Button from '../atoms/Button';
-import { ChangeEvent, useState } from 'react';
+import { useForm, ValidationError } from '@formspree/react';
 
 interface ContactFormProps {
   sx?: SxProps<Theme>;
@@ -17,8 +18,6 @@ const inquiryTypes = [
   'その他',
 ];
 
-const NEWT_FORM_ENDPOINT = import.meta.env.VITE_NEWT_FORM_ENDPOINT;
-
 const ContactForm = ({ sx }: ContactFormProps) => {
   const [formData, setFormData] = useState({
     inquiryType: '',
@@ -27,9 +26,11 @@ const ContactForm = ({ sx }: ContactFormProps) => {
     email: '',
     message: '',
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarStatus, setSnackbarStatus] = useState<'success' | 'error' | null>(null);
+
+  // Formspree
+  const [state, handleSubmit] = useForm("xovwgvpv");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -45,56 +46,23 @@ const ContactForm = ({ sx }: ContactFormProps) => {
     );
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    if (!NEWT_FORM_ENDPOINT) {
-      console.error('Newt form endpoint is not configured in environment variables.');
-      setSubmitStatus('error');
+  // Formspree送信後の副作用
+  React.useEffect(() => {
+    if (state.succeeded) {
+      setSnackbarStatus('success');
       setSnackbarOpen(true);
-      setIsSubmitting(false);
-      return;
-    }
-
-    const data = new FormData();
-    data.append('inquiryType', formData.inquiryType);
-    data.append('name', formData.name);
-    data.append('company', formData.company);
-    data.append('email', formData.email);
-    data.append('message', formData.message);
-
-    try {
-      const response = await fetch(NEWT_FORM_ENDPOINT, {
-        method: 'POST',
-        body: data,
-        headers: {
-          'Accept': 'application/json',
-        },
+      setFormData({
+        inquiryType: '',
+        name: '',
+        company: '',
+        email: '',
+        message: '',
       });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({
-          inquiryType: '',
-          name: '',
-          company: '',
-          email: '',
-          message: '',
-        });
-      } else {
-        console.error('Form submission error:', response.statusText);
-        setSubmitStatus('error');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
+    } else if (state.errors && Object.keys(state.errors).length > 0) {
+      setSnackbarStatus('error');
       setSnackbarOpen(true);
     }
-  };
+  }, [state.succeeded, state.errors, state.submitting]);
 
   const handleSnackbarClose = (_event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
@@ -104,7 +72,24 @@ const ContactForm = ({ sx }: ContactFormProps) => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3, ...sx }}>
+    <Box component="form" onSubmit={e => {
+      e.preventDefault();
+      if (!isFormValid() || state.submitting) return;
+      // Formspreeに送信
+      const fakeEvent = {
+        target: {
+          elements: [
+            { name: 'inquiryType', value: formData.inquiryType },
+            { name: 'name', value: formData.name },
+            { name: 'company', value: formData.company },
+            { name: 'email', value: formData.email },
+            { name: 'message', value: formData.message },
+          ]
+        },
+        preventDefault: () => {},
+      } as unknown as React.FormEvent<HTMLFormElement>;
+      handleSubmit(fakeEvent);
+    }} sx={{ display: 'flex', flexDirection: 'column', gap: 3, ...sx }}>
       <RadioGroupField
         label="お問い合わせ項目"
         name="inquiryType"
@@ -147,18 +132,21 @@ const ContactForm = ({ sx }: ContactFormProps) => {
         placeholder="お問い合わせ内容をご記入ください"
         required
       />
+      {/* Formspreeのバリデーションエラー表示（必要に応じて） */}
+      <ValidationError prefix="Email" field="email" errors={state.errors} />
+      <ValidationError prefix="Message" field="message" errors={state.errors} />
       <Button 
         variant="contained" 
         type="submit"
-        disabled={!isFormValid() || isSubmitting}
+        disabled={!isFormValid() || state.submitting}
       >
-        {isSubmitting ? '送信中...' : '送信する'}
+        {state.submitting ? '送信中...' : '送信する'}
       </Button>
 
       <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
-        <Alert onClose={handleSnackbarClose} severity={submitStatus ?? 'info'} sx={{ width: '100%' }}>
-          {submitStatus === 'success' && 'お問い合わせありがとうございます。送信されました。'}
-          {submitStatus === 'error' && '送信に失敗しました。時間をおいて再度お試しください。'}
+        <Alert onClose={handleSnackbarClose} severity={snackbarStatus ?? 'info'} sx={{ width: '100%' }}>
+          {snackbarStatus === 'success' && 'お問い合わせありがとうございます。送信されました。'}
+          {snackbarStatus === 'error' && '送信に失敗しました。時間をおいて再度お試しください。'}
         </Alert>
       </Snackbar>
     </Box>

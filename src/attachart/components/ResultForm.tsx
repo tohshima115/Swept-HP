@@ -97,7 +97,7 @@ export const ResultForm = ({ onSubmit, isSubmitting }: ResultFormProps) => {
     <Box component="form" onSubmit={handleSubmit} 
     sx={{ display:'flex', flexDirection:'column' }}>
       <Typography variant="h4" component="h3" sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
-        診断結果をメールで受け取る
+      結果の匿名提供やインタビューにご協力ください！
       </Typography>
       <Box sx={{            p: 3,
             borderRadius: 4,
